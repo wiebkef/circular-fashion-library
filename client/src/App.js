@@ -9,15 +9,16 @@ import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 import { Routes, Route } from "react-router-dom";
-
+import ItemCards from "./components/ItemCards";
+import UserDetails from "./components/UserDetails";
 function App() {
   return (
     <div className="App">
       <Navbar />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/shop" element={Shop} />
-        <Route path="/users/:id" element={User} />
+        <Route path="/shop" element={<ItemCards />} />
+        <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/cart" element={<Cart />} />
