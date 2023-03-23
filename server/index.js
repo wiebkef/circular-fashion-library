@@ -1,12 +1,17 @@
 require("dotenv/config");
-const app = require("./src/app");
-const { resolve } = require("path");
+const express = require("express");
+const cors = require("cors");
+//const connectDB = require("./config/db");
+const usersRouter = require("./routes/users");
+const PORT = process.env.PORT || 8000;
+const app = express();
+const { connectDB } = require("./config/db");
+app.use(cors());
+app.use(express.json());
+app.use("/api/users", usersRouter);
 
-app.get("*", (req, res) => {
-  res.sendFile(resolve(__dirname, "client", "build", "index.html"));
-});
-
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`);
+  });
 });
