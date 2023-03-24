@@ -1,7 +1,9 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { getAllUsers } = require("../controllers/users");
+const { getAllUsers, getUserById } = require("../controllers/users");
+const userFinder = require("../middlewares/userFinder");
 
-usersRouter.get("/", (req, res) => res.send("Hello World!"));
+usersRouter.get("/", getAllUsers);
+usersRouter.get("/:id", userFinder, getUserById);
 
 module.exports = usersRouter;
