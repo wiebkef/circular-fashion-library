@@ -3,12 +3,15 @@ const express = require("express");
 const cors = require("cors");
 const { connectDB } = require("./config/db");
 const path = require("path");
+const cookieParser = require("cookie-parser");
 const PORT = process.env.PORT || 8000;
 const app = express();
+const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
-
-app.use(cors());
+app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
+app.use("/auth", authRouter);
 app.use("/api/users", usersRouter);
 
 /* joining and normalizing paths for deployment */
