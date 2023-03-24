@@ -6,10 +6,12 @@ const path = require("path");
 const PORT = process.env.PORT || 8000;
 const app = express();
 const usersRouter = require("./routes/users");
+const itemsRouter = require("./routes/items");
 
 app.use(cors());
 app.use(express.json());
 app.use("/api/users", usersRouter);
+app.use("/api/items", itemsRouter);
 
 /* joining and normalizing paths for deployment */
 if (process.env.NODE_ENV === "production") {
