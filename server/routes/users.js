@@ -12,7 +12,7 @@ const userFinder = require("../middlewares/userFinder");
 usersRouter.get("/", getAllUsers);
 usersRouter.get("/:id", userFinder, getUserById);
 
-//usersRouter.post("/", createUser);
+usersRouter.post("/", createUser);
 
 usersRouter.put("/:id", userFinder, updateUser);
 
