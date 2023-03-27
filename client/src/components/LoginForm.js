@@ -32,7 +32,7 @@ function LoginForm({ setIsLoggedIn }) {
 
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div className="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+      <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1">
