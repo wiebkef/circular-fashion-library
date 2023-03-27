@@ -26,12 +26,10 @@ const signup = async (req, res) => {
       res.status(500).json({ message: error.message, errors: error.errors });
     }
   } else {
-    res
-      .status(403)
-      .json({
-        message:
-          "Passwords do not match. Please make sure that your password and the password confirmation are the same.",
-      });
+    res.status(403).json({
+      message:
+        "Passwords do not match. Please make sure that your password and the password confirmation are the same.",
+    });
   }
 };
 
@@ -76,6 +74,7 @@ const logout = (req, res) => {
 const getLoggedInUser = async (req, res) => {
   try {
     const currentUser = await User.findOne({
+      where: { id: req.user.id },
       attributes: { exclude: ["password"] },
     });
     res.json(currentUser);

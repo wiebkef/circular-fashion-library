@@ -309,7 +309,11 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   {user ? (
                     <>
-                      <div className="flow-root">{user.email}</div>
+                      <div className="flow-root">
+                        <span className="-m-2 block p-2 font-medium text-gray-900">
+                          {user.email}
+                        </span>
+                      </div>
                       <div className="flow-root">
                         <Link
                           onClick={handleLogout}
@@ -515,14 +519,13 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
               <div className="ml-auto flex items-center">
                 {user ? (
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    {user.email}
-                    <span
-                      className="mx-3 h-6 w-px bg-gray-200"
-                      aria-hidden="true"
-                    />
+                    <span className="text-sm font-medium text-gray-700">
+                      {user.email}
+                    </span>
+                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     <Link
                       onClick={handleLogout}
-                      className="-m-2 block p-2 font-medium text-gray-900"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       Log Out
                     </Link>
