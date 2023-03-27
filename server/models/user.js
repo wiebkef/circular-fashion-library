@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 
 const User = sequelize.define(
   "user",
@@ -15,10 +15,6 @@ const User = sequelize.define(
     },
     last_name: {
       type: DataTypes.STRING,
-      // allowNull defaults to true
-    },
-    email: {
-      type: DataTypes.STRING(320),
       // allowNull defaults to true
     },
     street: {
@@ -46,12 +42,13 @@ const User = sequelize.define(
       defaultValue: "Germany",
     },
     email: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
-    },
-    email: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
+      type: DataTypes.STRING(320),
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Email is required.",
+        },
+      },
     },
     /*     confirmPassword: {
       type: DataTypes.VIRTUAL,
@@ -64,6 +61,12 @@ const User = sequelize.define(
     }, */
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Password is required.",
+        },
+      },
       /*       validate: {
         equals: {
           args: this.confirmPassword,

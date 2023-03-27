@@ -1,6 +1,15 @@
 const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
 
+const createItem = async (req, res, next) => {
+  try {
+    const newItem = await Item.create(req.body);
+    res.status(201).json(newItem);
+  } catch (error) {
+    next(new ErrorResponse(error));
+  }
+};
+
 const getAllItems = async (req, res) => {
   try {
     const items = await Item.findAll({ raw: true });
@@ -29,4 +38,45 @@ const getItemById = async (req, res, next) => {
   } */
 };
 
-module.exports = { getAllItems, getItemById };
+const updateItem = async (req, res, next) => {
+  try {
+    const updatedItem = await Item.update(
+      req.body,
+      {
+        where: {
+          id: req.params.id,
+        },
+      },
+      { returning: true } /*
+      {
+        new: true,
+        runValidators: false,
+      } */
+    );
+    console.log(updatedItem);
+    res.json(updatedItem);
+  } catch (error) {
+    next(new ErrorResponse(error));
+  }
+};
+
+const deleteItem = async (req, res, next) => {
+  try {
+    const deletedItem = await Item.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.json(deletedItem);
+  } catch (error) {
+    next(new ErrorResponse(error));
+  }
+};
+
+module.exports = {
+  getAllItems,
+  getItemById,
+  createItem,
+  updateItem,
+  deleteItem,
+};

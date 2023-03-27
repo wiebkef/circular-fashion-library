@@ -6,7 +6,7 @@ const connectDB = async () => {
     await sequelize.authenticate();
     console.log("Connection to PostgreSQL DB successful.");
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    console.error("Unable to connect to the database: ", error);
   }
 };
 module.exports = { connectDB, sequelize };
