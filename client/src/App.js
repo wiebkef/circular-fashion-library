@@ -11,6 +11,7 @@ import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 import ItemCards from "./components/ItemCards";
 import UserDetails from "./components/UserDetails";
+import ItemForm from "./components/ItemForm";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -32,6 +33,11 @@ function App() {
         />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+
+        // ADMIN ROUTES
+        {/* <Route path="/admin/items" element={<ItemList />} /> */}
+        <Route path="/admin/items/new" element={<ItemForm />} />
+        <Route path="/admin/items/:id" element={<ItemForm />} />
       </Routes>
       <Footer />
     </div>
