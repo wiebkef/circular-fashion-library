@@ -2,8 +2,16 @@ const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
 
 const createItem = async (req, res, next) => {
+  const features = req.body.features;
+  console.log(features);
   try {
     const newItem = await Item.create(req.body);
+    await newItem.addFeatures(features, { through: { selfGranted: false } });
+    /* features.forEach((elem) => {
+      console.log(elem);
+            newItem.addFeature(elem, { through: { selfGranted: false } });
+
+    }); */
     res.status(201).json(newItem);
   } catch (error) {
     next(new ErrorResponse(error));
