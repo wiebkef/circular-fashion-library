@@ -36,7 +36,7 @@ function SignUpForm({ setIsLoggedIn }) {
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
-            <div className="mt-1">
+            <div className="mt-1 relative">
               {error.email && (
                 <p className="text-red-700">{error.email.message}</p>
               )}
@@ -47,13 +47,19 @@ function SignUpForm({ setIsLoggedIn }) {
                 value={user.email}
                 placeholder="Email address"
                 required
-                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
               />
+              <label
+                for="email"
+                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Email address
+              </label>
             </div>
           </div>
           <div>
-            <div className="mt-1">
+            <div className="mt-8 relative">
               {error.password && (
                 <p className="text-red-700">{error.password.message}</p>
               )}
@@ -64,13 +70,19 @@ function SignUpForm({ setIsLoggedIn }) {
                 value={user.password}
                 placeholder="Password"
                 required
-                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
               />
+              <label
+                for="password"
+                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Password
+              </label>
             </div>
           </div>
           <div>
-            <div className="mt-1">
+            <div className="mt-8 relative">
               {error.confirmPassword && (
                 <p className="text-red-700">{error.confirmPassword.message}</p>
               )}
@@ -81,9 +93,15 @@ function SignUpForm({ setIsLoggedIn }) {
                 value={user.confirmPassword}
                 placeholder="Confirm password"
                 required
-                className="w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand"
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
               />
+              <label
+                for="confirmPassword"
+                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Confirm password
+              </label>
             </div>
           </div>
           <div>
