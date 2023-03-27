@@ -11,9 +11,10 @@ const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const itemsRouter = require("./routes/items");
 const featuresRouter = require("./routes/features");
-const categoriesRouter = require("../routes/categories");
+const categoriesRouter = require("./routes/categories");
 
 const errorHandler = require("./middlewares/errorHandler");
+const relations = require("./utils/relations");
 
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
@@ -23,6 +24,9 @@ app.use("/api/users", usersRouter);
 app.use("/api/items", itemsRouter);
 app.use("/api/features", featuresRouter);
 app.use("/api/categories", categoriesRouter);
+
+// relations
+relations();
 
 // errorHandler is middleware for all routes
 app.use(errorHandler);
