@@ -1,20 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+    variants: {
+    extend: {},
+  },
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
   theme: {
-    colors: {
-      brand: "#7CDEDC",
-    },
     extend: {
-      fontFamily: {
-        sans: [],
+      colors: {
+        brand: {
+          DEFAULT: '#7CDEDC',
+          hover: '#7CDEDC',
+        },
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
 };
 
