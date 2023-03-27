@@ -6,14 +6,24 @@ const Item = sequelize.define(
   {
     sku: {
       type: DataTypes.INTEGER,
-      // allowNull defaults to true
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "SKU is required.",
+        },
+      },
     },
     user_id: {
       type: DataTypes.INTEGER,
     },
     category_id: {
       type: DataTypes.INTEGER,
-      // allowNull defaults to true
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Category is required.",
+        },
+      },
     },
     rented_at: {
       type: DataTypes.DATE,
@@ -37,14 +47,30 @@ const Item = sequelize.define(
     },
     title: {
       type: DataTypes.STRING,
-      // allowNull defaults to true
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Title is required.",
+        },
+      },
     },
     brand: {
       type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Brand is required.",
+        },
+      },
     },
     status: {
       type: DataTypes.STRING,
-      // allowNull defaults to true
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Status is required.",
+        },
+      },
     },
     images: {
       type: DataTypes.ARRAY(DataTypes.TEXT),

@@ -17,10 +17,6 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       // allowNull defaults to true
     },
-    email: {
-      type: DataTypes.STRING(320),
-      // allowNull defaults to true
-    },
     street: {
       type: DataTypes.STRING,
       // allowNull defaults to true
@@ -46,12 +42,13 @@ const User = sequelize.define(
       defaultValue: "Germany",
     },
     email: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
-    },
-    email: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
+      type: DataTypes.STRING(320),
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Email is required.",
+        },
+      },
     },
     /*     confirmPassword: {
       type: DataTypes.VIRTUAL,
@@ -64,6 +61,12 @@ const User = sequelize.define(
     }, */
     password: {
       type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Password is required.",
+        },
+      },
       /*       validate: {
         equals: {
           args: this.confirmPassword,
