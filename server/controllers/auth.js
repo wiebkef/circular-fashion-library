@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const register = async (req, res) => {
+const signup = async (req, res) => {
   if (req.body.password === req.body.confirmPassword) {
     req.body.password = await bcrypt.hash(req.body.password, 8);
     try {
@@ -85,7 +85,7 @@ const getLoggedInUser = async (req, res) => {
 };
 
 module.exports = {
-  register,
+  signup,
   login,
   logout,
   getLoggedInUser,
