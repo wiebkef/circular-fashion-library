@@ -12,6 +12,7 @@ const itemsRouter = require("./routes/items");
 const errorHandler = require("./middlewares/errorHandler");
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/api/users", usersRouter);

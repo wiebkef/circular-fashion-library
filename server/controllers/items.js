@@ -1,9 +1,30 @@
 const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
+
+// CLOUDINARY CONFIG
+/* cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+}); */
 
 const createItem = async (req, res, next) => {
   try {
     const newItem = await Item.create(req.body);
+    /*     const options = {
+      public_id: newItem.id,
+      folder: fashionItemImages,
+    }; */
+    // Upload to Cloudinary
+    /*     const result = await cloudinary.uploader.upload(req.file.path, options);
+    console.log("IMAGE URL", result.secure_url); */
+    // UPDATE ITEM WITH IMAGE URL
+    /*     newItem.images = result.secure_url;
+    const updatedItem = await newItem.save();
+    fs.unlinkSync(req.file.path);
+    res.status(201).json(updatedItem); */
     res.status(201).json(newItem);
   } catch (error) {
     next(new ErrorResponse(error));
