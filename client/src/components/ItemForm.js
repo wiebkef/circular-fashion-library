@@ -10,6 +10,7 @@ function ItemForm() {
     brand: "",
     title: "",
     short_description: "",
+    description: "",
     status: "",
   });
   const [error, setError] = useState({
@@ -18,18 +19,35 @@ function ItemForm() {
     brand: "",
     title: "",
     short_description: "",
+    description: "",
     status: "",
   });
+  const [images, setImages] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
+    console.log(images);
   };
+  /*   const handleImages = (e) => {
+    // const files = e.target.files;
+    // e.target.files.forEach((file) => setImages([...images, file]));
+    console.log(e.target.files);
+    console.log(images);
+  }; */
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("sku", item.sku);
+    formData.append("category_id", item.category_id);
+    formData.append("brand", item.brand);
+    formData.append("title", item.title);
+    formData.append("images", images);
+    formData.append("short_description", item.short_description);
+    formData.append("description", item.description);
+    formData.append("status", item.status);
     axios
-      .post("/api/items", item)
+      .post("/api/items", item) // replace item with formData for file upload
       .then((res) => {
-        console.log(res.data);
         navigate(`/admin/items/${res.data.id}`);
       })
       .catch((err) => {
@@ -38,9 +56,9 @@ function ItemForm() {
   };
 
   return (
-    <div className="mt-16 sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="mt-16 sm:mx-auto sm:w-full sm:max-w-xl">
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
-        <h1 className="mb-16 text-3xl font-bold">Welcome back!</h1>
+        <h1 className="mb-16 text-3xl font-bold">Add a new item</h1>
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1 relative">
@@ -57,7 +75,7 @@ function ItemForm() {
               />
               <label
                 htmlFor="sku"
-                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 SKU
               </label>
@@ -80,7 +98,7 @@ function ItemForm() {
               />
               <label
                 htmlFor="category_id"
-                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Category ID
               </label>
@@ -103,7 +121,7 @@ function ItemForm() {
               />
               <label
                 htmlFor="brand"
-                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Brand
               </label>
@@ -126,9 +144,31 @@ function ItemForm() {
               />
               <label
                 htmlFor="title"
-                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Title
+              </label>
+            </div>
+          </div>
+          <div>
+            <div className="mt-6 relative">
+              {error.images && (
+                <p className="text-red-700">{error.images.message}</p>
+              )}
+              <input
+                type="file"
+                id="images"
+                name="images"
+                value={item.images}
+                placeholder="Images"
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={(e) => setImages(e.target.files)}
+              />
+              <label
+                htmlFor="images"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Images
               </label>
             </div>
           </div>
@@ -149,9 +189,30 @@ function ItemForm() {
               ></textarea>
               <label
                 htmlFor="short_description"
-                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Short Description
+              </label>
+            </div>
+          </div>
+          <div>
+            <div className="mt-6 relative">
+              {error.description && (
+                <p className="text-red-700">{error.description.message}</p>
+              )}
+              <textarea
+                id="description"
+                name="description"
+                value={item.description}
+                placeholder="Description"
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={handleChange}
+              ></textarea>
+              <label
+                htmlFor="description"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Description
               </label>
             </div>
           </div>
@@ -172,7 +233,7 @@ function ItemForm() {
               />
               <label
                 htmlFor="status"
-                className="absolute left-0 -top-3.5 bg-white ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Status
               </label>
