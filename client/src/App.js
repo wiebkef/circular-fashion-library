@@ -33,7 +33,6 @@ function App() {
         />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-
         // ADMIN ROUTES
         {/* <Route path="/admin/items" element={<ItemList />} /> */}
         <Route path="/admin/items/new" element={<ItemForm />} />
