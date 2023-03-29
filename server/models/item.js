@@ -1,5 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db");
+const Category = require("./category");
 
 const Item = sequelize.define(
   "item",
@@ -18,6 +19,10 @@ const Item = sequelize.define(
     },
     category_id: {
       type: DataTypes.INTEGER,
+      references: {
+        model: Category,
+        key: "id",
+      },
       allowNull: false,
       validate: {
         notNull: {

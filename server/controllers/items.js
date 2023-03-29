@@ -1,5 +1,8 @@
+const { sequelize } = require("../config/db");
 const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
+const Category = require("../models/category");
+const Feature = require("../models/feature");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -11,11 +14,20 @@ cloudinary.config({
 });
 
 const createItem = async (req, res, next) => {
+  const features = req.body.features;
   try {
-    console.log("WHAAAAAAT", req.body);
     const { images, ...body } = req.body;
     const newItem = await Item.create(body);
-    console.log("CREATE", newItem);
+    features.forEach(async (elem) => {
+      const ifeat = await sequelize.query(
+        "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
+
+        {
+          replacements: { itemId: newItem.dataValues.id, featId: elem },
+          type: sequelize.QueryTypes.INSERT,
+        }
+      );
+    });
     const options = {
       public_id: newItem.id,
       folder: "images",
@@ -39,31 +51,23 @@ const getAllItems = async (req, res) => {
   try {
     const items = await Item.findAll({ raw: true });
     res.json(items);
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 const getItemById = async (req, res, next) => {
-  console.log("AAAAAAA", req.reqItem);
-  res.json(req.reqItem);
-
-  /*  const id = req.params.id;
   try {
-    const item = await Item.findByPk(id);
-    if (!item) {
-      console.log(item);
-      return res.status(404).json({ message: "Item not found" });
-    }
-    console.log(item);
-
+    const item = await Item.findAll({ include: [Feature, Category] });
     res.json(item);
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
-  } */
+  }
 };
 
 const updateItem = async (req, res, next) => {
+  const features = req.body.features;
+
   try {
     const updatedItem = await Item.update(
       req.body,
@@ -78,7 +82,17 @@ const updateItem = async (req, res, next) => {
         runValidators: false,
       } */
     );
-    console.log(updatedItem);
+
+    features.forEach(async (elem) => {
+      const ifeat = await sequelize.query(
+        "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
+
+        {
+          replacements: { itemId: req.params.id, featId: elem },
+          type: sequelize.QueryTypes.INSERT,
+        }
+      );
+    });
     res.json(updatedItem);
   } catch (error) {
     next(new ErrorResponse(error));
@@ -86,11 +100,24 @@ const updateItem = async (req, res, next) => {
 };
 
 const deleteItem = async (req, res, next) => {
+  const features = req.body.features;
+
   try {
     const deletedItem = await Item.destroy({
       where: {
         id: req.params.id,
       },
+    });
+
+    features.forEach(async (elem) => {
+      const ifeat = await sequelize.query(
+        "DELETE FROM item_feature WHERE item_id=:itemId",
+
+        {
+          replacements: { itemId: req.params.id },
+          type: sequelize.QueryTypes.DELETE,
+        }
+      );
     });
     res.json(deletedItem);
   } catch (error) {
