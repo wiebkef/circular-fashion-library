@@ -4,28 +4,32 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
 // CLOUDINARY CONFIG
-/* cloudinary.config({
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
-}); */
+});
 
 const createItem = async (req, res, next) => {
   try {
-    const newItem = await Item.create(req.body);
-    /*     const options = {
+    console.log("WHAAAAAAT", req.body);
+    const { images, ...body } = req.body;
+    const newItem = await Item.create(body);
+    console.log("CREATE", newItem);
+    const options = {
       public_id: newItem.id,
-      folder: fashionItemImages,
-    }; */
+      folder: "images",
+    };
     // Upload to Cloudinary
-    /*     const result = await cloudinary.uploader.upload(req.file.path, options);
-    console.log("IMAGE URL", result.secure_url); */
+    console.log("FILEPATH", req.file?.path);
+    const result = await cloudinary.uploader.upload(req.file.path, options);
+    console.log("IMAGE URL", result.secure_url);
     // UPDATE ITEM WITH IMAGE URL
-    /*     newItem.images = result.secure_url;
+    newItem.images = [result.secure_url];
     const updatedItem = await newItem.save();
     fs.unlinkSync(req.file.path);
-    res.status(201).json(updatedItem); */
-    res.status(201).json(newItem);
+    res.status(201).json(updatedItem);
+    // res.status(201).json(newItem);
   } catch (error) {
     next(new ErrorResponse(error));
   }

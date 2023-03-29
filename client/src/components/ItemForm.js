@@ -46,7 +46,7 @@ function ItemForm() {
     formData.append("description", item.description);
     formData.append("status", item.status);
     axios
-      .post("/api/items", item) // replace item with formData for file upload
+      .post("/api/items", formData) // replace item with formData for file upload
       .then((res) => {
         navigate(`/admin/items/${res.data.id}`);
       })
