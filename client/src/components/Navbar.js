@@ -198,7 +198,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                 <div className="flex px-4 pt-5 pb-2">
                   <button
                     type="button"
-                    className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
+                    className="-m-2 inline-flex items-center justify-center rounded-md p-2 text-brand"
                     onClick={() => setOpen(false)}
                   >
                     <span className="sr-only">Close menu</span>
@@ -215,10 +215,8 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                           key={category.name}
                           className={({ selected }) =>
                             classNames(
-                              selected
-                                ? "border-indigo-600 text-brand-600"
-                                : "border-transparent text-gray-900",
-                              "flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
+                              selected ? 'border-brand text-grey-600' : 'border-transparent text-gray-900',
+                              'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
                             )
                           }
                         >
@@ -309,7 +307,11 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   {user ? (
                     <>
-                      <div className="flow-root">{user.email}</div>
+                      <div className="flow-root">
+                        <span className="-m-2 block p-2 font-medium text-gray-900">
+                          {user.email}
+                        </span>
+                      </div>
                       <div className="flow-root">
                         <Link
                           onClick={handleLogout}
@@ -361,8 +363,8 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-brand px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Subscribe to our newsletters
+        <p className="flex h-10 items-center justify-center bg-brand px-4 text-md font-medium text-white sm:px-6 lg:px-8">
+        Subscribe to our newsletters!
         </p>
 
         <nav
@@ -370,21 +372,25 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
           className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
         >
           <div className="border-b border-gray-200">
-            <div className="flex h-16 items-center">
+            <div className="flex h-20 items-center">
               <button
                 type="button"
-                className="rounded-md bg-white p-2 text-gray-400 lg:hidden"
+                className="rounded-md bg-white p-2 text-gray-400  hover:text-brand lg:hidden"
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Open menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon className="h-7 w-7" aria-hidden="true" />
               </button>
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
                 <NavLink to="/">
                   <span className="sr-only">Circular Fashion Library</span>
-                  <img className="h-16 w-auto" src={myLogo} alt="brand-logo" />
+                  <img
+                    className="h-20 w-auto"
+                    src={myLogo}
+                    alt="brand-logo"
+                  />
                 </NavLink>
               </div>
 
@@ -399,9 +405,9 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             <Popover.Button
                               className={classNames(
                                 open
-                                  ? "border-brand-600 text-indigo-600"
-                                  : "border-transparent text-gray-700 hover:text-gray-800",
-                                "relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"
+                                  ? 'border-brand-600 text-brand-600'
+                                  : 'border-transparent text-gray-700 hover:text-brand',
+                                'relative z-10 -mb-px flex items-center border-b-2 pt-px text-base font-medium transition-colors duration-200 ease-out'
                               )}
                             >
                               {category.name}
@@ -504,7 +510,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                     <a
                       key={page.name}
                       href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className="flex items-center text-base font-medium text-gray-700 hover:text-brand"
                     >
                       {page.name}
                     </a>
@@ -515,14 +521,13 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
               <div className="ml-auto flex items-center">
                 {user ? (
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    {user.email}
-                    <span
-                      className="mx-3 h-6 w-px bg-gray-200"
-                      aria-hidden="true"
-                    />
+                    <span className="text-sm font-medium text-gray-700">
+                      {user.email}
+                    </span>
+                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     <Link
                       onClick={handleLogout}
-                      className="-m-2 block p-2 font-medium text-gray-900"
+                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       Log Out
                     </Link>
@@ -531,14 +536,14 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     <NavLink
                       to="/login"
-                      className="text-sm font-medium text-gray-700 hover:text-brand-800"
+                      className="text-base font-medium text-gray-700 hover:text-brand"
                     >
                       Log In
                     </NavLink>
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     <NavLink
                       to="/signup"
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className="text-base font-medium text-gray-700 hover:text-brand"
                     >
                       Create account
                     </NavLink>
@@ -562,15 +567,9 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a
-                    href="#"
-                    className="p-2 text-gray-400 hover:text-brand-500"
-                  >
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon
-                      className="h-6 w-6"
-                      aria-hidden="true"
-                    />
+            <a href="#" className="p-2 text-gray-400 hover:text-brand">
+              <span className="sr-only">Search</span>
+              <MagnifyingGlassIcon className="h-7 w-7" aria-hidden="true" />
                   </a>
                 </div>
 
@@ -578,7 +577,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                 <div className="ml-4 flow-root lg:ml-6">
                   <a href="#" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
-                      className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-brand-500"
+                      className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-brand"
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
