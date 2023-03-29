@@ -162,7 +162,7 @@ function ItemForm() {
                 value={item.images}
                 placeholder="Images"
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
-                onChange={(e) => setImages(e.target.files)}
+                onChange={(e) => setImages(e.target.files[0])}
               />
               <label
                 htmlFor="images"
