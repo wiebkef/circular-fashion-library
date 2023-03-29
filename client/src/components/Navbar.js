@@ -1,6 +1,6 @@
-import axios from "../axiosInstance";
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../context/Auth";
 import myLogo from "../images/logo_CFL.png";
 import FlagIcon from "../images/germany-flag-icon.svg";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
@@ -145,27 +145,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    axios
-      .get("/auth/loggedin-user")
-      .then((res) => {
-        setUser(res.data);
-        setIsLoggedIn(true);
-        console.log(user);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-  }, [isLoggedIn]);
-  const handleLogout = () => {
-    axios.post("/auth/logout", {}).then((res) => {
-      console.log("Logged out");
-      window.location.reload();
-    });
-  };
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <div className="bg-white">
@@ -215,8 +197,10 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                           key={category.name}
                           className={({ selected }) =>
                             classNames(
-                              selected ? 'border-brand text-grey-600' : 'border-transparent text-gray-900',
-                              'flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium'
+                              selected
+                                ? "border-brand text-grey-600"
+                                : "border-transparent text-gray-900",
+                              "flex-1 whitespace-nowrap border-b-2 py-4 px-1 text-base font-medium"
                             )
                           }
                         >
@@ -314,7 +298,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                       </div>
                       <div className="flow-root">
                         <Link
-                          onClick={handleLogout}
+                          onClick={logout}
                           className="-m-2 block p-2 font-medium text-gray-900"
                         >
                           Log Out
@@ -364,7 +348,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-brand px-4 text-md font-medium text-white sm:px-6 lg:px-8">
-        Subscribe to our newsletters!
+          Subscribe to our newsletters!
         </p>
 
         <nav
@@ -386,11 +370,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
               <div className="ml-4 flex lg:ml-0">
                 <NavLink to="/">
                   <span className="sr-only">Circular Fashion Library</span>
-                  <img
-                    className="h-20 w-auto"
-                    src={myLogo}
-                    alt="brand-logo"
-                  />
+                  <img className="h-20 w-auto" src={myLogo} alt="brand-logo" />
                 </NavLink>
               </div>
 
@@ -405,9 +385,9 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                             <Popover.Button
                               className={classNames(
                                 open
-                                  ? 'border-brand-600 text-brand-600'
-                                  : 'border-transparent text-gray-700 hover:text-brand',
-                                'relative z-10 -mb-px flex items-center border-b-2 pt-px text-base font-medium transition-colors duration-200 ease-out'
+                                  ? "border-brand-600 text-brand-600"
+                                  : "border-transparent text-gray-700 hover:text-brand",
+                                "relative z-10 -mb-px flex items-center border-b-2 pt-px text-base font-medium transition-colors duration-200 ease-out"
                               )}
                             >
                               {category.name}
@@ -526,7 +506,7 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
                     </span>
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     <Link
-                      onClick={handleLogout}
+                      onClick={logout}
                       className="text-sm font-medium text-gray-700 hover:text-gray-800"
                     >
                       Log Out
@@ -567,9 +547,12 @@ export default function Navbar({ isLoggedIn, setIsLoggedIn }) {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-            <a href="#" className="p-2 text-gray-400 hover:text-brand">
-              <span className="sr-only">Search</span>
-              <MagnifyingGlassIcon className="h-7 w-7" aria-hidden="true" />
+                  <a href="#" className="p-2 text-gray-400 hover:text-brand">
+                    <span className="sr-only">Search</span>
+                    <MagnifyingGlassIcon
+                      className="h-7 w-7"
+                      aria-hidden="true"
+                    />
                   </a>
                 </div>
 

@@ -1,15 +1,9 @@
-import axios from "../axiosInstance";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/Auth";
 
-function SignUpForm({ setIsLoggedIn }) {
-  const navigate = useNavigate();
+function SignUpForm() {
+  const context = useContext(AuthContext);
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [error, setError] = useState({
     email: "",
     password: "",
     confirmPassword: "",
@@ -20,15 +14,7 @@ function SignUpForm({ setIsLoggedIn }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("/auth/signup", user)
-      .then((res) => {
-        setIsLoggedIn(true);
-        navigate("/");
-      })
-      .catch((err) => {
-        setError(err.response.data.errors);
-      });
+    context.signup(user);
   };
 
   return (
@@ -38,8 +24,8 @@ function SignUpForm({ setIsLoggedIn }) {
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1 relative">
-              {error.email && (
-                <p className="text-red-700">{error.email.message}</p>
+              {context.error.email && (
+                <p className="text-red-700">{context.error.email.message}</p>
               )}
               <input
                 type="email"
@@ -61,8 +47,8 @@ function SignUpForm({ setIsLoggedIn }) {
           </div>
           <div>
             <div className="mt-6 relative">
-              {error.password && (
-                <p className="text-red-700">{error.password.message}</p>
+              {context.error.password && (
+                <p className="text-red-700">{context.error.password.message}</p>
               )}
               <input
                 type="password"
@@ -84,8 +70,8 @@ function SignUpForm({ setIsLoggedIn }) {
           </div>
           <div>
             <div className="mt-6 relative">
-              {error.confirmPassword && (
-                <p className="text-red-700">{error.confirmPassword.message}</p>
+              {context.error.confirmPassword && (
+                <p className="text-red-700">{context.error.confirmPassword.message}</p>
               )}
               <input
                 type="password"
