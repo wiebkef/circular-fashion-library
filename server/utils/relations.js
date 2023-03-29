@@ -8,7 +8,7 @@ const relations = () => {
     foreignKey: "category_id",
   });
   Item.belongsTo(Category, {
-    foreignKey: "id",
+    foreignKey: "category_id",
   });
 
   // Many to many relation Features/Items
