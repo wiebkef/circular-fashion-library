@@ -1,6 +1,8 @@
 const { sequelize } = require("../config/db");
 const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
+const Category = require("../models/Category");
+const Feature = require("../models/feature");
 
 const createItem = async (req, res, next) => {
   const features = req.body.features;
@@ -32,20 +34,12 @@ const getAllItems = async (req, res) => {
 };
 
 const getItemById = async (req, res, next) => {
-  res.json(req.reqItem);
-
-  /*  const id = req.params.id;
   try {
-    const item = await Item.findByPk(id);
-    if (!item) {
-      console.log(item);
-      return res.status(404).json({ message: "Item not found" });
-    }
-    console.log(item);
+    const item = await Item.findAll({ include: Feature, Category });
     res.json(item);
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
-  } */
+  }
 };
 
 const updateItem = async (req, res, next) => {

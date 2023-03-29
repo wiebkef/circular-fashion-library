@@ -6,9 +6,9 @@ const Feature = require("../models/feature");
 const ItemFeature = sequelize.define(
   "item_feature",
   {
-    selfGranted: DataTypes.BOOLEAN,
+    // selfGranted: DataTypes.BOOLEAN,
   },
-  { timestamps: false }
+  { timestamps: false, tableName: "item_feature" }
 );
 
 module.exports = ItemFeature;

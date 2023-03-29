@@ -1,6 +1,15 @@
 const Feature = require("../models/feature");
 const ErrorResponse = require("../utils/errorResponse");
 
+const getFeatureNames = async (req, res, next) => {
+  try {
+    const features = await Feature.findAll({ raw: true });
+    res.json(features);
+  } catch {
+    next(new ErrorResponse(error));
+  }
+};
+
 const createFeature = async (req, res, next) => {
   try {
     const newFeature = await Feature.create(req.body);
