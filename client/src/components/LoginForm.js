@@ -1,14 +1,9 @@
-import { useState } from "react";
-import axios from "../axiosInstance";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { AuthContext } from "../context/Auth";
 
-function LoginForm({ setIsLoggedIn }) {
-  const navigate = useNavigate();
+function LoginForm() {
+  const context = useContext(AuthContext);
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState({
     email: "",
     password: "",
   });
@@ -18,16 +13,7 @@ function LoginForm({ setIsLoggedIn }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("/auth/login", user)
-      .then((res) => {
-        console.log(res.data);
-        setIsLoggedIn(true);
-        navigate("/");
-      })
-      .catch((err) => {
-        setError("err.response.data.errors");
-      });
+    context.login(user);
   };
 
   return (
@@ -37,8 +23,8 @@ function LoginForm({ setIsLoggedIn }) {
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1 relative">
-              {error.email && (
-                <p className="text-red-700">{error.email.message}</p>
+              {context.error.email && (
+                <p className="text-red-700">{context.error.email.message}</p>
               )}
               <input
                 type="email"
@@ -60,8 +46,8 @@ function LoginForm({ setIsLoggedIn }) {
           </div>
           <div>
             <div className="mt-6 relative">
-              {error.password && (
-                <p className="text-red-700">{error.password.message}</p>
+              {context.error.password && (
+                <p className="text-red-700">{context.error.password.message}</p>
               )}
               <input
                 type="password"
