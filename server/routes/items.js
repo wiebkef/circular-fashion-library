@@ -8,11 +8,11 @@ const {
   deleteItem,
 } = require("../controllers/items");
 const itemFinder = require("../middlewares/itemFinder");
-// const multer = require("multer");
-// const upload = multer({ dest: "uploads/" });
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
-itemsRouter.post("/", createItem);
-// itemsRouter.post("/", upload.single("images"), createItem);
+//itemsRouter.post("/", createItem);
+itemsRouter.post("/", upload.single("images"), createItem);
 itemsRouter.get("/", getAllItems);
 itemsRouter.get("/:id", itemFinder, getItemById);
 itemsRouter.put("/:id", itemFinder, updateItem);

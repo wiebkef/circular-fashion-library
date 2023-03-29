@@ -79,6 +79,7 @@ const Item = sequelize.define(
     },
     images: {
       type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: true,
       // allowNull defaults to true
     },
   },
