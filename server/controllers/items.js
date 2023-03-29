@@ -1,7 +1,7 @@
 const { sequelize } = require("../config/db");
 const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
-const Category = require("../models/Category");
+const Category = require("../models/category");
 const Feature = require("../models/feature");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
@@ -49,14 +49,14 @@ const getAllItems = async (req, res) => {
   try {
     const items = await Item.findAll({ raw: true });
     res.json(items);
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
 const getItemById = async (req, res, next) => {
   try {
-    const item = await Item.findAll({ include: Feature, Category });
+    const item = await Item.findAll({ include: [Feature, Category] });
     res.json(item);
   } catch (error) {
     res.status(500).json({ message: error.message });
