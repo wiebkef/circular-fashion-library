@@ -7,6 +7,19 @@ There .env files in the client and the server directory. The .env.example files 
 ### Items
 
 - `get /api/items` returns all items
+- it can take a query as well, where all values are optional they are comined with AND, so all will match on the returned items
+- ie. `/api/items?size=XS&gender=unisex`
+- possible query parameters:
+
+  - `limit=<number>` how many items get returned, default 12
+  - `page=<number>`page you're on for pagination, default 1
+  - `size=<XS|S|M|L|XL|XXL>`
+  - `brand=<brandName>`
+  - `color=<colorName>`
+  - `gender=<male|female|unisex>`
+  - `feat=<featureName>`
+  - `cat=<categoryName>`
+
 - `get /api/items/:id` returns item with specified id
 - `post /api/items` creates an item
 - `put /api/items/:id` updates an item with specified id
