@@ -3,6 +3,7 @@ const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
 const Category = require("../models/category");
 const Feature = require("../models/feature");
+const queryBuilder = require("../utils/queryBuilder");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -50,8 +51,28 @@ const createItem = async (req, res, next) => {
 };
 
 const getAllItems = async (req, res) => {
+  const { page = 1, limit = 12 } = req.query;
+  const offset = (page - 1) * limit;
+  const { mainQuery, featQuery, catQuery } = queryBuilder(req.query);
+  console.log(mainQuery);
+  delete req.query.page;
+  delete req.query.limit;
+  console.log("MMMMMMMMM", limit);
+
   try {
-    const items = await Item.findAll({ raw: true });
+    const items = await Item.findAll(
+      {
+        include: [
+          { model: Feature, where: featQuery, required: false },
+          { model: Category, where: catQuery, required: false },
+        ],
+        where: mainQuery,
+        order: [["updated_at", "DESC"]],
+        offset: offset,
+        limit: limit,
+      },
+      { raw: true }
+    );
     res.json(items);
   } catch (error) {
     res.status(500).json({ message: error.message });
