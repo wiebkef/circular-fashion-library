@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../axiosInstance";
 import { useNavigate } from "react-router-dom";
 
@@ -20,13 +20,23 @@ function ItemForm() {
     title: "",
     short_description: "",
     description: "",
+    features: "",
     status: "",
   });
   const [images, setImages] = useState("");
+  const [features, setFeatures] = useState([]);
+  const [selectedFeatures, setSelectedFeatures] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`/api/features`)
+      .then((res) => setFeatures(res.data))
+      .catch((e) => console.log(e));
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
-    console.log(images);
+    console.log(selectedFeatures);
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
@@ -44,6 +54,7 @@ function ItemForm() {
     formData.append("images", images);
     formData.append("short_description", item.short_description);
     formData.append("description", item.description);
+    formData.append("features", selectedFeatures);
     formData.append("status", item.status);
     axios
       .post("/api/items", formData) // replace item with formData for file upload
@@ -160,7 +171,7 @@ function ItemForm() {
                 id="images"
                 name="images"
                 value={item.images}
-                placeholder="Images"
+                placeholder="Image"
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={(e) => setImages(e.target.files[0])}
               />
@@ -168,7 +179,7 @@ function ItemForm() {
                 htmlFor="images"
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
-                Images
+                Image
               </label>
             </div>
           </div>
@@ -213,6 +224,41 @@ function ItemForm() {
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Description
+              </label>
+            </div>
+          </div>
+          <div>
+            <div className="mt-6 relative">
+              {error.features && (
+                <p className="text-red-700">{error.features.message}</p>
+              )}
+              <select
+                id="features"
+                name="features[]"
+                placeholder="Features"
+                required
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={(e) =>
+                  setSelectedFeatures(
+                    [...e.target.selectedOptions].map((opt) =>
+                      Number(opt.value)
+                    )
+                  )
+                }
+                // onChange={(e) => console.log(e.target.value)}
+                multiple
+              >
+                {features.map((feature) => (
+                  <option key={feature.id} value={feature.id}>
+                    {feature.name}
+                  </option>
+                ))}
+              </select>
+              <label
+                htmlFor="features"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Features
               </label>
             </div>
           </div>
