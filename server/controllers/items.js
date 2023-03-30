@@ -15,7 +15,9 @@ cloudinary.config({
 });
 
 const createItem = async (req, res, next) => {
-  const features = req.body.features;
+  console.log("BODY", req.body);
+  console.log("FEATURES", req.body.features);
+  const features = req.body.features.split(",");
   try {
     const { images, ...body } = req.body;
     const newItem = await Item.create(body);
