@@ -51,6 +51,8 @@ const getAllItems = async (req, res) => {
   const offset = (page - 1) * limit;
   const { mainQuery, featQuery, catQuery } = queryBuilder(req.query);
   console.log(mainQuery);
+  console.log("FEAT", featQuery);
+
   delete req.query.page;
   delete req.query.limit;
 
