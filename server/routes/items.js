@@ -15,7 +15,7 @@ const upload = multer({ dest: "uploads/" });
 itemsRouter.post("/", upload.single("images"), createItem);
 itemsRouter.get("/", getAllItems);
 itemsRouter.get("/:id", itemFinder, getItemById);
-itemsRouter.put("/:id", itemFinder, updateItem);
+itemsRouter.put("/:id", upload.single("images"), itemFinder, updateItem);
 itemsRouter.delete("/:id", itemFinder, deleteItem);
 
 module.exports = itemsRouter;

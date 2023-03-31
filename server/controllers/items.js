@@ -36,10 +36,10 @@ const createItem = async (req, res, next) => {
     const result = await cloudinary.uploader.upload(req.file.path, options);
     // UPDATE ITEM WITH IMAGE URL
     newItem.images = [result.secure_url];
-    const updatedItem = await newItem.save();
+    const imgAddedItem = await newItem.save();
     // DELETE ITEM LOCALLY
     fs.unlinkSync(req.file.path);
-    res.status(201).json(updatedItem);
+    res.status(201).json(imgAddedItem);
     // res.status(201).json(newItem);
   } catch (error) {
     next(new ErrorResponse(error));
@@ -87,11 +87,22 @@ const getItemById = async (req, res, next) => {
 };
 
 const updateItem = async (req, res, next) => {
-  const features = req.body.features;
-
+  const features = req.body.features.split(",");
   try {
+    const { images, ...body } = req.body;
+
+    const options = {
+      public_id: req.params.id,
+      folder: "images",
+    };
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(req.file.path, options);
+    fs.unlinkSync(req.file.path);
+
+    // UPDATE ITEM WITH IMAGE URL
+    // updatedItem.images = [result.secure_url];
     const updatedItem = await Item.update(
-      req.body,
+      { ...body, images: [result.secure_url] },
       {
         where: {
           id: req.params.id,
@@ -103,18 +114,17 @@ const updateItem = async (req, res, next) => {
         runValidators: false,
       } */
     );
-
     features.forEach(async (elem) => {
       const ifeat = await sequelize.query(
         "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
-
         {
           replacements: { itemId: req.params.id, featId: elem },
           type: sequelize.QueryTypes.INSERT,
         }
       );
     });
-    res.json(updatedItem);
+    // DELETE ITEM LOCALLY
+    res.status(201).json(updatedItem);
   } catch (error) {
     next(new ErrorResponse(error));
   }
