@@ -9,9 +9,11 @@ import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 import ItemCards from "./components/ItemCards";
+import Items from "./components/Items";
 import UserDetails from "./components/UserDetails";
 import ItemForm from "./components/ItemForm";
 import Admin from "./components/AdminRoute";
+import ItemList from "./components/ItemList";
 
 function App() {
   return (
@@ -19,7 +21,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/shop" element={<ItemCards />} />
+        <Route path="/shop" element={<Items />} />
         <Route path="/shop/:id" element={<ItemDetails />} />
         <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/login" element={<LoginForm />} />
@@ -27,7 +29,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin/" element={<Admin />}>
-          {/* <Route path="/admin/items" element={<ItemList />} /> */}
+          <Route path="items" element={<ItemList />} />
           <Route path="items/new" element={<ItemForm />} />
           <Route path="items/:id" element={<ItemForm />} />
         </Route>
