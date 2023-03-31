@@ -29,27 +29,20 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function FilterSidebar({ selectFilters }) {
+export default function FilterSidebar() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [features, setFeatures] = useState([]);
-  const [checkedFeat, setcheckedFeat] = useState([]);
+  const [features, setFeatures] = useState([]); // get features from DB
   const [filters, setFilters] = useState([]);
-  const handleFeatureChange = (event) => {
+  /*  const handleFeatureChange = (event) => {
     const featureId = event.target.value;
     setFilters({ ...filters, feat: featureId });
+  }; */
+
+  const handleSubmit = () => {
+    console.log(filters);
   };
   const sizes = getSizes();
-  const [checkedFeatures, setCheckedFeatures] = useState();
 
-  function checkFeat(index) {
-    /*  const newChecked = [...checkedFeat];
-
-      newChecked.splice(index, 1, !checkedFeat[index]); */
-    const newChecked = checkedFeat.map((check) => (check = false));
-    newChecked.splice(index, 1, true);
-    console.log("THIS", newChecked);
-    setcheckedFeat(newChecked);
-  }
   //   const handleSubmit = () => {
   //     const queryString = Object.entries(filters)
   //       .filter(([key, value]) => value !== "")
@@ -67,12 +60,7 @@ export default function FilterSidebar({ selectFilters }) {
       .get(`/api/features`)
       .then((res) => {
         setFeatures(res.data);
-        setCheckedFeatures("HUHUHU", res.data.length);
-        /* res.data.length.forEach((initArray) =>
-          setCheckedFeatures.append(false)
-        ); */
-        // console.log("222222222", res.data.length);
-        //console.log(features);
+        console.log(features);
       })
 
       .catch((e) => console.log(e));
@@ -127,11 +115,9 @@ export default function FilterSidebar({ selectFilters }) {
 
                   {/* Filters */}
                   <form className="mt-4 border-t border-gray-200">
+                    {/* women - men - unisex */}
                     <h3 className="sr-only">Categories</h3>
-                    <ul
-                      role="list"
-                      className="px-2 py-3 font-medium text-gray-900"
-                    >
+                    <ul className="px-2 py-3 font-medium text-gray-900">
                       {subCategories.map((category) => (
                         <li key={category.name}>
                           <a href={category.href} className="block px-2 py-3">
@@ -140,7 +126,37 @@ export default function FilterSidebar({ selectFilters }) {
                         </li>
                       ))}
                     </ul>
-
+                    <div>
+                      <select
+                        className="form-select border-transparent"
+                        name="feature"
+                        aria-label="Select a feature"
+                      >
+                        <option value="">Feature</option>
+                        {features.map((feature) => {
+                          return (
+                            <option value={feature.name}>{feature.name}</option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <div>
+                      <select
+                        className="form-select border-transparent"
+                        name="size"
+                        aria-label="Select a size"
+                      >
+                        <option value="">Size</option>
+                        {features.map((feature) => {
+                          return (
+                            <option value={feature.name}>{feature.name}</option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                    <button type="submit" className="bg-brand">
+                      Apply filters
+                    </button>
                     <Disclosure
                       as="div"
                       className="border-t border-gray-200 px-4 py-6"
@@ -169,91 +185,25 @@ export default function FilterSidebar({ selectFilters }) {
                           </h3>
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-6">
-                              {features.map((feature, index) => (
-                                <div key={index} className="flex items-center">
+                              {features.map((feature) => (
+                                <div
+                                  key={feature.id}
+                                  className="flex items-center"
+                                >
                                   <input
+                                    id={feature.id}
+                                    name={feature.id}
+                                    value={feature.id}
                                     type="radio"
-                                    //id={feature.id}
-                                    //name="features"
-                                    value={feature.name}
-                                    //checked={false}
-                                    checked={checkedFeatures[index]}
-                                    onChange={() => {
-                                      checkFeat(index);
-                                      /* setCheckedFeatures(
-                                        (e.target.checked = !e.target.checked)
-                                      ) */
-                                      //selectFilters({ feat: e.target.value });
-                                      /* handleFilterChange */
-                                    }}
-                                    className={`h-4 w-4 rounded-full border-gray-300 text-brand focus:ring-transparent   ${
-                                      checkedFeatures[index]
-                                        ? "bg-brand border-brand"
-                                        : "border-gray-300 bg-white"
-                                    }`}
+                                    checked={filters.feat === feature.id}
+                                    //onChange={handleFilterChange}
+                                    className="h-4 w-4 rounded border-gray-300 text-brand focus:ring-brand"
                                   />
                                   <label
                                     htmlFor={feature.id}
                                     className="ml-3 min-w-0 flex-1 text-gray-500"
                                   >
                                     {feature.name}
-                                  </label>
-                                </div>
-                              ))}
-                            </div>
-                          </Disclosure.Panel>
-                        </>
-                      )}
-                    </Disclosure>
-
-                    {/* Sizes */}
-                    <Disclosure
-                      as="div"
-                      className="border-t border-gray-200 px-4 py-6"
-                    >
-                      {({ open }) => (
-                        <>
-                          <h3 className="-mx-2 -my-3 flow-root">
-                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                              <span className="font-medium text-gray-900">
-                                Sizes
-                              </span>
-                              <span className="ml-6 flex items-center">
-                                {open ? (
-                                  <MinusIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                ) : (
-                                  <PlusIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                              </span>
-                            </Disclosure.Button>
-                          </h3>
-                          <Disclosure.Panel className="pt-6">
-                            <div className="space-y-6">
-                              {sizes.map((size, index) => (
-                                <div key={index} className="flex items-center">
-                                  <input
-                                    id={size}
-                                    name="sizes"
-                                    value={size}
-                                    type="radio"
-                                    checked={filters.size === size}
-                                    onChange={(e) => {
-                                      selectFilters({ feat: e.target.value });
-                                      /* handleFilterChange */
-                                    }}
-                                    className="h-4 w-4 rounded-full border-gray-300 text-brand focus:ring-brand"
-                                  />
-                                  <label
-                                    htmlFor={size}
-                                    className="ml-3 min-w-0 flex-1 text-gray-500"
-                                  >
-                                    {size}
                                   </label>
                                 </div>
                               ))}
@@ -269,6 +219,7 @@ export default function FilterSidebar({ selectFilters }) {
           </Dialog>
         </Transition.Root>
 
+        {/* Desktop filter dialog */}
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
@@ -346,7 +297,7 @@ export default function FilterSidebar({ selectFilters }) {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block">
+              <form onSubmit={handleSubmit} className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
                 <ul
                   role="list"
