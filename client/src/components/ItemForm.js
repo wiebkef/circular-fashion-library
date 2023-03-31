@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "../axiosInstance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function ItemForm() {
   const navigate = useNavigate();
@@ -9,6 +9,7 @@ function ItemForm() {
     category_id: "",
     brand: "",
     title: "",
+    images: "",
     short_description: "",
     description: "",
     status: "",
@@ -18,6 +19,7 @@ function ItemForm() {
     category_id: "",
     brand: "",
     title: "",
+    images: "",
     short_description: "",
     description: "",
     features: "",
@@ -26,7 +28,18 @@ function ItemForm() {
   const [images, setImages] = useState("");
   const [features, setFeatures] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
+  const [reload, setReload] = useState(false);
+  const { id } = useParams();
   useEffect(() => {
+    if (id) {
+      axios
+        .get(`/api/items/${id}`)
+        .then((res) => {
+          setItem(res.data);
+          console.log(res.data);
+        })
+        .catch((e) => console.log(e));
+    }
     axios
       .get(`/api/features`)
       .then((res) => setFeatures(res.data))
@@ -55,20 +68,35 @@ function ItemForm() {
     formData.append("description", item.description);
     formData.append("features", selectedFeatures);
     formData.append("status", item.status);
-    axios
-      .post("/api/items", formData) // replace item with formData for file upload
-      .then((res) => {
-        navigate(`/admin/items/${res.data.id}`);
-      })
-      .catch((err) => {
-        setError("err.response.data.errors");
-      });
+    if (id) {
+      axios
+        .put(`/api/items/${id}`, formData)
+        .then((res) => {
+          // navigate(`/admin/items/${id}`);
+          window.location.reload();
+          // setReload(true);
+        })
+        .catch((err) => {
+          setError("err.response.data.errors");
+        });
+    } else {
+      axios
+        .post("/api/items", formData)
+        .then((res) => {
+          navigate(`/admin/items/${res.data.id}`);
+        })
+        .catch((err) => {
+          setError("err.response.data.errors");
+        });
+    }
   };
 
   return (
     <div className="mt-16 sm:mx-auto sm:w-full sm:max-w-xl">
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
-        <h1 className="mb-16 text-3xl font-bold">Add a new item</h1>
+        <h1 className="mb-16 text-3xl font-bold">
+          {id ? "Update" : "Add a new"} item
+        </h1>
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1 relative">
@@ -161,6 +189,12 @@ function ItemForm() {
             </div>
           </div>
           <div>
+            {item.images && (
+              <>
+                <h3 className="text-start text-md font-bold">Current Image</h3>
+                <img src={item.images} />
+              </>
+            )}
             <div className="mt-6 relative">
               {error.images && (
                 <p className="text-red-700">{error.images.message}</p>
@@ -169,8 +203,7 @@ function ItemForm() {
                 type="file"
                 id="images"
                 name="images"
-                value={item.images}
-                placeholder="Image"
+                placeholder="Select new image to replace"
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={(e) => setImages(e.target.files[0])}
               />
@@ -178,7 +211,7 @@ function ItemForm() {
                 htmlFor="images"
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
-                Image
+                Select new image to replace
               </label>
             </div>
           </div>
@@ -289,7 +322,7 @@ function ItemForm() {
               type="submit"
               className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
             >
-              Add new item
+              {id ? "Update" : "Add new"} item
             </button>
           </div>
         </form>
