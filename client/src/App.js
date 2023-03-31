@@ -14,6 +14,7 @@ import UserDetails from "./components/UserDetails";
 import ItemForm from "./components/ItemForm";
 import Admin from "./components/AdminRoute";
 import ItemList from "./components/ItemList";
+import FilterSidebar from "./components/FilterSidebar";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/shop" element={<Items />} />
+        <Route path="/shop" element={<FilterSidebar />} />
         <Route path="/shop/:id" element={<ItemDetails />} />
         <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/login" element={<LoginForm />} />

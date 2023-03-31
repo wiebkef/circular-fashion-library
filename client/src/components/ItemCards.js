@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axiosInstance";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+const useQueryString = () => {
+  const location = useLocation();
+  return new URLSearchParams(location.search);
+};
 
 function ItemCards() {
   const [items, setItems] = useState([]);
-
+  const queryString = useQueryString();
+  console.log("TTTTTT", queryString);
   useEffect(() => {
     axios
-      .get(`/api/items`)
+      .get(`/api/items?${queryString}`)
       .then((res) => setItems(res.data))
       .catch((e) => console.log(e));
   }, []);
