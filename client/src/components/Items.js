@@ -12,7 +12,8 @@ export default function Items() {
   return (
     <>
       <FilterSidebar selectFilters={selectFilters} />
-      <ItemCards />
+      {/*       <ItemCards />
+       */}{" "}
     </>
   );
 }

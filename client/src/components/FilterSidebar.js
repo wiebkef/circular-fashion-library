@@ -10,6 +10,7 @@ import {
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { getSizes } from "../utils/getFilters";
+import ItemCards from "./ItemCards";
 
 const sortOptions = [
   { name: "Newest", href: "#", current: false },
@@ -37,11 +38,18 @@ export default function FilterSidebar() {
     const featureId = event.target.value;
     setFilters({ ...filters, feat: featureId });
   }; */
+  const sizes = getSizes();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("hello");
     console.log(filters);
   };
-  const sizes = getSizes();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilters({ ...filters, [name]: value });
+  };
 
   //   const handleSubmit = () => {
   //     const queryString = Object.entries(filters)
@@ -60,7 +68,6 @@ export default function FilterSidebar() {
       .get(`/api/features`)
       .then((res) => {
         setFeatures(res.data);
-        console.log(features);
       })
 
       .catch((e) => console.log(e));
@@ -126,35 +133,42 @@ export default function FilterSidebar() {
                         </li>
                       ))}
                     </ul>
+
+                    {/* Features */}
                     <div>
                       <select
                         className="form-select border-transparent"
                         name="feature"
                         aria-label="Select a feature"
+                        onChange={handleChange}
                       >
-                        <option value="">Feature</option>
                         {features.map((feature) => {
                           return (
-                            <option value={feature.name}>{feature.name}</option>
+                            <option key={feature.id} value={feature.name}>
+                              {feature.name}
+                            </option>
                           );
                         })}
                       </select>
                     </div>
+
+                    {/* Sizes */}
                     <div>
                       <select
                         className="form-select border-transparent"
                         name="size"
                         aria-label="Select a size"
                       >
-                        <option value="">Size</option>
-                        {features.map((feature) => {
+                        {getSizes().map((size, index) => {
                           return (
-                            <option value={feature.name}>{feature.name}</option>
+                            <option key={index} value={size}>
+                              {size}
+                            </option>
                           );
                         })}
                       </select>
                     </div>
-                    <button type="submit" className="bg-brand">
+                    <button onSubmit={handleSubmit} className="bg-brand">
                       Apply filters
                     </button>
                     <Disclosure
@@ -361,7 +375,9 @@ export default function FilterSidebar() {
                 </Disclosure>
               </form>
               {/* Product grid */}
-              <div className="lg:col-span-3"></div>
+              <div className="lg:col-span-3">
+                <ItemCards></ItemCards>
+              </div>
             </div>
           </section>
         </main>
