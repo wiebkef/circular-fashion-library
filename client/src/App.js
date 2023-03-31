@@ -9,6 +9,7 @@ import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 import ItemCards from "./components/ItemCards";
+import Items from "./components/Items";
 import UserDetails from "./components/UserDetails";
 import ItemForm from "./components/ItemForm";
 
@@ -18,7 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Start />} />
-        <Route path="/shop" element={<ItemCards />} />
+        <Route path="/shop" element={<Items />} />
         <Route path="/shop/:id" element={<ItemDetails />} />
         <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/login" element={<LoginForm />} />
