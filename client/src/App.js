@@ -12,6 +12,7 @@ import ItemCards from "./components/ItemCards";
 import UserDetails from "./components/UserDetails";
 import ItemForm from "./components/ItemForm";
 import Admin from "./components/AdminRoute";
+import ItemList from "./components/ItemList";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/admin/" element={<Admin />}>
-          {/* <Route path="/admin/items" element={<ItemList />} /> */}
+          <Route path="items" element={<ItemList />} />
           <Route path="items/new" element={<ItemForm />} />
           <Route path="items/:id" element={<ItemForm />} />
         </Route>
