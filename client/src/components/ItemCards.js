@@ -14,7 +14,7 @@ function ItemCards() {
 
   return (
     <div>
-            <div className="container mx-auto px-4 py-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mb-4">
+      <div className="container mx-auto px-4 py-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mb-4">
         {items.map((item) => (
           <Link to={`/items/${item.id}`} key={item.id}>
             <div className="bg-white shadow-md overflow-hidden rounded-lg">

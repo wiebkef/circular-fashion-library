@@ -9,6 +9,7 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
+import { getSizes } from "../utils/getFilters";
 
 const sortOptions = [
   { name: "Newest", href: "#", current: false },
@@ -20,61 +21,35 @@ const subCategories = [
   { name: "Men", href: "#" },
   { name: "Children", href: "#" },
 ];
-const filters = [
-  {
-    id: "size",
-    name: "Sizes",
-    options: [
-      { value: "XS", label: "XS", checked: false },
-      { value: "S", label: "S", checked: false },
-      { value: "M", label: "M", checked: false },
-      { value: "L", label: "L", checked: false },
-      { value: "XL", label: "XL", checked: false },
-      { value: "XXL", label: "XXL", checked: true },
-    ],
-  },
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
 
-  {
-    id: "brand",
-    name: "Brand",
-    options: [
-      { value: "Adidas", label: "Adidas", checked: false },
-      { value: "armed angels", label: "Armed Angels", checked: false },
-      { value: "Gucci", label: "Gucci", checked: true },
-      { value: "Nike", label: "Nike", checked: false },
-      { value: "Louis Vuitton", label: "Louis Vuitton", checked: false },
-      { value: "The North Face", label: "The North Face", checked: false },
-    ],
-  },
-];
-console.log("WHAAAT", filters[0].options);
-filters[0].options.map((sizes) => console.log(sizes.value));
+//console.log("WHAAAT", filters[0].options);
+//filters[0].options.map((sizes) => console.log(sizes.value));
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function FilterSidebar() {
+export default function FilterSidebar({ selectFilters }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [features, setFeatures] = useState([]);
+  const [checkedFeat, setcheckedFeat] = useState([]);
   const [filters, setFilters] = useState([]);
   const handleFeatureChange = (event) => {
     const featureId = event.target.value;
     setFilters({ ...filters, feat: featureId });
   };
+  const sizes = getSizes();
+  const [checkedFeatures, setCheckedFeatures] = useState();
 
+  function checkFeat(index) {
+    /*  const newChecked = [...checkedFeat];
+
+      newChecked.splice(index, 1, !checkedFeat[index]); */
+    const newChecked = checkedFeat.map((check) => (check = false));
+    newChecked.splice(index, 1, true);
+    console.log("THIS", newChecked);
+    setcheckedFeat(newChecked);
+  }
   //   const handleSubmit = () => {
   //     const queryString = Object.entries(filters)
   //       .filter(([key, value]) => value !== "")
@@ -92,7 +67,12 @@ export default function FilterSidebar() {
       .get(`/api/features`)
       .then((res) => {
         setFeatures(res.data);
-        console.log(features);
+        setCheckedFeatures("HUHUHU", res.data.length);
+        /* res.data.length.forEach((initArray) =>
+          setCheckedFeatures.append(false)
+        ); */
+        // console.log("222222222", res.data.length);
+        //console.log(features);
       })
 
       .catch((e) => console.log(e));
@@ -189,25 +169,91 @@ export default function FilterSidebar() {
                           </h3>
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-6">
-                              {features.map((feature) => (
-                                <div
-                                  key={feature.id}
-                                  className="flex items-center"
-                                >
+                              {features.map((feature, index) => (
+                                <div key={index} className="flex items-center">
                                   <input
-                                    id={feature.id}
-                                    name={feature.id}
-                                    value={feature.id}
                                     type="radio"
-                                    checked={filters.feat === feature.id}
-                                    //onChange={handleFilterChange}
-                                    className="h-4 w-4 rounded border-gray-300 text-brand focus:ring-brand"
+                                    //id={feature.id}
+                                    //name="features"
+                                    value={feature.name}
+                                    //checked={false}
+                                    checked={checkedFeatures[index]}
+                                    onChange={() => {
+                                      checkFeat(index);
+                                      /* setCheckedFeatures(
+                                        (e.target.checked = !e.target.checked)
+                                      ) */
+                                      //selectFilters({ feat: e.target.value });
+                                      /* handleFilterChange */
+                                    }}
+                                    className={`h-4 w-4 rounded-full border-gray-300 text-brand focus:ring-transparent   ${
+                                      checkedFeatures[index]
+                                        ? "bg-brand border-brand"
+                                        : "border-gray-300 bg-white"
+                                    }`}
                                   />
                                   <label
                                     htmlFor={feature.id}
                                     className="ml-3 min-w-0 flex-1 text-gray-500"
                                   >
                                     {feature.name}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
+                          </Disclosure.Panel>
+                        </>
+                      )}
+                    </Disclosure>
+
+                    {/* Sizes */}
+                    <Disclosure
+                      as="div"
+                      className="border-t border-gray-200 px-4 py-6"
+                    >
+                      {({ open }) => (
+                        <>
+                          <h3 className="-mx-2 -my-3 flow-root">
+                            <Disclosure.Button className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                              <span className="font-medium text-gray-900">
+                                Sizes
+                              </span>
+                              <span className="ml-6 flex items-center">
+                                {open ? (
+                                  <MinusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                ) : (
+                                  <PlusIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </span>
+                            </Disclosure.Button>
+                          </h3>
+                          <Disclosure.Panel className="pt-6">
+                            <div className="space-y-6">
+                              {sizes.map((size, index) => (
+                                <div key={index} className="flex items-center">
+                                  <input
+                                    id={size}
+                                    name="sizes"
+                                    value={size}
+                                    type="radio"
+                                    checked={filters.size === size}
+                                    onChange={(e) => {
+                                      selectFilters({ feat: e.target.value });
+                                      /* handleFilterChange */
+                                    }}
+                                    className="h-4 w-4 rounded-full border-gray-300 text-brand focus:ring-brand"
+                                  />
+                                  <label
+                                    htmlFor={size}
+                                    className="ml-3 min-w-0 flex-1 text-gray-500"
+                                  >
+                                    {size}
                                   </label>
                                 </div>
                               ))}

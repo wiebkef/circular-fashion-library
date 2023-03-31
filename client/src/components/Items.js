@@ -1,14 +1,21 @@
 import FilterSidebar from "./FilterSidebar";
 import ItemCards from "./ItemCards";
+import { useState } from "react";
 
 export default function Items() {
-    return (
-        <>
-        <FilterSidebar />
-        <ItemCards />
-      </>
-    ); 
-  }
+  const [allFilters, setFilters] = useState();
+
+  const selectFilters = (filter) => {
+    console.log("FILTER HERE", filter);
+  };
+
+  return (
+    <>
+      <FilterSidebar selectFilters={selectFilters} />
+      <ItemCards />
+    </>
+  );
+}
 
 //   export default function Items() {
 //     return (
@@ -19,6 +26,6 @@ export default function Items() {
 //   <div className="w-full lg:w-3/4">
 //         <ItemCards />
 //         </div>
-// </div>  
-//     )  
+// </div>
+//     )
 //   }
