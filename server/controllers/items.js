@@ -53,7 +53,6 @@ const getAllItems = async (req, res) => {
   console.log(mainQuery);
   delete req.query.page;
   delete req.query.limit;
-  console.log("MMMMMMMMM", limit);
 
   try {
     const items = await Item.findAll(
@@ -77,7 +76,10 @@ const getAllItems = async (req, res) => {
 
 const getItemById = async (req, res, next) => {
   try {
-    const item = await Item.findAll({ include: [Feature, Category] });
+    const item = await Item.findOne({
+      include: [Feature, Category],
+      where: { id: req.params.id },
+    });
     res.json(item);
   } catch (error) {
     res.status(500).json({ message: error.message });
