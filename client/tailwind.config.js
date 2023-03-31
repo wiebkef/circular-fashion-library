@@ -14,8 +14,8 @@ module.exports = {
         brand: {
           DEFAULT: "#7CDEDC",
           hover: "#55D4D2",
-          bluegray: "#A9B3CE",
         },
+        bluegray: "#A9B3CE",
       },
     },
   },
