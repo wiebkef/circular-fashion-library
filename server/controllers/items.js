@@ -15,8 +15,6 @@ cloudinary.config({
 });
 
 const createItem = async (req, res, next) => {
-  console.log("BODY", req.body);
-  console.log("FEATURES", req.body.features);
   const features = req.body.features.split(",");
   try {
     const { images, ...body } = req.body;
@@ -24,7 +22,6 @@ const createItem = async (req, res, next) => {
     features.forEach(async (elem) => {
       const ifeat = await sequelize.query(
         "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
-
         {
           replacements: { itemId: newItem.dataValues.id, featId: elem },
           type: sequelize.QueryTypes.INSERT,
@@ -36,12 +33,11 @@ const createItem = async (req, res, next) => {
       folder: "images",
     };
     // Upload to Cloudinary
-    console.log("FILEPATH", req.file?.path);
     const result = await cloudinary.uploader.upload(req.file.path, options);
-    console.log("IMAGE URL", result.secure_url);
     // UPDATE ITEM WITH IMAGE URL
     newItem.images = [result.secure_url];
     const updatedItem = await newItem.save();
+    // DELETE ITEM LOCALLY
     fs.unlinkSync(req.file.path);
     res.status(201).json(updatedItem);
     // res.status(201).json(newItem);

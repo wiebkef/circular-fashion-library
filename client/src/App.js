@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import ItemCards from "./components/ItemCards";
 import UserDetails from "./components/UserDetails";
 import ItemForm from "./components/ItemForm";
+import Admin from "./components/AdminRoute";
 
 function App() {
   return (
@@ -25,10 +26,11 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
-        // ADMIN ROUTES
-        {/* <Route path="/admin/items" element={<ItemList />} /> */}
-        <Route path="/admin/items/new" element={<ItemForm />} />
-        <Route path="/admin/items/:id" element={<ItemForm />} />
+        <Route path="/admin/" element={<Admin />}>
+          {/* <Route path="/admin/items" element={<ItemList />} /> */}
+          <Route path="items/new" element={<ItemForm />} />
+          <Route path="items/:id" element={<ItemForm />} />
+        </Route>
       </Routes>
       <Footer />
     </div>

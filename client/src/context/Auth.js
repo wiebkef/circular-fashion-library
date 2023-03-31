@@ -7,7 +7,7 @@ export const AuthContext = createContext();
 function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState({
     email: "",
     password: "",
@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
       .catch((err) => {
         setUser(null);
         setLoading(false);
-        console.log(err.response.data);
+        // console.log(err.response.data);
       });
   }, []);
 
@@ -50,6 +50,7 @@ function AuthProvider({ children }) {
         navigate("/");
       })
       .catch((err) => {
+        setUser(null);
         setError(err.response.data.errors);
       });
   };
