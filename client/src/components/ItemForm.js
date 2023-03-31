@@ -36,7 +36,6 @@ function ItemForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
-    console.log(selectedFeatures);
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
