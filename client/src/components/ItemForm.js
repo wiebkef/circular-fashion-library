@@ -25,10 +25,10 @@ function ItemForm() {
     features: "",
     status: "",
   });
-  const [images, setImages] = useState("");
+  const [images, setImages] = useState(null);
   const [features, setFeatures] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  const [reload, setReload] = useState(false);
+  // const [reload, setReload] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -36,7 +36,7 @@ function ItemForm() {
         .get(`/api/items/${id}`)
         .then((res) => {
           setItem(res.data);
-          console.log(res.data);
+          res.data.features.map((feature) => selectedFeatures.push(feature.id));
         })
         .catch((e) => console.log(e));
     }
@@ -44,11 +44,12 @@ function ItemForm() {
       .get(`/api/features`)
       .then((res) => setFeatures(res.data))
       .catch((e) => console.log(e));
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
+    console.log("IMAGEEEEESSSSS", images);
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
@@ -63,11 +64,13 @@ function ItemForm() {
     formData.append("category_id", item.category_id);
     formData.append("brand", item.brand);
     formData.append("title", item.title);
-    formData.append("images", images);
     formData.append("short_description", item.short_description);
     formData.append("description", item.description);
     formData.append("features", selectedFeatures);
     formData.append("status", item.status);
+    images
+      ? formData.append("images", images)
+      : formData.append("images", item.images);
     if (id) {
       axios
         .put(`/api/items/${id}`, formData)
@@ -267,6 +270,7 @@ function ItemForm() {
               <select
                 id="features"
                 name="features[]"
+                value={selectedFeatures}
                 placeholder="Features"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
