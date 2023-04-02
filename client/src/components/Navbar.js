@@ -347,9 +347,9 @@ export default function Navbar() {
       </Transition.Root>
 
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-brand px-4 text-md font-medium text-white sm:px-6 lg:px-8">
-          Subscribe to our newsletters!
-        </p>
+      <a href ="#footer" className="flex h-10 items-center justify-center bg-brand px-4 text-md font-medium text-white sm:px-6 lg:px-8  hover:text-gray-400">
+          Subscribe to our newsletter!
+        </a>
 
         <nav
           aria-label="Top"

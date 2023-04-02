@@ -1,15 +1,13 @@
 import myLogo2 from "../images/logo_CFL-rounded.png";
-//import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsYoutube } from 'bootstrap-icons'
-
 
 function Footer() {
   return (
-    <footer className="bg-white shadow-lg border-t shadow-color-gray-800 shadow-opacity-75fixed bottom-0 w-full">
-      <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <div className="container mx-auto py-4 px-4 sm:px-6 lg:px-10 flex justify-between items-center">
+    <footer id="footer" className="bg-white border-t shadow-lg w-full">
+      <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-auto">
+      <div className=" sm:px-6 lg:px-auto flex justify-between items-center">
 
         {/* Logo */}
-        <div className="ml-4 flex lg:ml-0">
+        <div className="ml-4 flex lg:ml-24">
           <span className="sr-only">Circular Fashion Library</span>
           <img className="h-20 w-auto" src={myLogo2} alt="brand-logo" />
         </div>
@@ -23,11 +21,11 @@ function Footer() {
               <div className="w-full sm:w-2/3 lg:w-3/5 mb-3 sm:mb-0">
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  className="bg-white border border-gray-400 py-2 px-4 w-full rounded-lg focus:outline-none focus:border-brand"
+                  placeholder= "Enter your email"
+                  className="bg-white border border-gray-400 py-2 px-4 w-full rounded-lg focus:outline-brand focus:border-brand"
                 />
               </div>
-              <div className="w-full sm:w-1/3 lg:w-2/5">
+              <div className="w-full sm:w-1/3 lg:w-1/6">
                 <button
                   type="submit"
                   className="bg-gray-500 hover:bg-brand text-white py-2 px-4 rounded-md w-full sm:w-auto"
@@ -145,23 +143,23 @@ function Footer() {
             © {new Date().getFullYear()} Circular Fashion Library. All rights
             reserved.
           </div>
-          {/* <div className="flex">
-        <a href="#" className="text-gray-600 hover:text-blue-500 mx-2">
-          <BsFacebook />
+           <div className="flex">
+        <a href="#" className="h-5 w-5 text-gray-600 hover:text-brand mx-2">
+        <i className="bi bi-facebook"></i>
         </a>
-        <a href="#" className="text-gray-600 hover:text-blue-500 mx-2">
-          <BsInstagram />
+        <a href="#" className="text-gray-600 hover:text-brand mx-2">
+        <i className="bi bi-instagram"></i>
         </a>
-        <a href="#" className="text-gray-600 hover:text-blue-500 mx-2">
-          <BsLinkedin />
+        <a href="#" className="text-gray-600 hover:text-brand mx-2">
+        <i className="bi bi-twitter"></i>
         </a>
-        <a href="#" className="text-gray-600 hover:text-blue-500 mx-2">
-          <BsTwitter />
+        <a href="#" className="text-gray-600 hover:text-brand mx-2">
+        <i className="bi bi-linkedin"></i>
         </a>
-        <a href="#" className="text-gray-600 hover:text-blue-500 mx-2">
-          <BsYoutube />
+        <a href="#" className="text-gray-600 hover:text-brand mx-2">
+        <i className="bi bi-youtube"></i>
         </a>
-      </div> */}
+      </div> 
         </div>
       </div>
     </footer>
