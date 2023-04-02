@@ -92,7 +92,6 @@ const updateItem = async (req, res, next) => {
   const features = req.body.features.split(",");
   try {
     const { images, ...body } = req.body;
-
     const options = {
       public_id: req.params.id,
       folder: "images",
@@ -100,9 +99,6 @@ const updateItem = async (req, res, next) => {
     // Upload to Cloudinary
     const result = await cloudinary.uploader.upload(req.file.path, options);
     fs.unlinkSync(req.file.path);
-
-    // UPDATE ITEM WITH IMAGE URL
-    // updatedItem.images = [result.secure_url];
     const updatedItem = await Item.update(
       { ...body, images: [result.secure_url] },
       {
