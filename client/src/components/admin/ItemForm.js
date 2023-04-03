@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
+import { getSizes } from "../../utils/getFilters";
 
 function ItemForm() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function ItemForm() {
     category_id: "",
     brand: "",
     title: "",
+    size: "",
     images: "",
     short_description: "",
     description: "",
@@ -19,6 +21,7 @@ function ItemForm() {
     category_id: "",
     brand: "",
     title: "",
+    size: "",
     images: "",
     short_description: "",
     description: "",
@@ -26,6 +29,7 @@ function ItemForm() {
     status: "",
   });
   const [images, setImages] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   // const [reload, setReload] = useState(false);
@@ -44,12 +48,17 @@ function ItemForm() {
       .get(`/api/features`)
       .then((res) => setFeatures(res.data))
       .catch((e) => console.log(e));
+    axios
+      .get(`/api/categories`)
+      .then((res) => setCategories(res.data))
+      .catch((e) => console.log(e));
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
     console.log("IMAGEEEEESSSSS", images);
+    console.log("SIZEEEEEEE", item.size);
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
@@ -64,6 +73,7 @@ function ItemForm() {
     formData.append("category_id", item.category_id);
     formData.append("brand", item.brand);
     formData.append("title", item.title);
+    formData.append("size", item.size);
     formData.append("short_description", item.short_description);
     formData.append("description", item.description);
     formData.append("features", selectedFeatures);
@@ -127,21 +137,28 @@ function ItemForm() {
               {error.category_id && (
                 <p className="text-red-700">{error.category_id.message}</p>
               )}
-              <input
-                type="text"
+              <select
                 id="category_id"
                 name="category_id"
-                value={item.category_id}
-                placeholder="Category ID"
+                value={item.category_id || ""}
+                placeholder="Category"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
-              />
+                // onChange={(e) => console.log(e.target.value)}
+              >
+                <option value="">Choose category</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
               <label
-                htmlFor="category_id"
+                htmlFor="category"
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
-                Category ID
+                Category
               </label>
             </div>
           </div>
@@ -188,6 +205,36 @@ function ItemForm() {
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Title
+              </label>
+            </div>
+          </div>
+          <div>
+            <div className="mt-1 relative">
+              {error.size && (
+                <p className="text-red-700">{error.size.message}</p>
+              )}
+              <select
+                id="size"
+                name="size"
+                value={item.size || ""}
+                placeholder="Size"
+                required
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={handleChange}
+                // onChange={(e) => console.log(e.target.value)}
+              >
+                <option value="">Choose size</option>
+                {getSizes().map((size) => (
+                  <option key={size} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+              <label
+                htmlFor="size"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Size
               </label>
             </div>
           </div>
