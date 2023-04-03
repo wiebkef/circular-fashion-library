@@ -11,12 +11,13 @@ function ItemCards() {
   const [items, setItems] = useState([]);
   const queryString = useQueryString();
   console.log("TTTTTT", queryString);
+  const url = `/api/items?${queryString}`;
   useEffect(() => {
     axios
-      .get(`/api/items?${queryString}`)
+      .get(url)
       .then((res) => setItems(res.data))
       .catch((e) => console.log(e));
-  }, []);
+  }, [url]);
 
   return (
     <div>
@@ -40,16 +41,16 @@ function ItemCards() {
                   Available sizes: {item.size}
                 </p>
                 <div className="flex flex-wrap justify-center mt-1 mb-3 py-1 px-1">
-                <ul className= "flex flex-wrap justify-center mt-0 mb-0 py-0 px-3 space-x-2">
-              {item.features.map((feature) => (
-                <li
-                  key={feature.id}
-                  className="bg-brand text-sm rounded-full py-0.75 px-1 mb-3"
-                >
-                  {feature.name}
-                </li>
-              ))}
-            </ul>
+                  <ul className="flex flex-wrap justify-center mt-0 mb-0 py-0 px-3 space-x-2">
+                    {item.features.map((feature) => (
+                      <li
+                        key={feature.id}
+                        className="bg-brand text-sm rounded-full py-0.75 px-1 mb-3"
+                      >
+                        {feature.name}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
