@@ -95,7 +95,7 @@ function ItemForm() {
   };
 
   return (
-    <div className="mt-16 sm:mx-auto sm:w-full sm:max-w-xl">
+    <div className="my-16 sm:mx-auto sm:w-full sm:max-w-xl">
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
         <h1 className="mb-16 text-3xl font-bold">
           {id ? "Update" : "Add a new"} item

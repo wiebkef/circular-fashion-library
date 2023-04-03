@@ -7,7 +7,7 @@ function Member() {
   return (
     <>
       {!loading && (
-        <>{user?.role === "member" ? <Outlet /> : <Navigate to="/login" />}</>
+        <>{user?.role === "admin" || user?.role === "employee" || user?.role === "member" ? <Outlet /> : <Navigate to="/login" />}</>
       )}
     </>
   );
