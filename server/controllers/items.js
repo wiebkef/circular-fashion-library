@@ -60,8 +60,8 @@ const getAllItems = async (req, res) => {
     const items = await Item.findAll(
       {
         include: [
-          { model: Feature, where: featQuery, required: false },
-          { model: Category, where: catQuery, required: false },
+          { model: Feature, where: featQuery, required: true },
+          { model: Category, where: catQuery, required: true },
         ],
         where: mainQuery,
         order: [["updated_at", "DESC"]],
