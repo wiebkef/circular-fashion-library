@@ -1,17 +1,34 @@
-const getSizes = () => {
+import axios from "../axiosInstance";
+
+export const getSizes = () => {
   return ["XS", "S", "M", "L", "XL"];
 };
 
-const getColors = () => {
+export const getColors = () => {
   return ["black", "white", "grey", "blue", "red", "green", "yellow"];
 };
 
-const getBrands = () => {
-  return ["Levis", "Diesel", "Hugo"];
+export const getBrands = () => {
+  return ["Levis", "Diesel", "Hugo", "Armed Angels"];
 };
 
-const getCategories = () => {
-  return ["T-Shirts", "Jeans"];
+let categoryArr = [];
+export function getCategories() {
+  axios
+    .get(`/api/categories`)
+    .then((res) => {
+      const categoryObj = res.data;
+      categoryArr = [];
+      categoryObj.map((cat) => {
+        categoryArr.push(cat.name);
+      });
+    })
+    .catch((e) => console.log(e));
+  return categoryArr;
+}
+
+export const getStatuses = () => {
+  return ["available", "repair", "recycling", "unavailable"];
 };
 
-module.exports = { getSizes, getColors, getBrands, getCategories };
+// module.exports = { getSizes, getColors, getBrands, getCategories, getStatuses };
