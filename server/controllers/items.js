@@ -112,6 +112,9 @@ const updateItem = async (req, res, next) => {
         runValidators: false,
       } */
     );
+    await sequelize.query("DELETE FROM item_feature WHERE item_id = :itemId", {
+      replacements: { itemId: req.params.id },
+    });
     features.forEach(async (elem) => {
       const ifeat = await sequelize.query(
         "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
