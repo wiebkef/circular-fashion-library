@@ -25,6 +25,10 @@ There .env files in the client and the server directory. The .env.example files 
 - `put /api/items/:id` updates an item with specified id
 - `delete /api/items/:id` deletes one item with specified id
 
+### Wardrobe
+
+- `get /api/items/wardrobe/:id` returns all items a user has borrowed currently, where id is the users id
+
 ### Users
 
 - `get /api/users` returns all users

@@ -157,10 +157,23 @@ const deleteItem = async (req, res, next) => {
   }
 };
 
+const getWardrobe = async (req, res, next) => {
+  try {
+    const item = await Item.findAll({
+      include: [Feature, Category],
+      where: { user_id: req.params.id },
+    });
+    res.json(item);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllItems,
   getItemById,
   createItem,
   updateItem,
   deleteItem,
+  getWardrobe,
 };
