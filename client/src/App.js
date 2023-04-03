@@ -10,13 +10,16 @@ import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 import ItemCards from "./components/ItemCards";
 import Items from "./components/Items";
-import UserDetails from "./components/UserDetails";
-import ItemForm from "./components/ItemForm";
-import Admin from "./components/AdminRoute";
 import Member from "./components/MemberRoute";
-import ItemList from "./components/ItemList";
 import FilterSidebar from "./components/FilterSidebar";
 import Contact from "./components/Contact";
+import UserDetails from "./components/UserDetails";
+
+// ADMIN COMPONENTS IMPORTS
+import ItemForm from "./components/admin/ItemForm";
+import Admin from "./components/admin/AdminRoute";
+import AdminDashboard from "./components/admin/AdminDashboard";
+import ItemList from "./components/admin/ItemList";
 
 function App() {
   return (
@@ -34,6 +37,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<Member />}></Route>
         <Route path="/admin/" element={<Admin />}>
+          <Route index element={<AdminDashboard />} />
           <Route path="items" element={<ItemList />} />
           <Route path="items/new" element={<ItemForm />} />
           <Route path="items/:id" element={<ItemForm />} />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "../axiosInstance";
+import axios from "../../axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ItemForm() {
