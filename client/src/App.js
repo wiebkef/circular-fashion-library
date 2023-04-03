@@ -15,6 +15,7 @@ import ItemForm from "./components/ItemForm";
 import Admin from "./components/AdminRoute";
 import ItemList from "./components/ItemList";
 import FilterSidebar from "./components/FilterSidebar";
+import Contact from "./components/Contact"
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/admin/" element={<Admin />}>
           <Route path="items" element={<ItemList />} />
           <Route path="items/new" element={<ItemForm />} />

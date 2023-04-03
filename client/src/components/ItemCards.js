@@ -44,7 +44,7 @@ function ItemCards() {
               {item.features.map((feature) => (
                 <li
                   key={feature.id}
-                  className="bg-brand rounded-full py-0.75 px-2 mb-3"
+                  className="bg-brand text-sm rounded-full py-0.75 px-1 mb-3"
                 >
                   {feature.name}
                 </li>
