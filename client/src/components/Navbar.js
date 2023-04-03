@@ -292,9 +292,21 @@ export default function Navbar() {
                   {user ? (
                     <>
                       <div className="flow-root">
-                        <span className="-m-2 block p-2 font-medium text-gray-900">
-                          {user.email}
-                        </span>
+                        {user.role === "admin" || user.role === "employee" ? (
+                          <Link
+                            to="/admin"
+                            className="-m-2 block p-2 font-medium text-gray-900"
+                          >
+                            Admin {user.email}
+                          </Link>
+                        ) : (
+                          <Link
+                            to="/account"
+                            className="-m-2 block p-2 font-medium text-gray-900"
+                          >
+                            User {user.email}
+                          </Link>
+                        )}
                       </div>
                       <div className="flow-root">
                         <Link
@@ -347,7 +359,10 @@ export default function Navbar() {
       </Transition.Root>
 
       <header className="relative bg-white">
-      <a href ="#footer" className="flex h-10 items-center justify-center bg-brand px-4 text-md font-medium text-white sm:px-6 lg:px-8  hover:text-gray-400">
+        <a
+          href="#footer"
+          className="flex h-10 items-center justify-center bg-brand px-4 text-md font-medium text-white sm:px-6 lg:px-8  hover:text-gray-400"
+        >
           Subscribe to our newsletter!
         </a>
 
@@ -501,9 +516,21 @@ export default function Navbar() {
               <div className="ml-auto flex items-center">
                 {user ? (
                   <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    <span className="text-sm font-medium text-gray-700">
-                      {user.email}
-                    </span>
+                    {user.role === "admin" || user.role === "employee" ? (
+                      <Link
+                        to="/admin"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        {user.email}
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/account"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        {user.email}
+                      </Link>
+                    )}
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     <Link
                       onClick={logout}

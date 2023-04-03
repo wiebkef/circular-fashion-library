@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "../axiosInstance";
+import axios from "../../axiosInstance";
 import { Link } from "react-router-dom";
 const ItemList = () => {
   const [items, setItems] = useState();
@@ -12,16 +12,16 @@ const ItemList = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="container mx-auto">
       <h2 className="text-3xl font-semibold mt-6">Items</h2>
       {items && (
         <>
-          <table className="table-auto m-4 mx-auto border-2 rounded-lg border-bluegray border-collapse text-left">
+          <table className="w-full table-auto m-4 mx-auto border-2 rounded-lg border-bluegray border-collapse text-left">
             <thead className="">
               <tr className="">
                 <th className="border-y-2 border-bluegray py-4 px-2">SKU</th>
                 <th className="border-y-2 border-bluegray py-4 px-2">Title</th>
-                <th className="border-y-2 border-bluegray py-4 px-2"> Brand</th>
+                <th className="border-y-2 border-bluegray py-4 px-2">Brand</th>
                 <th className="border-y-2 border-bluegray py-4 px-2">Status</th>
                 <th className="border-y-2 border-bluegray py-4 px-2">Size</th>
                 <th className="border-y-2 border-bluegray py-4 px-2">Color</th>
