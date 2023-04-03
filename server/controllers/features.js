@@ -5,7 +5,7 @@ const getFeatureNames = async (req, res, next) => {
   try {
     const features = await Feature.findAll({ raw: true });
     res.json(features);
-  } catch {
+  } catch (error) {
     next(new ErrorResponse(error));
   }
 };
@@ -23,7 +23,7 @@ const getAllFeatures = async (req, res) => {
   try {
     const features = await Feature.findAll({ raw: true });
     res.json(features);
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
