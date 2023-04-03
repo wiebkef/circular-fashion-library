@@ -1,41 +1,41 @@
 import myLogo2 from "../images/logo_CFL-rounded.png";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
     <footer id="footer" className="bg-white border-t shadow-lg w-full">
       <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8 mt-auto">
-      <div className=" sm:px-6 lg:px-auto flex justify-between items-center">
-
-        {/* Logo */}
-        <div className="ml-4 flex lg:ml-24">
-          <span className="sr-only">Circular Fashion Library</span>
-          <img className="h-20 w-auto" src={myLogo2} alt="brand-logo" />
-        </div>
-        {/* Subscribe */}
-        <div className="w-full sm:w-1/2 lg:w-2/3 mb-4">
-          <h3 className="text-gray-700 uppercase mb-2 font-semibold text-left">
-            Subscribe to our newsletter
-          </h3>
-          <form>
-            <div className="flex flex-wrap items-center">
-              <div className="w-full sm:w-2/3 lg:w-3/5 mb-3 sm:mb-0">
-                <input
-                  type="email"
-                  placeholder= "Enter your email"
-                  className="bg-white border border-gray-400 py-2 px-4 w-full rounded-lg focus:outline-brand focus:border-brand"
-                />
+        <div className=" sm:px-6 lg:px-auto flex justify-between items-center">
+          {/* Logo */}
+          <div className="ml-4 flex lg:ml-24">
+            <span className="sr-only">Circular Fashion Library</span>
+            <img className="h-20 w-auto" src={myLogo2} alt="brand-logo" />
+          </div>
+          {/* Subscribe */}
+          <div className="w-full sm:w-1/2 lg:w-2/3 mb-4">
+            <h3 className="text-gray-700 uppercase mb-2 font-semibold text-left">
+              Subscribe to our newsletter
+            </h3>
+            <form>
+              <div className="flex flex-wrap items-center">
+                <div className="w-full sm:w-2/3 lg:w-3/5 mb-3 sm:mb-0">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="bg-white border border-gray-400 py-2 px-4 w-full rounded-lg focus:outline-brand focus:border-brand"
+                  />
+                </div>
+                <div className="w-full sm:w-1/3 lg:w-1/6">
+                  <button
+                    type="submit"
+                    className="bg-gray-500 hover:bg-brand text-white py-2 px-4 rounded-md w-full sm:w-auto"
+                  >
+                    Subscribe
+                  </button>
+                </div>
               </div>
-              <div className="w-full sm:w-1/3 lg:w-1/6">
-                <button
-                  type="submit"
-                  className="bg-gray-500 hover:bg-brand text-white py-2 px-4 rounded-md w-full sm:w-auto"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
         </div>
 
         {/* Service */}
@@ -95,9 +95,12 @@ function Footer() {
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <Link
+                  to="/contact"
+                  className="text-gray-600 hover:text-brand"
+                >
                   Contact Us
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -143,23 +146,23 @@ function Footer() {
             © {new Date().getFullYear()} Circular Fashion Library. All rights
             reserved.
           </div>
-           <div className="flex">
-        <a href="#" className="h-5 w-5 text-gray-600 hover:text-brand mx-2">
-        <i className="bi bi-facebook"></i>
-        </a>
-        <a href="#" className="text-gray-600 hover:text-brand mx-2">
-        <i className="bi bi-instagram"></i>
-        </a>
-        <a href="#" className="text-gray-600 hover:text-brand mx-2">
-        <i className="bi bi-twitter"></i>
-        </a>
-        <a href="#" className="text-gray-600 hover:text-brand mx-2">
-        <i className="bi bi-linkedin"></i>
-        </a>
-        <a href="#" className="text-gray-600 hover:text-brand mx-2">
-        <i className="bi bi-youtube"></i>
-        </a>
-      </div> 
+          <div className="flex">
+            <a href="#" className="h-5 w-5 text-gray-600 hover:text-brand mx-2">
+              <i className="bi bi-facebook"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+              <i className="bi bi-instagram"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+              <i className="bi bi-twitter"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+              <i className="bi bi-linkedin"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+              <i className="bi bi-youtube"></i>
+            </a>
+          </div>
         </div>
       </div>
     </footer>
