@@ -3,7 +3,7 @@ const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
 const Category = require("../models/category");
 const Feature = require("../models/feature");
-const queryBuilder = require("../utils/queryBuilder");
+const { queryBuilder, statementBuilder } = require("../utils/queryBuilder");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -55,6 +55,8 @@ const getAllItems = async (req, res) => {
 
   delete req.query.page;
   delete req.query.limit;
+
+  /*   const { featStatement } = statementBuilder(mainQuery, featQuery, catQuery); */
 
   try {
     const items = await Item.findAll(

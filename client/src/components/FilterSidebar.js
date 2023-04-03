@@ -9,49 +9,30 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
-import { getSizes } from "../utils/getFilters";
+import {
+  getSizes,
+  getBrands,
+  getColors,
+  getCategories,
+} from "../utils/getFilters";
 import ItemCards from "./ItemCards";
 import { useNavigate } from "react-router-dom";
-
-const sortOptions = [
-  { name: "Newest", href: "#", current: false },
-  { name: "Most Popular", href: "#", current: false },
-  { name: "Available", href: "#", current: true },
-];
-const subCategories = [
-  { name: "Women", href: "#" },
-  { name: "Men", href: "#" },
-  { name: "Children", href: "#" },
-];
-
-//console.log("WHAAAT", filters[0].options);
-//filters[0].options.map((sizes) => console.log(sizes.value));
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function FilterSidebar() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [features, setFeatures] = useState([]); // get features from DB
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
-  /*  const handleFeatureChange = (event) => {
-    const featureId = event.target.value;
-    setFilters({ ...filters, feat: featureId });
-  }; */
-  const sizes = getSizes();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("MMMMM", filters);
     const notEmptyQuery = Object.entries(filters).map(([k, v]) => {
       if (v !== "") {
         return `${k}=${v}`;
       }
     });
+
     const queryString = notEmptyQuery.join("&");
-    console.log("ÄÄÄÄÄÄÄ", queryString);
     navigate({
       pathname: "/shop",
       search: `?${queryString}`,
@@ -61,25 +42,9 @@ export default function FilterSidebar() {
   };
 
   const handleChange = (e) => {
-    console.log("HHHHHH", e.target.value, e.target.name);
     const { name, value } = e.target;
-    /*  if (value === "") {
-      delete name;
-    } */
     setFilters({ ...filters, [name]: value });
   };
-
-  //   const handleSubmit = () => {
-  //     const queryString = Object.entries(filters)
-  //       .filter(([key, value]) => value !== "")
-  //       .map(([key, value]) => `${key}=${value}`)
-  //       .join('&')
-
-  //     fetch(`/api/items?${queryString}`)
-  //       .then(response => response.json())
-  //       .then(data => setItems(data))
-  //       .catch(e => console.error(e))
-  //   }
 
   useEffect(() => {
     axios
@@ -143,22 +108,25 @@ export default function FilterSidebar() {
                     onSubmit={handleSubmit}
                     className="mt-4 border-t border-gray-200"
                   >
-                    {/* women - men - unisex */}
-                    <h3 className="sr-only">Categories</h3>
-                    <ul className="px-2 py-3 font-medium text-gray-900">
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
+                    {/* Gender */}
+                    <div className="border-t border-gray-200 py-2">
+                      <select
+                        className="form-select border-transparent w-full "
+                        name="gender"
+                        aria-label="Select a size"
+                        onChange={handleChange}
+                      >
+                        <option>Gender</option>
+                        <option value="unisex">Unisex</option>
+                        <option value="female">Women</option>
+                        <option value="male">Men</option>
+                      </select>
+                    </div>
 
                     {/* Sizes */}
-                    <div>
+                    <div className="border-t border-gray-200 py-2">
                       <select
-                        className="form-select border-transparent"
+                        className="form-select border-transparent w-full "
                         name="size"
                         aria-label="Select a size"
                         onChange={handleChange}
@@ -174,14 +142,34 @@ export default function FilterSidebar() {
                       </select>
                     </div>
 
-                    {/* Features */}
-                    <div>
+                    {/* Colors */}
+                    <div className="border-t border-gray-200 py-2">
                       <select
-                        className="form-select border-transparent"
+                        className="form-select border-transparent w-full"
+                        name="color"
+                        aria-label="Select a Color"
+                        onChange={handleChange}
+                      >
+                        <option value="">Color</option>
+                        {getColors().map((color, index) => {
+                          return (
+                            <option key={index} value={color}>
+                              {color}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    {/* Features */}
+                    <div className="border-t border-gray-200 py-2">
+                      <select
+                        className="form-select border-transparent w-full"
                         name="feat"
                         aria-label="Select a feature"
                         onChange={handleChange}
                       >
+                        <option value="">Feature</option>
                         {features.map((feature) => {
                           return (
                             <option key={feature.id} value={feature.name}>
@@ -192,7 +180,28 @@ export default function FilterSidebar() {
                       </select>
                     </div>
 
-                    <button className="bg-brand">Apply filters</button>
+                    {/* Categories */}
+                    <div className="border-t border-gray-200 py-2">
+                      <select
+                        className="form-select border-transparent w-full"
+                        name="cat"
+                        aria-label="Select a feature"
+                        onChange={handleChange}
+                      >
+                        <option value="">Category</option>
+                        {getCategories().map((category, index) => {
+                          return (
+                            <option key={index} value={category}>
+                              {category}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
+                    <button className="ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover">
+                      Apply filters
+                    </button>
                     <Disclosure
                       as="div"
                       className="border-t border-gray-200 px-4 py-6"
@@ -263,8 +272,8 @@ export default function FilterSidebar() {
             </h1>
 
             <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
-                <div>
+              {/*  <Menu as="div" className="relative inline-block text-left">
+                {/* <div>
                   <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                     Sort
                     <ChevronDownIcon
@@ -285,7 +294,7 @@ export default function FilterSidebar() {
                 >
                   <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1">
-                      {sortOptions.map((option) => (
+                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
                             <a
@@ -306,15 +315,15 @@ export default function FilterSidebar() {
                     </div>
                   </Menu.Items>
                 </Transition>
-              </Menu>
+              </Menu> */}
 
-              <button
+              {/*     <button
                 type="button"
                 className="-m-2 ml-5 p-2 text-gray-400 hover:text-brand sm:ml-7"
               >
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
+              </button> */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-brand sm:ml-6"
@@ -339,11 +348,12 @@ export default function FilterSidebar() {
                   role="list"
                   className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
                 >
+                  {/*
                   {subCategories.map((category) => (
                     <li key={category.name}>
                       <a href={category.href}>{category.name}</a>
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
 
                 <Disclosure as="div" className="border-b border-gray-200 py-6">
