@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
-import { getSizes } from "../../utils/getFilters";
+import {
+  getSizes,
+  getColors,
+  getBrands,
+  getStatuses,
+  getCategories,
+} from "../../utils/getFilters";
 
 function ItemForm() {
   const navigate = useNavigate();
@@ -11,6 +17,7 @@ function ItemForm() {
     brand: "",
     title: "",
     size: "",
+    color: "",
     images: "",
     short_description: "",
     description: "",
@@ -22,6 +29,7 @@ function ItemForm() {
     brand: "",
     title: "",
     size: "",
+    color: "",
     images: "",
     short_description: "",
     description: "",
@@ -57,8 +65,7 @@ function ItemForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
-    console.log("IMAGEEEEESSSSS", images);
-    console.log("SIZEEEEEEE", item.size);
+    console.log("CATEGORIESSSSSSSS", getCategories());
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
@@ -74,6 +81,7 @@ function ItemForm() {
     formData.append("brand", item.brand);
     formData.append("title", item.title);
     formData.append("size", item.size);
+    formData.append("color", item.color);
     formData.append("short_description", item.short_description);
     formData.append("description", item.description);
     formData.append("features", selectedFeatures);
@@ -145,7 +153,6 @@ function ItemForm() {
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
-                // onChange={(e) => console.log(e.target.value)}
               >
                 <option value="">Choose category</option>
                 {categories.map((category) => (
@@ -167,16 +174,22 @@ function ItemForm() {
               {error.brand && (
                 <p className="text-red-700">{error.brand.message}</p>
               )}
-              <input
-                type="text"
+              <select
                 id="brand"
                 name="brand"
-                value={item.brand}
+                value={item.brand || ""}
                 placeholder="Brand"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
-              />
+              >
+                <option value="">Choose brand</option>
+                {getBrands().map((brand) => (
+                  <option key={brand} value={brand}>
+                    {brand}
+                  </option>
+                ))}
+              </select>
               <label
                 htmlFor="brand"
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
@@ -221,7 +234,6 @@ function ItemForm() {
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
-                // onChange={(e) => console.log(e.target.value)}
               >
                 <option value="">Choose size</option>
                 {getSizes().map((size) => (
@@ -235,6 +247,35 @@ function ItemForm() {
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
               >
                 Size
+              </label>
+            </div>
+          </div>
+          <div>
+            <div className="mt-1 relative">
+              {error.color && (
+                <p className="text-red-700">{error.color.message}</p>
+              )}
+              <select
+                id="color"
+                name="color"
+                value={item.color || ""}
+                placeholder="Color"
+                required
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={handleChange}
+              >
+                <option value="">Choose color</option>
+                {getColors().map((color) => (
+                  <option key={color} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </select>
+              <label
+                htmlFor="color"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Color
               </label>
             </div>
           </div>
@@ -328,7 +369,6 @@ function ItemForm() {
                     )
                   )
                 }
-                // onChange={(e) => console.log(e.target.value)}
                 multiple
               >
                 {features.map((feature) => (
@@ -346,20 +386,26 @@ function ItemForm() {
             </div>
           </div>
           <div>
-            <div className="mt-6 relative">
+            <div className="mt-1 relative">
               {error.status && (
                 <p className="text-red-700">{error.status.message}</p>
               )}
-              <input
-                type="text"
+              <select
                 id="status"
                 name="status"
-                value={item.status}
+                value={item.status || ""}
                 placeholder="Status"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
-              />
+              >
+                <option value="">Choose status</option>
+                {getStatuses().map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
               <label
                 htmlFor="status"
                 className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
