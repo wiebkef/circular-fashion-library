@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { getSizes } from "../utils/getFilters";
 import ItemCards from "./ItemCards";
+import { useNavigate } from "react-router-dom";
 
 const sortOptions = [
   { name: "Newest", href: "#", current: false },
@@ -33,7 +34,8 @@ function classNames(...classes) {
 export default function FilterSidebar() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [features, setFeatures] = useState([]); // get features from DB
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState({});
+  const navigate = useNavigate();
   /*  const handleFeatureChange = (event) => {
     const featureId = event.target.value;
     setFilters({ ...filters, feat: featureId });
@@ -42,12 +44,28 @@ export default function FilterSidebar() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello");
-    console.log(filters);
+    console.log("MMMMM", filters);
+    const notEmptyQuery = Object.entries(filters).map(([k, v]) => {
+      if (v !== "") {
+        return `${k}=${v}`;
+      }
+    });
+    const queryString = notEmptyQuery.join("&");
+    console.log("ÄÄÄÄÄÄÄ", queryString);
+    navigate({
+      pathname: "/shop",
+      search: `?${queryString}`,
+    });
+    setMobileFiltersOpen(false);
+    setFilters({});
   };
 
   const handleChange = (e) => {
+    console.log("HHHHHH", e.target.value, e.target.name);
     const { name, value } = e.target;
+    /*  if (value === "") {
+      delete name;
+    } */
     setFilters({ ...filters, [name]: value });
   };
 
@@ -121,7 +139,10 @@ export default function FilterSidebar() {
                   </div>
 
                   {/* Filters */}
-                  <form className="mt-4 border-t border-gray-200">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="mt-4 border-t border-gray-200"
+                  >
                     {/* women - men - unisex */}
                     <h3 className="sr-only">Categories</h3>
                     <ul className="px-2 py-3 font-medium text-gray-900">
@@ -134,11 +155,30 @@ export default function FilterSidebar() {
                       ))}
                     </ul>
 
+                    {/* Sizes */}
+                    <div>
+                      <select
+                        className="form-select border-transparent"
+                        name="size"
+                        aria-label="Select a size"
+                        onChange={handleChange}
+                      >
+                        <option value="">Size</option>
+                        {getSizes().map((size, index) => {
+                          return (
+                            <option key={index} value={size}>
+                              {size}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
                     {/* Features */}
                     <div>
                       <select
                         className="form-select border-transparent"
-                        name="feature"
+                        name="feat"
                         aria-label="Select a feature"
                         onChange={handleChange}
                       >
@@ -152,25 +192,7 @@ export default function FilterSidebar() {
                       </select>
                     </div>
 
-                    {/* Sizes */}
-                    <div>
-                      <select
-                        className="form-select border-transparent"
-                        name="size"
-                        aria-label="Select a size"
-                      >
-                        {getSizes().map((size, index) => {
-                          return (
-                            <option key={index} value={size}>
-                              {size}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                    <button onSubmit={handleSubmit} className="bg-brand">
-                      Apply filters
-                    </button>
+                    <button className="bg-brand">Apply filters</button>
                     <Disclosure
                       as="div"
                       className="border-t border-gray-200 px-4 py-6"
@@ -376,7 +398,7 @@ export default function FilterSidebar() {
               </form>
               {/* Product grid */}
               <div className="lg:col-span-3">
-                <ItemCards></ItemCards>
+                <ItemCards />
               </div>
             </div>
           </section>
