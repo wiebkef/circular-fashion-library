@@ -42,6 +42,8 @@ export default function FilterSidebar() {
   const sizes = getSizes();
 
   const handleSubmit = (e) => {
+    console.log("helloooooooooooooooooooooo");
+
     e.preventDefault();
     console.log("hello");
     console.log(filters);

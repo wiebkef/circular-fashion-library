@@ -1,6 +1,7 @@
 import FilterSidebar from "./FilterSidebar";
 import ItemCards from "./ItemCards";
 import { useState } from "react";
+import Sidebar from "./Sidebar";
 
 export default function Items() {
   const [allFilters, setFilters] = useState();
@@ -11,9 +12,11 @@ export default function Items() {
 
   return (
     <>
-      <FilterSidebar selectFilters={selectFilters} />
+      <Sidebar />
+      {/* <FilterSidebar /> */}
+      {/* <FilterSidebar selectFilters={selectFilters} /> */}
       {/*       <ItemCards />
-       */}{" "}
+       */}
     </>
   );
 }

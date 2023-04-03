@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axiosInstance";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 
 const useQueryString = () => {
   const location = useLocation();
@@ -10,6 +10,8 @@ const useQueryString = () => {
 function ItemCards() {
   const [items, setItems] = useState([]);
   const queryString = useQueryString();
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log("XYZ", searchParams);
   console.log("TTTTTT", queryString);
   useEffect(() => {
     axios
