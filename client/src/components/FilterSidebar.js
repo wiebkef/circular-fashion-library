@@ -27,6 +27,7 @@ const subCategories = [
 //filters[0].options.map((sizes) => console.log(sizes.value));
 
 function classNames(...classes) {
+  console.log("CRAP!");
   return classes.filter(Boolean).join(" ");
 }
 
