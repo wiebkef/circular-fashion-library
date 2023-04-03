@@ -5,13 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./context/Auth";
+import ShopStates from "./context/Shop";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <ShopStates>
+          <App />
+        </ShopStates>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
