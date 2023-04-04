@@ -151,8 +151,6 @@ export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const { cart } = useShopContext();
 
-  
-
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -257,7 +255,6 @@ export default function Navbar() {
                               {section.name}
                             </p>
                             <ul
-                              role="list"
                               aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
                               className="mt-6 flex flex-col space-y-6"
                             >
@@ -344,7 +341,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="border-t border-gray-200 py-6 px-4">
-                  <a href="#" className="-m-2 flex items-center p-2">
+                  <a href="!#" className="-m-2 flex items-center p-2">
                     <img
                       src={FlagIcon}
                       alt=""
@@ -474,7 +471,6 @@ export default function Navbar() {
                                             {section.name}
                                           </p>
                                           <ul
-                                            role="list"
                                             aria-labelledby={`${section.name}-heading`}
                                             className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
                                           >
@@ -563,7 +559,7 @@ export default function Navbar() {
 
                 <div className="hidden lg:ml-8 lg:flex">
                   <a
-                    href="#"
+                    href="!#"
                     className="flex items-center text-gray-700 hover:text-gray-800"
                   >
                     <img
@@ -578,7 +574,7 @@ export default function Navbar() {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-brand">
+                  <a href="!#" className="p-2 text-gray-400 hover:text-brand">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon
                       className="h-7 w-7"

@@ -54,7 +54,7 @@ const UserList = () => {
                       <td className="p-2 text-end">
                         <Link to={`${user.id}`}>
                           <button className="ml-3 inline-block justify-center px-1 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand">
-                            <i class="bi bi-pencil"></i>
+                            <i className="bi bi-pencil"></i>
                           </button>
                         </Link>
                         <button
@@ -65,7 +65,7 @@ const UserList = () => {
                           }}
                           className="ml-3 inline-block justify-center px-1 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-100 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-700"
                         >
-                          <i class="bi bi-x text-xl"></i>
+                          <i className="bi bi-x text-xl"></i>
                         </button>
                       </td>
                     </tr>

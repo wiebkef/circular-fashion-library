@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+// import { useState, useRef, useEffect } from "react";
 
 const Carousel = ({ images }) => {
   console.log("11111111111111", images);
@@ -6,7 +6,7 @@ const Carousel = ({ images }) => {
   return (
     <div className="overflow-hidden relative">
       {images.map((img) => (
-        <img className="flex" src={img} />
+        <img className="flex" src={img} alt="Fashion item" />
       ))}
       <button></button>
     </div>
