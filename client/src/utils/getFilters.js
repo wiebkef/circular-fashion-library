@@ -12,6 +12,10 @@ export const getBrands = () => {
   return ["Levis", "Diesel", "Hugo", "Armed Angels"];
 };
 
+export const getGenders = () => {
+  return ["male", "female", "unisex"];
+};
+
 let categoryObj = null;
 export function getCategories() {
   axios
@@ -20,7 +24,6 @@ export function getCategories() {
       categoryObj = res.data;
     })
     .catch((e) => console.log(e));
-  console.log("BLAAAAAAAAAAHHHHHHHH", categoryObj);
   return categoryObj;
 }
 

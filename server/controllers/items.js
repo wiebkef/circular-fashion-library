@@ -126,7 +126,6 @@ const updateItem = async (req, res, next) => {
         }
       );
     });
-    // DELETE ITEM LOCALLY
     res.status(201).json(updatedItem);
   } catch (error) {
     next(new ErrorResponse(error));
@@ -135,23 +134,14 @@ const updateItem = async (req, res, next) => {
 
 const deleteItem = async (req, res, next) => {
   const features = req.body.features;
-
   try {
     const deletedItem = await Item.destroy({
       where: {
         id: req.params.id,
       },
     });
-
-    features.forEach(async (elem) => {
-      const ifeat = await sequelize.query(
-        "DELETE FROM item_feature WHERE item_id=:itemId",
-
-        {
-          replacements: { itemId: req.params.id },
-          type: sequelize.QueryTypes.DELETE,
-        }
-      );
+    await sequelize.query("DELETE FROM item_feature WHERE item_id = :itemId", {
+      replacements: { itemId: req.params.id },
     });
     res.json(deletedItem);
   } catch (error) {

@@ -1,7 +1,8 @@
 import React from "react";
+import FilterSidebar from "./FilterSidebar";
 
 function Start() {
-  return <div>Hello world!</div>;
+  return <FilterSidebar />;
 }
 
 export default Start;
