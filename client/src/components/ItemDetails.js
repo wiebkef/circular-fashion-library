@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../axiosInstance";
 import { useParams } from "react-router-dom";
 import Accordion from "./Accordion";
-import Carousel from "./Carousel";
+// import Carousel from "./Carousel";
 import {useShopContext} from "../context/Shop";
 
 
@@ -112,7 +112,7 @@ function ItemDetails() {
         <div>
           <div className="">
             {item.images?.map((img, index) => (
-              <img key={index} className="mx-auto" src={img} />
+              <img key={index} className="mx-auto" src={img} alt={item.title} />
             ))}
           </div>
           <div className="text-start m-4">

@@ -46,17 +46,17 @@ function Footer() {
             </h4>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Manage Account
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Admin & Customer
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Guidelines
                 </a>
               </li>
@@ -70,35 +70,32 @@ function Footer() {
             </h4>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Who we are
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Shop Сoncept
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Sustainability
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Privacy
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Terms & Conditions
                 </a>
               </li>
               <li className="mb-2">
-                <Link
-                  to="/contact"
-                  className="text-gray-600 hover:text-brand"
-                >
+                <Link to="/contact" className="text-gray-600 hover:text-brand">
                   Contact Us
                 </Link>
               </li>
@@ -112,27 +109,27 @@ function Footer() {
             </h3>
             <ul className="list-unstyled">
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Shipping
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Returns
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Warrantly
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   Secure Payments
                 </a>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-gray-600 hover:text-brand">
+                <a href="!#" className="text-gray-600 hover:text-brand">
                   FAQ
                 </a>
               </li>
@@ -147,19 +144,22 @@ function Footer() {
             reserved.
           </div>
           <div className="flex">
-            <a href="#" className="h-5 w-5 text-gray-600 hover:text-brand mx-2">
+            <a
+              href="!#"
+              className="h-5 w-5 text-gray-600 hover:text-brand mx-2"
+            >
               <i className="bi bi-facebook"></i>
             </a>
-            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+            <a href="!#" className="text-gray-600 hover:text-brand mx-2">
               <i className="bi bi-instagram"></i>
             </a>
-            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+            <a href="!#" className="text-gray-600 hover:text-brand mx-2">
               <i className="bi bi-twitter"></i>
             </a>
-            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+            <a href="!#" className="text-gray-600 hover:text-brand mx-2">
               <i className="bi bi-linkedin"></i>
             </a>
-            <a href="#" className="text-gray-600 hover:text-brand mx-2">
+            <a href="!#" className="text-gray-600 hover:text-brand mx-2">
               <i className="bi bi-youtube"></i>
             </a>
           </div>

@@ -62,7 +62,7 @@ function ItemForm() {
       .get(`/api/categories`)
       .then((res) => setCategories(res.data))
       .catch((e) => console.log(e));
-  }, [id]);
+  }, [id, selectedFeatures]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -314,7 +314,7 @@ function ItemForm() {
             {item.images && (
               <>
                 <h3 className="text-start text-md font-bold">Current Image</h3>
-                <img src={item.images} />
+                <img src={item.images} alt={item.title} />
               </>
             )}
             <div className="mt-6 relative">

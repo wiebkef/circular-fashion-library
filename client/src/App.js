@@ -8,7 +8,7 @@ import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
-import ItemCards from "./components/ItemCards";
+// import ItemCards from "./components/ItemCards";
 import Member from "./components/MemberRoute";
 import FilterSidebar from "./components/FilterSidebar";
 import Contact from "./components/Contact";
