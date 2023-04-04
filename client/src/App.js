@@ -9,7 +9,6 @@ import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 import ItemCards from "./components/ItemCards";
-import Items from "./components/Items";
 import Member from "./components/MemberRoute";
 import FilterSidebar from "./components/FilterSidebar";
 import Contact from "./components/Contact";
