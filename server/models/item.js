@@ -68,6 +68,15 @@ const Item = sequelize.define(
         },
       },
     },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: "Gender is required.",
+        },
+      },
+    },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
