@@ -12,7 +12,30 @@ export const getBrands = () => {
   return ["Levis", "Diesel", "Hugo", "Armed Angels"];
 };
 
-let categoryArr = [];
+let categoryObj = null;
+export function getCategories() {
+  axios
+    .get(`/api/categories`)
+    .then((res) => {
+      categoryObj = res.data;
+    })
+    .catch((e) => console.log(e));
+  console.log("BLAAAAAAAAAAHHHHHHHH", categoryObj);
+  return categoryObj;
+}
+
+let featureObj = null;
+export function getFeatures() {
+  axios
+    .get(`/api/features`)
+    .then((res) => {
+      featureObj = res.data;
+    })
+    .catch((e) => console.log(e));
+  return featureObj;
+}
+
+/* let categoryArr = [];
 export function getCategories() {
   axios
     .get(`/api/categories`)
@@ -25,7 +48,7 @@ export function getCategories() {
     })
     .catch((e) => console.log(e));
   return categoryArr;
-}
+} */
 
 export const getStatuses = () => {
   return ["available", "repair", "recycling", "unavailable"];

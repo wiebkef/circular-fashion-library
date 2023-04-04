@@ -7,6 +7,7 @@ import {
   getBrands,
   getStatuses,
   getCategories,
+  getFeatures,
 } from "../../utils/getFilters";
 
 function ItemForm() {
@@ -66,6 +67,7 @@ function ItemForm() {
     const { name, value } = e.target;
     setItem({ ...item, [name]: value });
     console.log("CATEGORIESSSSSSSS", getCategories());
+    console.log("FEATURESSSSSSSS", getFeatures());
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
