@@ -31,8 +31,9 @@ export default function FilterSidebar() {
         return `${k}=${v}`;
       }
     });
-
+    notEmptyQuery.push("status=available");
     const queryString = notEmptyQuery.join("&");
+    console.log("KKKKKKK", queryString);
     navigate({
       pathname: "/shop",
       search: `?${queryString}`,
