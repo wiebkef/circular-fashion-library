@@ -8,8 +8,8 @@ import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
-import ItemCards from "./components/ItemCards";
-import Items from "./components/Items";
+// import ItemCards from "./components/ItemCards";
+// import Items from "./components/Items";
 import Member from "./components/MemberRoute";
 import FilterSidebar from "./components/FilterSidebar";
 import Contact from "./components/Contact";
@@ -20,6 +20,7 @@ import ItemForm from "./components/admin/ItemForm";
 import Admin from "./components/admin/AdminRoute";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ItemList from "./components/admin/ItemList";
+import UserList from "./components/admin/UserList";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="items" element={<ItemList />} />
           <Route path="items/new" element={<ItemForm />} />
           <Route path="items/:id" element={<ItemForm />} />
+          <Route path="users" element={<UserList />} />
         </Route>
       </Routes>
       <Footer />
