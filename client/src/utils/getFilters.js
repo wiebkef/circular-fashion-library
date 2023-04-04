@@ -12,27 +12,12 @@ export const getBrands = () => {
   return ["Levis", "Diesel", "Hugo", "Armed Angels"];
 };
 
-let categoryObj = null;
 export function getCategories() {
-  axios
-    .get(`/api/categories`)
-    .then((res) => {
-      categoryObj = res.data;
-    })
-    .catch((e) => console.log(e));
-  console.log("BLAAAAAAAAAAHHHHHHHH", categoryObj);
-  return categoryObj;
+  return axios.get(`/api/categories`);
 }
 
-let featureObj = null;
 export function getFeatures() {
-  axios
-    .get(`/api/features`)
-    .then((res) => {
-      featureObj = res.data;
-    })
-    .catch((e) => console.log(e));
-  return featureObj;
+  return axios(`/api/features`);
 }
 
 /* let categoryArr = [];
