@@ -14,13 +14,14 @@ import {
   getBrands,
   getColors,
   getCategories,
+  getFeatures,
 } from "../utils/getFilters";
 import ItemCards from "./ItemCards";
 import { useNavigate } from "react-router-dom";
 
 export default function FilterSidebar() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [features, setFeatures] = useState([]); // get features from DB
+  //const [features, setFeatures] = useState([]); // get features from DB
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
 
@@ -47,7 +48,7 @@ export default function FilterSidebar() {
     setFilters({ ...filters, [name]: value });
   };
 
-  useEffect(() => {
+  /*  useEffect(() => {
     axios
       .get(`/api/features`)
       .then((res) => {
@@ -55,7 +56,7 @@ export default function FilterSidebar() {
       })
 
       .catch((e) => console.log(e));
-  }, []);
+  }, []); */
 
   return (
     <div className="bg-white">
@@ -171,7 +172,7 @@ export default function FilterSidebar() {
                         onChange={handleChange}
                       >
                         <option value="">Feature</option>
-                        {features.map((feature) => {
+                        {getFeatures().map((feature) => {
                           return (
                             <option key={feature.id} value={feature.name}>
                               {feature.name}
@@ -192,8 +193,8 @@ export default function FilterSidebar() {
                         <option value="">Category</option>
                         {getCategories().map((category, index) => {
                           return (
-                            <option key={index} value={category}>
-                              {category}
+                            <option key={index} value={category.name}>
+                              {category.name}
                             </option>
                           );
                         })}
@@ -231,7 +232,7 @@ export default function FilterSidebar() {
                           </h3>
                           <Disclosure.Panel className="pt-6">
                             <div className="space-y-6">
-                              {features.map((feature) => (
+                              {getFeatures().map((feature) => (
                                 <div
                                   key={feature.id}
                                   className="flex items-center"
@@ -382,7 +383,7 @@ export default function FilterSidebar() {
                       </h3>
                       <Disclosure.Panel className="pt-6">
                         <div className="space-y-4">
-                          {features.map((feature) => (
+                          {getFeatures().map((feature) => (
                             <div key={feature.id} className="flex items-center">
                               <input
                                 id={feature.id}
