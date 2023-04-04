@@ -3,7 +3,7 @@ const Item = require("../models/item");
 const ErrorResponse = require("../utils/errorResponse");
 const Category = require("../models/category");
 const Feature = require("../models/feature");
-const { queryBuilder, statementBuilder } = require("../utils/queryBuilder");
+const { queryBuilder } = require("../utils/queryBuilder");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -50,29 +50,85 @@ const getAllItems = async (req, res) => {
   const { page = 1, limit = 12 } = req.query;
   const offset = (page - 1) * limit;
   const { mainQuery, featQuery, catQuery } = queryBuilder(req.query);
-  console.log(mainQuery);
-  console.log("FEAT", featQuery);
 
   delete req.query.page;
   delete req.query.limit;
 
-  /*   const { featStatement } = statementBuilder(mainQuery, featQuery, catQuery); */
-
   try {
-    const items = await Item.findAll(
-      {
-        include: [
-          { model: Feature, where: featQuery, required: true },
-          { model: Category, where: catQuery, required: true },
-        ],
-        where: mainQuery,
-        order: [["updated_at", "DESC"]],
-        offset: offset,
-        limit: limit,
-      },
-      { raw: true }
-    );
-    res.json(items);
+    if (
+      Object.keys(featQuery).length === 0 &&
+      Object.keys(catQuery).length === 0
+    ) {
+      console.log("OBJECTS ARE EMPTY");
+      const items = await Item.findAll(
+        {
+          include: [
+            { model: Feature, where: catQuery, required: false },
+            { model: Category, where: catQuery, required: false },
+          ],
+          where: mainQuery,
+          order: [["updated_at", "DESC"]],
+          offset: offset,
+          limit: limit,
+        },
+        { raw: true }
+      );
+      res.json(items);
+    } else if (
+      Object.keys(featQuery).length === 0 &&
+      Object.keys(catQuery).length !== 0
+    ) {
+      console.log("FEAT IS EMPTY");
+      const items = await Item.findAll(
+        {
+          include: [
+            { model: Feature },
+            { model: Category, where: catQuery, required: true },
+          ],
+          where: mainQuery,
+          order: [["updated_at", "DESC"]],
+          offset: offset,
+          limit: limit,
+        },
+        { raw: true }
+      );
+      res.json(items);
+    } else if (
+      Object.keys(featQuery).length !== 0 &&
+      Object.keys(catQuery).length === 0
+    ) {
+      console.log("CAT IS EMPTY");
+      const items = await Item.findAll(
+        {
+          include: [
+            { model: Feature, where: featQuery, required: true },
+            { model: Category },
+          ],
+          where: mainQuery,
+          order: [["updated_at", "DESC"]],
+          offset: offset,
+          limit: limit,
+        },
+        { raw: true }
+      );
+      res.json(items);
+    } else {
+      console.log("OBJECTS ARE NOT EMPTY");
+      const items = await Item.findAll(
+        {
+          include: [
+            { model: Feature, where: featQuery, required: true },
+            { model: Category, where: catQuery, required: true },
+          ],
+          where: mainQuery,
+          order: [["updated_at", "DESC"]],
+          offset: offset,
+          limit: limit,
+        },
+        { raw: true }
+      );
+      res.json(items);
+    }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

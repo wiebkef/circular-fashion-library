@@ -14,7 +14,7 @@ const getAllCategories = async (req, res) => {
   try {
     const categories = await Category.findAll({ raw: true });
     res.json(categories);
-  } catch {
+  } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
