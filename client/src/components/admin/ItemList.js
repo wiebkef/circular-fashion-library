@@ -51,7 +51,11 @@ const ItemList = () => {
                       <td className="p-2">{item.size}</td>
                       <td className="p-2">{item.color}</td>
                       <td className="p-2">
-                        <Link to={`${item.id}`}>Edit</Link>
+                        <Link to={`${item.id}`}>
+                          <button className="ml-3 inline-block justify-center px-1 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-100 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-700">
+                            <i class="bi bi-pencil"></i>
+                          </button>
+                        </Link>
                         <button
                           type="button"
                           onClick={() => {
