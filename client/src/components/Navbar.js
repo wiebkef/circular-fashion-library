@@ -10,6 +10,7 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { useShopContext } from "../context/Shop";
 
 const navigation = {
   categories: [
@@ -148,6 +149,9 @@ function classNames(...classes) {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const { cart } = useShopContext();
+
+  
 
   return (
     <div className="bg-white">
@@ -585,16 +589,19 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 flex items-center p-2">
+                  <Link to="/cart" className="group -m-2 flex items-center p-2">
                     <ShoppingBagIcon
                       className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-brand"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                    {/* <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                       0
-                    </span>
-                    <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                    </span> */}
+                    {/* {cart.length ? (
+                      <div className="cartCount">{cart.length}</div>
+                    ) : null} */}
+                    <Link to="cart">Cart</Link>
+                  </Link>
                 </div>
               </div>
             </div>
