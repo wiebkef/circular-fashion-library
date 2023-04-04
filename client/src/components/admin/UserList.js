@@ -3,7 +3,7 @@ import axios from "../../axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 
-const ItemList = () => {
+const UserList = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState();
   const [id, setId] = useState(null);
@@ -118,4 +118,4 @@ const ItemList = () => {
   );
 };
 
-export default ItemList;
+export default UserList;
