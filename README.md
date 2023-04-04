@@ -13,6 +13,7 @@ There .env files in the client and the server directory. The .env.example files 
 
   - `limit=<number>` how many items get returned, default 12
   - `page=<number>`page you're on for pagination, default 1
+  - `status=<available | repair | recycling | unavailable>`
   - `size=<XS|S|M|L|XL|XXL>`
   - `brand=<brandName>`
   - `color=<colorName>`

@@ -11,7 +11,11 @@ function ItemCards() {
   const [items, setItems] = useState([]);
   const queryString = useQueryString();
   console.log("TTTTTT", queryString);
-  const url = `/api/items?${queryString}`;
+  /*  let url;
+  Object.keys(queryString).length === 0
+    ? (url = `/api/items?status=available`)
+    : (url = `/api/items?${queryString}`); */
+  const url = `/api/items?${queryString}&status=available`;
   useEffect(() => {
     axios
       .get(url)
