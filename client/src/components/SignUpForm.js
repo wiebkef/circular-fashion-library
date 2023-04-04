@@ -18,7 +18,7 @@ function SignUpForm() {
   };
 
   return (
-    <div className="mt-16 sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="my-16 sm:mx-auto sm:w-full sm:max-w-md">
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
         <h1 className="mb-16 text-3xl font-bold">Join us!</h1>
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
@@ -71,7 +71,9 @@ function SignUpForm() {
           <div>
             <div className="mt-6 relative">
               {context.error.confirmPassword && (
-                <p className="text-red-700">{context.error.confirmPassword.message}</p>
+                <p className="text-red-700">
+                  {context.error.confirmPassword.message}
+                </p>
               )}
               <input
                 type="password"

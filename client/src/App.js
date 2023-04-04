@@ -19,6 +19,7 @@ import ItemForm from "./components/admin/ItemForm";
 import Admin from "./components/admin/AdminRoute";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ItemList from "./components/admin/ItemList";
+import UserList from "./components/admin/UserList";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="items" element={<ItemList />} />
           <Route path="items/new" element={<ItemForm />} />
           <Route path="items/:id" element={<ItemForm />} />
+          <Route path="users" element={<UserList />} />
         </Route>
       </Routes>
       <Footer />
