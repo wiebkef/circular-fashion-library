@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import axios from "../axiosInstance";
 import { useParams } from "react-router-dom";
 import Accordion from "./Accordion";
 import Carousel from "./Carousel";
+import {useShopContext} from "../context/Shop";
+
 
 function ItemDetails() {
   const [item, setItem] =
@@ -77,7 +79,22 @@ function ItemDetails() {
       updated_at: null,
     },
   } */);
+  //const [newWardrobe, setNewWardrobe] = useState([]);
   const { id } = useParams();
+  //const { setNewWardrobe } = useShopContext();
+  // const handleAddToWardrobe = (item) => {
+  //   console.log("Adding item to wardrobe:", item);
+  //   setNewWardrobe((currWardrobe) => [...currWardrobe, item]);
+  // };
+
+  // const handleAddToWardrobe = () => {
+  //   setNewWardrobe([...newWardrobe, item]);
+  //   console.log("newWardrobe after add:", newWardrobe);
+  // };
+
+  const { handleAddToWardrobe, newWardrobe } = useShopContext();
+  console.log("newWardrobe after add:", newWardrobe);
+
 
   useEffect(() => {
     axios
@@ -94,8 +111,8 @@ function ItemDetails() {
       {item && (
         <div>
           <div className="">
-            {item.images?.map((img) => (
-              <img className="mx-auto" src={img} />
+            {item.images?.map((img, index) => (
+              <img key={index} className="mx-auto" src={img} />
             ))}
           </div>
           <div className="text-start m-4">
@@ -116,7 +133,8 @@ function ItemDetails() {
               ))}
             </ul>
           </div>
-          <button className="my-3 font-semibold text-gray-700 border border-gray-700 p-3 rounded-md">
+          <button  onClick={() => handleAddToWardrobe(item)}
+          className="my-3 font-semibold text-gray-700 border border-gray-700 p-3 rounded-md">
             Add to wardrobe
           </button>
         </div>
