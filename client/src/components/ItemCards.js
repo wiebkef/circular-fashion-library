@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axiosInstance";
 import { Link, useLocation } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const useQueryString = () => {
   const location = useLocation();
@@ -9,13 +10,15 @@ const useQueryString = () => {
 
 function ItemCards() {
   const [items, setItems] = useState([]);
+  const [page, setPage] = useState(1);
+
   const queryString = useQueryString();
   console.log("TTTTTT", queryString);
   /*  let url;
   Object.keys(queryString).length === 0
     ? (url = `/api/items?status=available`)
     : (url = `/api/items?${queryString}`); */
-  const url = `/api/items?${queryString}&status=available`;
+  const url = `/api/items?${queryString}`;
   useEffect(() => {
     axios
       .get(url)
@@ -24,7 +27,7 @@ function ItemCards() {
   }, [url]);
 
   return (
-    <div>
+    <>
       <div className="container mx-auto py-8 grid gap-8 max-w-sm md:min-w-[90%] md:grid-cols-2 lg:grid-cols-3 lg:min-w-[95%] 3xl:grid-cols-4 3xl:gap-6 mb-4">
         {items.map((item) => (
           <Link to={`/shop/${item.id}`} key={item.id}>
@@ -61,7 +64,8 @@ function ItemCards() {
           </Link>
         ))}
       </div>
-    </div>
+      <Pagination page={page} setPage={setPage} url={url} />
+    </>
   );
 }
 
