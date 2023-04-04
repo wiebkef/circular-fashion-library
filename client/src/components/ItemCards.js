@@ -25,7 +25,7 @@ function ItemCards() {
 
   return (
     <div>
-      <div className="container mx-auto px-4 py-8 grid gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mb-4">
+      <div className="container mx-auto py-8 grid gap-8 max-w-sm md:min-w-[90%] md:grid-cols-2 lg:grid-cols-3 lg:min-w-[95%] 3xl:grid-cols-4 3xl:gap-6 mb-4">
         {items.map((item) => (
           <Link to={`/shop/${item.id}`} key={item.id}>
             <div className="bg-white shadow-md overflow-hidden rounded-lg h-full">
