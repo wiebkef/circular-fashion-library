@@ -14,6 +14,7 @@ export const getBrands = () => {
 
 export function getCategories() {
   return axios.get(`/api/categories`);
+}
 
 export const getGenders = () => {
   return ["male", "female", "unisex"];
