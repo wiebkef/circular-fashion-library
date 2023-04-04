@@ -150,7 +150,7 @@ const updateItem = async (req, res, next) => {
   const features = req.body.features.split(",");
   try {
     const { images, ...body } = req.body;
-    let imageUrl = [images;
+    let imageUrl = [images];
     if (req.file) {
       const options = {
         public_id: req.params.id,
