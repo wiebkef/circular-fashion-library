@@ -150,15 +150,19 @@ const updateItem = async (req, res, next) => {
   const features = req.body.features.split(",");
   try {
     const { images, ...body } = req.body;
-    const options = {
-      public_id: req.params.id,
-      folder: "images",
-    };
-    // Upload to Cloudinary
-    const result = await cloudinary.uploader.upload(req.file.path, options);
-    fs.unlinkSync(req.file.path);
+    let imageUrl = [images];
+    if (req.file) {
+      const options = {
+        public_id: req.params.id,
+        folder: "images",
+      };
+      // Upload to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path, options);
+      fs.unlinkSync(req.file.path);
+      imageUrl = [result.secure_url];
+    }
     const updatedItem = await Item.update(
-      { ...body, images: [result.secure_url] },
+      { ...body, images: imageUrl },
       {
         where: {
           id: req.params.id,
