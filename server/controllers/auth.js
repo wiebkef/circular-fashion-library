@@ -15,7 +15,7 @@ const signup = async (req, res) => {
       const userToken = jwt.sign(payload, JWT_SECRET);
       const options = {
         httpOnly: true,
-        expires: new Date(Date.now() + 9000000),
+        expires: new Date(Date.now() + 60 * 60 * 24 * 30 * 1000), // 30 days
       };
       console.log("JWT TOKEN", userToken);
       res
@@ -55,7 +55,7 @@ const login = async (req, res) => {
         const userToken = jwt.sign(payload, JWT_SECRET);
         const options = {
           httpOnly: true,
-          expires: new Date(Date.now() + 9000000),
+          expires: new Date(Date.now() + 60 * 60 * 24 * 30 * 1000), // 30 days
         };
         console.log("JWT TOKEN", userToken);
         res.cookie("userToken", userToken, options).json({ user: payload });

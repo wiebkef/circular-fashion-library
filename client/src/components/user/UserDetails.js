@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "../../axiosInstance";
-import { useNavigate, useParams } from "react-router-dom";
-import { userRoles, getCountries } from "../../utils/userProps";
+import { getCountries } from "../../utils/userProps";
+import { AuthContext } from "../../context/Auth";
 
-function UserForm() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState({
+function UserDetails() {
+  const { user } = useContext(AuthContext);
+  const id = user.id;
+
+  const [userDetails, setUserDetails] = useState({
     first_name: "",
     last_name: "",
     email: "",
@@ -17,7 +19,6 @@ function UserForm() {
     zip: "",
     city: "",
     country: "",
-    role: "",
   });
   const [error, setError] = useState({
     first_name: "",
@@ -31,16 +32,14 @@ function UserForm() {
     zip: "",
     city: "",
     country: "",
-    role: "",
   });
 
-  const { id } = useParams();
   useEffect(() => {
     if (id) {
       axios
         .get(`/api/users/${id}`)
         .then((res) => {
-          setUser(res.data);
+          setUserDetails(res.data);
         })
         .catch((e) => console.log(e));
     }
@@ -48,7 +47,7 @@ function UserForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUserDetails({ ...userDetails, [name]: value });
   };
   /*   const handleImages = (e) => {
     // const files = e.target.files;
@@ -58,34 +57,23 @@ function UserForm() {
   }; */
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (id) {
-      axios
-        .put(`/api/users/${id}`, user)
-        .then((res) => {
-          // navigate(`/admin/users/${id}`);
-          window.location.reload();
-          // setReload(true);
-        })
-        .catch((err) => {
-          setError("err.response.data.errors");
-        });
-    } else {
-      axios
-        .post("/api/users", user)
-        .then((res) => {
-          navigate(`/admin/users/${res.data.id}`);
-        })
-        .catch((err) => {
-          setError("err.response.data.errors");
-        });
-    }
+    axios
+      .put(`/api/users/${id}`, userDetails)
+      .then((res) => {
+        // navigate(`/admin/users/${id}`);
+        window.location.reload();
+        // setReload(true);
+      })
+      .catch((err) => {
+        setError("err.response.data.errors");
+      });
   };
 
   return (
     <div className="my-16 sm:mx-auto sm:w-full sm:max-w-xl">
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
         <h1 className="mb-16 text-3xl font-bold">
-          {id ? "Update" : "Add a new"} user
+          Update your details and address
         </h1>
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
@@ -97,7 +85,7 @@ function UserForm() {
                 type="email"
                 id="email"
                 name="email"
-                value={user.email}
+                value={userDetails.email}
                 placeholder="Email"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
@@ -120,11 +108,7 @@ function UserForm() {
                 type="password"
                 id="password"
                 name="password"
-                placeholder={
-                  id
-                    ? "Change password (leave empty to keep current password)"
-                    : "Initial password"
-                }
+                placeholder={id ? "Change password" : "Initial password"}
                 required={id ? false : true}
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
@@ -177,7 +161,7 @@ function UserForm() {
                   type="text"
                   id="first_name"
                   name="first_name"
-                  value={user.first_name || ""}
+                  value={userDetails.first_name || ""}
                   placeholder="First Name"
                   className="inline-block peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
@@ -197,7 +181,7 @@ function UserForm() {
                   type="text"
                   id="last_name"
                   name="last_name"
-                  value={user.last_name || ""}
+                  value={userDetails.last_name || ""}
                   placeholder="Last Name"
                   className="inline-block peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
@@ -221,7 +205,7 @@ function UserForm() {
                   type="text"
                   id="street"
                   name="street"
-                  value={user.street || ""}
+                  value={userDetails.street || ""}
                   placeholder="Street"
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
@@ -241,7 +225,7 @@ function UserForm() {
                   type="text"
                   id="house_no"
                   name="house_no"
-                  value={user.house_no || ""}
+                  value={userDetails.house_no || ""}
                   placeholder="Number"
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
@@ -265,7 +249,7 @@ function UserForm() {
                   type="text"
                   id="zip"
                   name="zip"
-                  value={user.zip || ""}
+                  value={userDetails.zip || ""}
                   placeholder="Zip code"
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
@@ -285,7 +269,7 @@ function UserForm() {
                   type="text"
                   id="city"
                   name="city"
-                  value={user.city || ""}
+                  value={userDetails.city || ""}
                   placeholder="City"
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
@@ -307,7 +291,7 @@ function UserForm() {
               <select
                 id="country"
                 name="country"
-                value={user.country || ""}
+                value={userDetails.country || ""}
                 placeholder="Country"
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
@@ -328,40 +312,11 @@ function UserForm() {
             </div>
           </div>
           <div>
-            <div className="mt-1 relative">
-              {error.role && (
-                <p className="text-red-700">{error.role.message}</p>
-              )}
-              <select
-                id="role"
-                name="role"
-                value={user.role || ""}
-                placeholder="Role"
-                required
-                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
-                onChange={handleChange}
-              >
-                <option value="">Choose role</option>
-                {userRoles().map((role) => (
-                  <option key={role} value={role}>
-                    {role}
-                  </option>
-                ))}
-              </select>
-              <label
-                htmlFor="role"
-                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
-              >
-                Role
-              </label>
-            </div>
-          </div>
-          <div>
             <button
               type="submit"
               className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
             >
-              {id ? "Update" : "Add new"} user
+              Update
             </button>
           </div>
         </form>
@@ -370,4 +325,4 @@ function UserForm() {
   );
 }
 
-export default UserForm;
+export default UserDetails;

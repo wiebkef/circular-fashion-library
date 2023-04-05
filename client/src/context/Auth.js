@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
       .catch((err) => {
         setUser(null);
         setLoading(false);
-        // console.log(err.response.data);
+        console.log(err.response.data);
       });
   }, []);
 
@@ -33,7 +33,7 @@ function AuthProvider({ children }) {
       .post("/auth/login", user)
       .then((res) => {
         setUser(res.data.user);
-        // navigate("/");
+        navigate("/");
         window.location.reload();
       })
       .catch((err) => {
