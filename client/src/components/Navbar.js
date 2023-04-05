@@ -596,7 +596,7 @@ export default function Navbar() {
                     {/* {cart.length ? (
                       <div className="cartCount">{cart.length}</div>
                     ) : null} */}
-                    <Link to="cart">Cart</Link>
+                    Cart
                   </Link>
                 </div>
               </div>
