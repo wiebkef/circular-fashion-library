@@ -1,4 +1,4 @@
-import { Fragment, useState, useContext } from "react";
+import { Fragment, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
 import myLogo from "../images/logo_CFL.png";
@@ -11,12 +11,89 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useShopContext } from "../context/Shop";
+import { getBrands, getCategories, getFeatures } from "../utils/getFilters";
 
+const gender = [
+  {
+    id: "women",
+    name: "Women",
+  },
+  {
+    id: "unisex",
+    name: "Unisex",
+  },
+  {
+    id: "men",
+    name: "Men",
+  },
+];
 const navigation = {
   categories: [
     {
       id: "women",
       name: "Women",
+      featured: [
+        {
+          name: "New Arrivals",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
+          imageAlt:
+            "Models sitting back to back, wearing Basic Tee in black and bone.",
+        },
+        {
+          name: "Basic Tees",
+          href: "#",
+          imageSrc:
+            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
+          imageAlt:
+            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+        },
+      ],
+      sections: [
+        /* {
+          id: "clothing",
+          name: "Clothing",
+          items: [
+            { name: "Tops", href: "#" },
+            { name: "Dresses", href: "#" },
+            { name: "Pants", href: "#" },
+            { name: "Denim", href: "#" },
+            { name: "Sweaters", href: "#" },
+            { name: "T-Shirts", href: "#" },
+            { name: "Jackets", href: "#" },
+            { name: "Activewear", href: "#" },
+            { name: "Browse All", href: "#" },
+          ],
+        }, */
+        /*  {
+          id: "accessories",
+          name: "Accessories",
+          items: [
+            { name: "Watches", href: "#" },
+            { name: "Wallets", href: "#" },
+            { name: "Bags", href: "#" },
+            { name: "Sunglasses", href: "#" },
+            { name: "Hats", href: "#" },
+            { name: "Belts", href: "#" },
+          ],
+        }, */
+        /* {
+          id: "brands",
+          name: "Brands",
+          items: [
+            { name: "Full Nelson", href: "#" },
+            { name: "My Way", href: "#" },
+            { name: "Re-Arranged", href: "#" },
+            { name: "Counterfeit", href: "#" },
+            { name: "Significant Other", href: "#" },
+          ],
+        }, */
+      ],
+    },
+    {
+      id: "unisex",
+      name: "Unisex",
       featured: [
         {
           name: "New Arrivals",
@@ -136,10 +213,7 @@ const navigation = {
       ],
     },
   ],
-  pages: [
-    { name: "Kids", href: "#" },
-    { name: "About", href: "#" },
-  ],
+  pages: [{ name: "About", href: "#" }],
 };
 
 function classNames(...classes) {
@@ -148,8 +222,26 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState();
+  const [features, setFeatures] = useState();
+
   const { user, logout } = useContext(AuthContext);
   const { cart } = useShopContext();
+  const [apparel, setApparel] = useState("female");
+
+  useEffect(() => {
+    getCategories()
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((e) => console.log(e));
+
+    getFeatures()
+      .then((res) => {
+        setFeatures(res.data);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   return (
     <div className="bg-white">
@@ -271,6 +363,55 @@ export default function Navbar() {
                             </ul>
                           </div>
                         ))}
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            Categories
+                          </p>
+                          <ul className="mt-6 flex flex-col space-y-6">
+                            {categories &&
+                              categories.map((category) => (
+                                <li key={category.id} className="flow-root">
+                                  <a
+                                    href="#"
+                                    className="-m-2 block p-2 text-gray-500"
+                                  >
+                                    {category.name}
+                                  </a>
+                                </li>
+                              ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">Features</p>
+                          <ul className="mt-6 flex flex-col space-y-6">
+                            {features &&
+                              features.map((feature) => (
+                                <li key={feature.id} className="flow-root">
+                                  <a
+                                    href="#"
+                                    className="-m-2 block p-2 text-gray-500"
+                                  >
+                                    {feature.name}
+                                  </a>
+                                </li>
+                              ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">Brands</p>
+                          <ul className="mt-6 flex flex-col space-y-6">
+                            {getBrands().map((item, index) => (
+                              <li key={index} className="flow-root">
+                                <a
+                                  href={item.href}
+                                  className="-m-2 block p-2 text-gray-500"
+                                >
+                                  {item}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </Tab.Panel>
                     ))}
                   </Tab.Panels>
@@ -324,6 +465,7 @@ export default function Navbar() {
                         <NavLink
                           to="/login"
                           className="-m-2 block p-2 font-medium text-gray-900"
+                          onClick={() => setOpen(false)}
                         >
                           Log In
                         </NavLink>
@@ -332,6 +474,7 @@ export default function Navbar() {
                         <NavLink
                           to="/signup"
                           className="-m-2 block p-2 font-medium text-gray-900"
+                          onClick={() => setOpen(false)}
                         >
                           Create account
                         </NavLink>
@@ -340,7 +483,7 @@ export default function Navbar() {
                   )}
                 </div>
 
-                <div className="border-t border-gray-200 py-6 px-4">
+                {/*     <div className="border-t border-gray-200 py-6 px-4">
                   <a href="!#" className="-m-2 flex items-center p-2">
                     <img
                       src={FlagIcon}
@@ -352,7 +495,7 @@ export default function Navbar() {
                     </span>
                     <span className="sr-only">, change currency</span>
                   </a>
-                </div>
+                </div> */}
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -429,6 +572,7 @@ export default function Navbar() {
                               <div className="relative bg-white">
                                 <div className="mx-auto max-w-7xl px-8">
                                   <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
+                                    {/* Images */}
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div
@@ -461,35 +605,70 @@ export default function Navbar() {
                                         </div>
                                       ))}
                                     </div>
+                                    {/* Images end */}
+
+                                    {/* Prefilter selections */}
                                     <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                      {category.sections.map((section) => (
-                                        <div key={section.name}>
-                                          <p
-                                            id={`${section.name}-heading`}
-                                            className="font-medium text-gray-900"
-                                          >
-                                            {section.name}
-                                          </p>
-                                          <ul
-                                            aria-labelledby={`${section.name}-heading`}
-                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                          >
-                                            {section.items.map((item) => (
+                                      <div>
+                                        <p className="font-medium text-gray-900 text-left">
+                                          Brands
+                                        </p>
+                                        <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                          {getBrands().map((brand, index) => (
+                                            <li key={index} className="flex">
+                                              <a
+                                                href="/"
+                                                className="hover:text-gray-800"
+                                              >
+                                                {brand}
+                                              </a>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <p className="font-medium text-gray-900 text-left">
+                                          Categories
+                                        </p>
+                                        <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                          {categories &&
+                                            categories.map((categorie) => (
                                               <li
-                                                key={item.name}
+                                                key={categorie.id}
                                                 className="flex"
                                               >
                                                 <a
-                                                  href={item.href}
+                                                  href="/"
                                                   className="hover:text-gray-800"
                                                 >
-                                                  {item.name}
+                                                  {categorie.name}
                                                 </a>
                                               </li>
                                             ))}
-                                          </ul>
-                                        </div>
-                                      ))}
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <p className="font-medium text-gray-900 text-left">
+                                          Features
+                                        </p>
+                                        <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                          {features &&
+                                            features.map((feature) => (
+                                              <li
+                                                key={feature.id}
+                                                className="flex"
+                                              >
+                                                <a
+                                                  href="/"
+                                                  className="hover:text-gray-800"
+                                                >
+                                                  {feature.name}
+                                                </a>
+                                              </li>
+                                            ))}
+                                        </ul>
+                                      </div>
+                                      {/* Prefilter selections end*/}
                                     </div>
                                   </div>
                                 </div>
@@ -557,23 +736,8 @@ export default function Navbar() {
                   </div>
                 )}
 
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a
-                    href="!#"
-                    className="flex items-center text-gray-700 hover:text-gray-800"
-                  >
-                    <img
-                      src={FlagIcon}
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-sm font-medium">DE</span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div>
-
                 {/* Search */}
-                <div className="flex lg:ml-6">
+                {/*   <div className="flex lg:ml-6">
                   <a href="!#" className="p-2 text-gray-400 hover:text-brand">
                     <span className="sr-only">Search</span>
                     <MagnifyingGlassIcon
@@ -581,7 +745,7 @@ export default function Navbar() {
                       aria-hidden="true"
                     />
                   </a>
-                </div>
+                </div> */}
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
