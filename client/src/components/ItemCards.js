@@ -8,10 +8,8 @@ const useQueryString = () => {
   return new URLSearchParams(location.search);
 };
 
-function ItemCards() {
+function ItemCards({ page, setPage }) {
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);
-
   const queryString = useQueryString();
   console.log("TTTTTT", queryString);
   /*  let url;

@@ -16,6 +16,7 @@ export default function FilterSidebar() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [features, setFeatures] = useState([]); // get features from utils
   const [categories, setCategories] = useState([]); // get categories from utils
+  const [page, setPage] = useState(1);
 
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
@@ -30,9 +31,10 @@ export default function FilterSidebar() {
     notEmptyQuery.push("status=available");
     const queryString = notEmptyQuery.join("&");
     console.log("KKKKKKK", queryString);
+    setPage(1);
     navigate({
       pathname: "/shop",
-      search: `?${queryString}`,
+      search: `?${queryString}&page=1`,
     });
     setMobileFiltersOpen(false);
     setFilters({});
@@ -370,7 +372,7 @@ export default function FilterSidebar() {
 
               {/* Product grid */}
               <div className="lg:col-span-4 xl:col-span-5">
-                <ItemCards />
+                <ItemCards page={page} setPage={setPage} />
               </div>
             </div>
           </section>

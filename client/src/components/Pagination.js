@@ -2,31 +2,47 @@ import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Pagination = ({ page = 1, setPage }) => {
-  const currentPage = page;
-  const navigate = useNavigate();
-
   const [searchParams, setSearchParams] = useSearchParams();
+  console.log("currentPage", page);
+
+  const previousPage = (e) => {
+    e.preventDefault();
+    const hasPage = searchParams.get("page");
+    setPage(page - 1);
+
+    console.log("BBBBBBBBBBBBBBBBBB", hasPage);
+    if (hasPage) {
+      searchParams.set("page", page - 1);
+      console.log("PAGE", page - 1);
+    } else {
+      searchParams.append("page", page);
+    }
+
+    setSearchParams(searchParams);
+  };
 
   const nextPage = (e) => {
     e.preventDefault();
-    console.log("BBBBBBBBBBBBBBBBBB", searchParams);
-    //queryParams.size && { size: queryParams.size }
-    // {    ...(queryParams.size && { size: queryParams.size }),}
-    const updatedParams = { ...searchParams };
-    !searchParams.page && setSearchParams({ page: 1, ...updatedParams });
-    setPage((page += 1));
-    console.log("99999999999999", searchParams);
 
-    setSearchParams({ page: page });
-    //const url = `/shop?${searchParams}&page=${page}&status=available`;
-    //navigate(url);
+    const hasPage = searchParams.get("page");
+    setPage(page + 1);
+
+    console.log("BBBBBBBBBBBBBBBBBB", hasPage);
+    if (hasPage) {
+      searchParams.set("page", page + 1);
+      console.log("PAGE", page + 1);
+    } else {
+      searchParams.append("page", page);
+    }
+
+    setSearchParams(searchParams);
   };
 
   return (
     <div className="flex justify-center">
       {page !== 1 && (
         <button
-          onClick={nextPage}
+          onClick={previousPage}
           className="ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
         >
           <svg
