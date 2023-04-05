@@ -17,6 +17,7 @@ export default function FilterSidebar() {
   const [features, setFeatures] = useState([]); // get features from utils
   const [categories, setCategories] = useState([]); // get categories from utils
   const [page, setPage] = useState(1);
+  const [lastItem, setLastItem] = useState(false);
 
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function FilterSidebar() {
     });
     notEmptyQuery.push("status=available");
     const queryString = notEmptyQuery.join("&");
-    console.log("KKKKKKK", queryString);
+    //console.log("KKKKKKK", queryString);
     setPage(1);
     navigate({
       pathname: "/shop",
@@ -372,7 +373,12 @@ export default function FilterSidebar() {
 
               {/* Product grid */}
               <div className="lg:col-span-4 xl:col-span-5">
-                <ItemCards page={page} setPage={setPage} />
+                <ItemCards
+                  page={page}
+                  setPage={setPage}
+                  lastItem={lastItem}
+                  setLastItem={setLastItem}
+                />
               </div>
             </div>
           </section>

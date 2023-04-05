@@ -8,21 +8,22 @@ const useQueryString = () => {
   return new URLSearchParams(location.search);
 };
 
-function ItemCards({ page, setPage }) {
+function ItemCards({ page, setPage, lastItem, setLastItem }) {
   const [items, setItems] = useState([]);
   const queryString = useQueryString();
-  console.log("TTTTTT", queryString);
-  /*  let url;
-  Object.keys(queryString).length === 0
-    ? (url = `/api/items?status=available`)
-    : (url = `/api/items?${queryString}`); */
+
   const url = `/api/items?${queryString}`;
   useEffect(() => {
     axios
       .get(url)
-      .then((res) => setItems(res.data))
+      .then((res) => {
+        if (res.data.length < 12) {
+          setLastItem(true);
+        }
+        setItems(res.data);
+      })
       .catch((e) => console.log(e));
-  }, [url]);
+  }, [url, lastItem]);
 
   return (
     <>
@@ -62,7 +63,14 @@ function ItemCards({ page, setPage }) {
           </Link>
         ))}
       </div>
-      <Pagination page={page} setPage={setPage} url={url} />
+      {lastItem && <div>You reached the end. But more is coming soon!</div>}
+      <Pagination
+        page={page}
+        setPage={setPage}
+        url={url}
+        lastItem={lastItem}
+        setLastItem={setLastItem}
+      />
     </>
   );
 }
