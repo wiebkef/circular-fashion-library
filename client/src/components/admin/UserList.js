@@ -20,6 +20,7 @@ const UserList = () => {
       .delete(`/api/users/${id}`)
       .then((res) => navigate("/admin/users"))
       .catch((e) => console.log(e));
+    window.location.reload();
   };
 
   return (

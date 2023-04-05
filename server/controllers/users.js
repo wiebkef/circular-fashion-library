@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const ErrorResponse = require("../utils/errorResponse");
+const bcrypt = require("bcrypt");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -12,11 +13,14 @@ const getAllUsers = async (req, res) => {
 };
 
 const createUser = async (req, res, next) => {
-  try {
-    const newUser = await User.create(req.body);
-    res.status(201).json(newUser);
-  } catch (error) {
-    next(new ErrorResponse(error));
+  if (req.body.password === req.body.confirmPassword) {
+    req.body.password = await bcrypt.hash(req.body.password, 8);
+    try {
+      const newUser = await User.create(req.body);
+      res.status(201).json(newUser);
+    } catch (error) {
+      next(new ErrorResponse(error));
+    }
   }
 };
 
@@ -26,6 +30,9 @@ const getUserById = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
+  if (req.body.password === req.body.confirmPassword) {
+    req.body.password = await bcrypt.hash(req.body.password, 8);
+  }
   try {
     const updatedUser = await User.update(
       req.body,
@@ -39,7 +46,6 @@ const updateUser = async (req, res, next) => {
         runValidators: false,
       } */
     );
-
     res.json(updatedUser);
   } catch (error) {
     next(new ErrorResponse(error));

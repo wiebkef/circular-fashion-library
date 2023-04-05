@@ -9,10 +9,13 @@ import Checkout from "./components/Checkout";
 import ItemDetails from "./components/ItemDetails";
 import Footer from "./components/Footer";
 // import ItemCards from "./components/ItemCards";
-import Member from "./components/MemberRoute";
 import FilterSidebar from "./components/FilterSidebar";
 import Contact from "./components/Contact";
-import UserDetails from "./components/UserDetails";
+
+// PROTECTED USER COMPONENTS IMPORTS
+import User from "./components/user/UserRoute";
+import UserDashboard from "./components/user/UserDashboard";
+import UserDetails from "./components/user/UserDetails";
 
 // ADMIN COMPONENTS IMPORTS
 import ItemForm from "./components/admin/ItemForm";
@@ -36,7 +39,10 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/" element={<Member />}></Route>
+        <Route path="/" element={<User />}>
+          <Route path="account" element={<UserDashboard />} />
+          <Route path="account/details" element={<UserDetails />} />
+        </Route>
         <Route path="/admin/" element={<Admin />}>
           <Route index element={<AdminDashboard />} />
           <Route path="items" element={<ItemList />} />

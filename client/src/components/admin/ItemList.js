@@ -20,6 +20,7 @@ const ItemList = () => {
       .delete(`/api/items/${id}`)
       .then((res) => navigate("/admin/items"))
       .catch((e) => console.log(e));
+    window.location.reload();
   };
 
   return (
