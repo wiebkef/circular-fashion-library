@@ -33,7 +33,8 @@ function AuthProvider({ children }) {
       .post("/auth/login", user)
       .then((res) => {
         setUser(res.data.user);
-        navigate("/");
+        // navigate("/");
+        window.location.reload();
       })
       .catch((err) => {
         setUser(null);

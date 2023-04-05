@@ -20,6 +20,7 @@ import Admin from "./components/admin/AdminRoute";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ItemList from "./components/admin/ItemList";
 import UserList from "./components/admin/UserList";
+import UserForm from "./components/admin/UserForm";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
           <Route path="items/new" element={<ItemForm />} />
           <Route path="items/:id" element={<ItemForm />} />
           <Route path="users" element={<UserList />} />
+          <Route path="users/new" element={<UserForm />} />
+          <Route path="users/:id" element={<UserForm />} />
         </Route>
       </Routes>
       <Footer />
