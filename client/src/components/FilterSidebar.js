@@ -1,13 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
-import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  FunnelIcon,
-  MinusIcon,
-  PlusIcon,
-  Squares2X2Icon,
-} from "@heroicons/react/20/solid";
+import { FunnelIcon } from "@heroicons/react/20/solid";
 import {
   getSizes,
   getBrands,
@@ -22,6 +16,8 @@ export default function FilterSidebar() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [features, setFeatures] = useState([]); // get features from utils
   const [categories, setCategories] = useState([]); // get categories from utils
+  const [page, setPage] = useState(1);
+  const [lastItem, setLastItem] = useState(false);
 
   const [filters, setFilters] = useState({});
   const navigate = useNavigate();
@@ -35,10 +31,11 @@ export default function FilterSidebar() {
     });
     notEmptyQuery.push("status=available");
     const queryString = notEmptyQuery.join("&");
-    console.log("KKKKKKK", queryString);
+    //console.log("KKKKKKK", queryString);
+    setPage(1);
     navigate({
       pathname: "/shop",
-      search: `?${queryString}`,
+      search: `?${queryString}&page=1`,
     });
     setMobileFiltersOpen(false);
     setFilters({});
@@ -167,6 +164,25 @@ export default function FilterSidebar() {
                       </select>
                     </div>
 
+                    {/* Brands */}
+                    <div className="border-t border-gray-200 py-2">
+                      <select
+                        className="form-select border-transparent w-full "
+                        name="brand"
+                        aria-label="Select a brand"
+                        onChange={handleChange}
+                      >
+                        <option value="">Brand</option>
+                        {getBrands().map((brand, index) => {
+                          return (
+                            <option key={index} value={brand}>
+                              {brand}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+
                     {/* Features */}
                     <div className="border-t border-gray-200 py-2">
                       <select
@@ -192,7 +208,7 @@ export default function FilterSidebar() {
                       <select
                         className="form-select border-transparent w-full"
                         name="cat"
-                        aria-label="Select a feature"
+                        aria-label="Select a category"
                         onChange={handleChange}
                       >
                         <option value="">Category</option>
@@ -291,6 +307,25 @@ export default function FilterSidebar() {
                   </select>
                 </div>
 
+                {/* Brands */}
+                <div className="border-t border-gray-200 py-2">
+                  <select
+                    className="form-select border-transparent w-full "
+                    name="brand"
+                    aria-label="Select a brand"
+                    onChange={handleChange}
+                  >
+                    <option value="">Brand</option>
+                    {getBrands().map((brand, index) => {
+                      return (
+                        <option key={index} value={brand}>
+                          {brand}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
                 {/* Features */}
                 <div className="border-t border-gray-200 py-2">
                   <select
@@ -338,7 +373,12 @@ export default function FilterSidebar() {
 
               {/* Product grid */}
               <div className="lg:col-span-4 xl:col-span-5">
-                <ItemCards />
+                <ItemCards
+                  page={page}
+                  setPage={setPage}
+                  lastItem={lastItem}
+                  setLastItem={setLastItem}
+                />
               </div>
             </div>
           </section>
