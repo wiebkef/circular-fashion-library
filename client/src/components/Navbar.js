@@ -1,6 +1,7 @@
 import { Fragment, useState, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
+import { useShopContext } from "../context/Shop";
 import myLogo from "../images/logo_CFL.png";
 import FlagIcon from "../images/germany-flag-icon.svg";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
@@ -10,7 +11,6 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import { useShopContext } from "../context/Shop";
 
 const navigation = {
   categories: [
@@ -149,7 +149,7 @@ function classNames(...classes) {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
-  const { cart } = useShopContext();
+  const { newWardrobe } = useShopContext();
 
   
 
@@ -594,13 +594,9 @@ export default function Navbar() {
                       className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-brand"
                       aria-hidden="true"
                     />
-                    {/* <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
-                    </span> */}
-                    {/* {cart.length ? (
-                      <div className="cartCount">{cart.length}</div>
-                    ) : null} */}
-                    <Link to="cart">Cart</Link>
+                     {newWardrobe.length ? (
+                      <div className="cartCount">{newWardrobe.length}</div>
+                    ) : null} 
                   </Link>
                 </div>
               </div>

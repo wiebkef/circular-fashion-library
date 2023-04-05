@@ -79,19 +79,7 @@ function ItemDetails() {
       updated_at: null,
     },
   } */);
-  //const [newWardrobe, setNewWardrobe] = useState([]);
   const { id } = useParams();
-  //const { setNewWardrobe } = useShopContext();
-  // const handleAddToWardrobe = (item) => {
-  //   console.log("Adding item to wardrobe:", item);
-  //   setNewWardrobe((currWardrobe) => [...currWardrobe, item]);
-  // };
-
-  // const handleAddToWardrobe = () => {
-  //   setNewWardrobe([...newWardrobe, item]);
-  //   console.log("newWardrobe after add:", newWardrobe);
-  // };
-
   const { handleAddToWardrobe, newWardrobe } = useShopContext();
   console.log("newWardrobe after add:", newWardrobe);
 
