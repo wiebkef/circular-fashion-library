@@ -2,4 +2,8 @@ const userRoles = () => {
   return ["user", "member", "employee", "admin"];
 };
 
-module.exports = { userRoles };
+const getCountries = () => {
+  return ["Germany"];
+};
+
+module.exports = { userRoles, getCountries };
