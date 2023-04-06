@@ -44,14 +44,14 @@ function ItemCards({ page, setPage, lastItem, setLastItem }) {
                 </h3>
                 <p className="text-sm text-gray-500">{item.color}</p>
                 <p className="text-sm text-gray-500">
-                  Available sizes: {item.size}
+                  Size: {item.size}
                 </p>
                 <div className="flex flex-wrap justify-center mt-1 mb-3 py-1 px-1">
                   <ul className="flex flex-wrap justify-center mt-0 mb-0 py-0 px-3 space-x-2">
                     {item.features.map((feature) => (
                       <li
                         key={feature.id}
-                        className="bg-brand text-sm rounded-full py-0.75 px-1 mb-3"
+                        className="bg-brand text-xs rounded-full py-0.5 px-2 mb-3"
                       >
                         {feature.name}
                       </li>

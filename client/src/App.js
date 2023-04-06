@@ -16,6 +16,7 @@ import Contact from "./components/Contact";
 import User from "./components/user/UserRoute";
 import UserDashboard from "./components/user/UserDashboard";
 import UserDetails from "./components/user/UserDetails";
+import UserWardrobe from "./components/user/UserWardrobe";
 
 // ADMIN COMPONENTS IMPORTS
 import ItemForm from "./components/admin/ItemForm";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<User />}>
           <Route path="account" element={<UserDashboard />} />
+          <Route path="account/wardrobe" element={<UserWardrobe />} />
           <Route path="account/details" element={<UserDetails />} />
         </Route>
         <Route path="/admin/" element={<Admin />}>

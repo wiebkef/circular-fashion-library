@@ -126,8 +126,9 @@ function ItemDetails() {
                   {item.brand} {item.title}
                 </div>
                 <div className="text-sm">
-                  <span className="mr-2">Color {item.color} </span>
-                  <span className="text-gray-400 mr-2">|</span> Size {item.size}
+                  <span className="mr-2">{item.color} </span>
+                  <span className="text-gray-400 mr-2">|</span> Size:{" "}
+                  {item.size}
                 </div>
                 <div className="text-sm mt-3">{item.short_description}</div>
                 <ul className="flex my-5">
@@ -142,7 +143,7 @@ function ItemDetails() {
                 </ul>
                 <button
                   onClick={() => handleAddToWardrobe(item)}
-                  className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
+                  className="w-full flex justify-center mt-10 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
                 >
                   Add to wardrobe
                 </button>

@@ -147,7 +147,9 @@ const getItemById = async (req, res, next) => {
 };
 
 const updateItem = async (req, res, next) => {
-  const features = req.body.features.split(",");
+  if (!req.body.remove) {
+    const features = req.body.features.split(",");
+  }
   try {
     const { images, ...body } = req.body;
     let imageUrl = [images];
@@ -174,18 +176,23 @@ const updateItem = async (req, res, next) => {
         runValidators: false,
       } */
     );
-    await sequelize.query("DELETE FROM item_feature WHERE item_id = :itemId", {
-      replacements: { itemId: req.params.id },
-    });
-    features.forEach(async (elem) => {
-      const ifeat = await sequelize.query(
-        "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
+    if (!req.body.remove) {
+      await sequelize.query(
+        "DELETE FROM item_feature WHERE item_id = :itemId",
         {
-          replacements: { itemId: req.params.id, featId: elem },
-          type: sequelize.QueryTypes.INSERT,
+          replacements: { itemId: req.params.id },
         }
       );
-    });
+      features.forEach(async (elem) => {
+        const ifeat = await sequelize.query(
+          "INSERT INTO item_feature (item_id, feature_id) VALUES (:itemId, :featId )",
+          {
+            replacements: { itemId: req.params.id, featId: elem },
+            type: sequelize.QueryTypes.INSERT,
+          }
+        );
+      });
+    }
     res.status(201).json(updatedItem);
   } catch (error) {
     next(new ErrorResponse(error));
