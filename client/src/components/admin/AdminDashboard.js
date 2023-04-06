@@ -11,7 +11,7 @@ function AdminDashboard() {
             Create new item
           </button>
         </Link>
-        <Link to="/admin/items">
+        <Link to="/admin/items?page=1&limit=20">
           <button className="w-full flex justify-center my-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover">
             Item list
           </button>
@@ -22,7 +22,7 @@ function AdminDashboard() {
             Add new user
           </button>
         </Link>
-        <Link to="/admin/users">
+        <Link to="/admin/users?page=1&limit=20">
           <button className="w-full flex justify-center my-6 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover">
             User list
           </button>
