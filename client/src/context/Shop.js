@@ -1,69 +1,66 @@
-import { createContext, useContext, useState, useReducer, useEffect} from "react";
-import {ItemCards} from "../components/ItemCards"
+import {
+  createContext,
+  useContext,
+  useState,
+  useReducer,
+  useEffect,
+} from "react";
+import ItemCards from "../components/ItemCards";
 
 /* ---------- context setup ------------ */
 export const ShopContext = createContext();
 
 export const useShopContext = () => useContext(ShopContext);
+const cartReducer = (state, action) => {
+  console.log("Hello from the reducer function!");
+  const { type, payload } = action;
+  switch (type) {
+    case "addToCart":
+      return [...state, payload.item];
+    case "removeFromCart":
+      const copyCart = [...state];
+      const findItemIndex = state.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state.splice(findItemIndex, 1);
+      return copyCart;
+    case "clearCart":
+      return [];
+
+    default:
+      throw new Error("Invalid action type for cart reducer");
+  }
+};
 
 /* ---------- cart reducer ------------ */
 
 const ShopStates = ({ children }) => {
-  const [currWardrobe, setCurrWardrobe] = useState([]);
-  const [newWardrobe, setNewWardrobe] = useState([]);
-
-  const handleAddToWardrobe = (item) => {
-    console.log("Adding item to wardrobe:", item);
-    setNewWardrobe([...newWardrobe, item]);
-  };
-  const addToCart = 'addToCart', removeFromCart = 'removeFromCart'
   /* ---------- cart reducer ------------ */
-  const cartReducer = (state, action) => {
-    const { type, payload } = action 
-    switch (type) {
-      case addToCart:
-        return [...state, payload];
-      case "removeFromCart":
-        return state.filter((item) => item.id !== action.payload.id);
-      case "clearCart":
-        return [];
-      case "updateQuantity":
-        return state.map((item) =>
-          item.id === action.payload.id
-            ? { ...item, qty: action.payload.qty }
-            : item
-        );
-      default:
-        throw new Error("Invalid action type for cart reducer");
-    }
-  };
-  const [cartState, dispatch] = useReducer(cartReducer, []);
 
-  const handleRemoveFromCart = (item) => {
-    console.log("Removing item from cart:", item);
-    dispatch({
-      type: "removeFromCart",
-      payload: { id: item.id },
-    });
-  };
+  const [cart, cartDispatch] = useReducer(cartReducer, []);
+
+  // const handleRemoveFromCart = (id) => {
+  //   console.log("Removing item from cart:", id);
+  //   cartDispatch({
+  //     type: "removeFromCart",
+  //     payload: { id },
+  //   });
+  // };
 
   const handleClearCart = () => {
     console.log("Clearing cart");
-    dispatch({ type: "clearCart" });
+    cartDispatch({ type: "clearCart" });
   };
 
+  // useEffect(() => {
+  //   ItemCards(setItems);
+  // }, []);
 
   return (
     <ShopContext.Provider
       value={{
-        currWardrobe,
-        setCurrWardrobe,
-        newWardrobe,
-        setNewWardrobe,
-        cartState,
-        dispatch,
-        handleAddToWardrobe,
-        handleRemoveFromCart,
+        cart,
+        cartDispatch,
         handleClearCart,
       }}
     >

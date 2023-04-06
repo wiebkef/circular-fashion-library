@@ -149,7 +149,7 @@ function classNames(...classes) {
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
-  const { newWardrobe } = useShopContext();
+  const { cart } = useShopContext();
 
   
 
@@ -594,8 +594,8 @@ export default function Navbar() {
                       className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-brand"
                       aria-hidden="true"
                     />
-                     {newWardrobe.length ? (
-                      <div className="cartCount">{newWardrobe.length}</div>
+                     {cart.length ? (
+                      <div className="cartCount">{cart.length}</div>
                     ) : null} 
                   </Link>
                 </div>

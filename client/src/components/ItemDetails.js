@@ -3,8 +3,7 @@ import axios from "../axiosInstance";
 import { useParams } from "react-router-dom";
 import Accordion from "./Accordion";
 import Carousel from "./Carousel";
-import {useShopContext} from "../context/Shop";
-
+import { useShopContext } from "../context/Shop";
 
 function ItemDetails() {
   const [item, setItem] =
@@ -80,9 +79,7 @@ function ItemDetails() {
     },
   } */);
   const { id } = useParams();
-  const { handleAddToWardrobe, newWardrobe } = useShopContext();
-  console.log("newWardrobe after add:", newWardrobe);
-
+  const { cart, cartDispatch } = useShopContext();
 
   useEffect(() => {
     axios
@@ -121,8 +118,15 @@ function ItemDetails() {
               ))}
             </ul>
           </div>
-          <button  onClick={() => handleAddToWardrobe(item)}
-          className="my-3 font-semibold text-gray-700 border border-gray-700 p-3 rounded-md">
+          <button
+            onClick={() =>
+              cartDispatch({
+                type: "addToCart",
+                payload: { item },
+              })
+            }
+            className="my-3 font-semibold text-gray-700 border border-gray-700 p-3 rounded-md"
+          >
             Add to wardrobe
           </button>
         </div>

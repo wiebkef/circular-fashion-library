@@ -3,14 +3,8 @@ import { Link } from "react-router-dom";
 import Incentives from "./Incentives";
 
 const Cart = () => {
-  const { newWardrobe, handleRemoveFromCart } = useShopContext();
-  console.log("newWardrobe:", newWardrobe);
-
-  //useEffect(() => {}, []);
-
-  const handleRemove = (item) => {
-    handleRemoveFromCart(item);
-  };
+  const { cart, cartDispatch } = useShopContext();
+  console.log("cart:", cart);
 
   return (
     <div>
@@ -26,9 +20,9 @@ const Cart = () => {
         </div>
         <div className="bg-white shadow rounded-lg overflow-hidden my-4">
           <div className="flex flex-col divide-y divide-gray-200">
-            {newWardrobe.length > 0 ? (
-              newWardrobe.map((item) => (
-                <div key={item.sku} className="flex py-5">
+            {cart.length > 0 ? (
+              cart.map((item, index) => (
+                <div key={`${index}_${item.sku}`} className="flex py-5">
                   <div className="w-1/4 pl-5">
                     <img
                       className="w-full h-full object-center object-cover rounded-lg"
@@ -41,7 +35,12 @@ const Cart = () => {
                       <h4 className="text-xl font-bold pt-0">{item.title}</h4>
                       <button
                         className="text-gray-400 hover:text-brand py-4 px-5"
-                        onClick={() => handleRemove(item)}
+                        onClick={() =>
+                          cartDispatch({
+                            type: "removeFromCart",
+                            payload: { id: item.id },
+                          })
+                        }
                       >
                         <svg
                           className="w-5 h-5 fill-current"
@@ -57,8 +56,12 @@ const Cart = () => {
                     </div>
                     <div className="flex">
                       <div className="w-1/3">
-                        <p className="text-gray-500 text-left">Color: {item.color}</p>
-                        <p className="text-gray-500 text-left">Size: {item.size}</p>
+                        <p className="text-gray-500 text-left">
+                          Color: {item.color}
+                        </p>
+                        <p className="text-gray-500 text-left">
+                          Size: {item.size}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -78,7 +81,7 @@ const Cart = () => {
             <Link
               to="/checkout"
               onClick={(event) => {
-                if (!newWardrobe.length) {
+                if (!cart.length) {
                   event.preventDefault();
                 }
               }}

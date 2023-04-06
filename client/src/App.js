@@ -13,6 +13,7 @@ import Member from "./components/MemberRoute";
 import FilterSidebar from "./components/FilterSidebar";
 import Contact from "./components/Contact";
 import UserDetails from "./components/UserDetails";
+import SubscrPlan from "./components/SubscrPlan";
 
 // ADMIN COMPONENTS IMPORTS
 import ItemForm from "./components/admin/ItemForm";
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/subscription" element={<SubscrPlan />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<Member />}></Route>
         <Route path="/admin/" element={<Admin />}>
