@@ -25,6 +25,7 @@ import AdminDashboard from "./components/admin/AdminDashboard";
 import ItemList from "./components/admin/ItemList";
 import UserList from "./components/admin/UserList";
 import UserForm from "./components/admin/UserForm";
+import SubscrPlan from "./components/SubscrPlan";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
         <Route path="/signup" element={<SignUpForm />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/subscription" element={<SubscrPlan />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<User />}>
           <Route path="account" element={<UserDashboard />} />

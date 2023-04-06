@@ -91,8 +91,7 @@ function ItemDetails() {
   //   console.log("newWardrobe after add:", newWardrobe);
   // };
 
-  const { handleAddToWardrobe, newWardrobe } = useShopContext();
-  console.log("newWardrobe after add:", newWardrobe);
+  const { cart, cartDispatch } = useShopContext();
 
   useEffect(() => {
     axios
@@ -142,8 +141,13 @@ function ItemDetails() {
                   ))}
                 </ul>
                 <button
-                  onClick={() => handleAddToWardrobe(item)}
-                  className="w-full flex justify-center mt-10 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
+                  onClick={() =>
+                    cartDispatch({
+                      type: "addToCart",
+                      payload: { item },
+                    })
+                  }
+                  className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
                 >
                   Add to wardrobe
                 </button>
