@@ -602,13 +602,9 @@ export default function Navbar() {
                       className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-brand"
                       aria-hidden="true"
                     />
-                    {/* <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
-                    </span> */}
-                    {/* {cart.length ? (
+                    {cart.length ? (
                       <div className="cartCount">{cart.length}</div>
-                    ) : null} */}
-                    Cart
+                    ) : null}
                   </Link>
                 </div>
               </div>
