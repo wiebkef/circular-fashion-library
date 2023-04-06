@@ -1,26 +1,46 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
+import Pagination from "../Pagination";
+
+const useQueryString = () => {
+  const location = useLocation();
+  return new URLSearchParams(location.search);
+};
 
 const ItemList = () => {
   const navigate = useNavigate();
   const [items, setItems] = useState();
   const [id, setId] = useState(null);
   let [isOpen, setIsOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const [lastItem, setLastItem] = useState(false);
+  const [tableChange, setTableChange] = useState(false);
+
+  const queryString = useQueryString();
+  const url = `/api/items?${queryString}`;
 
   useEffect(() => {
-    axios.get("/api/items").then((res) => {
-      setItems(res.data);
-    });
-  }, []);
+    axios
+      .get(url)
+      .then((res) => {
+        if (res.data.length < 20) {
+          setLastItem(true);
+        }
+        setItems(res.data);
+      })
+      .catch((e) => console.log(e));
+  }, [url, lastItem, tableChange]);
 
   const handleRemove = (id) => {
     axios
       .delete(`/api/items/${id}`)
-      .then((res) => navigate("/admin/items"))
+      .then((res) => {
+        setTableChange(!tableChange);
+        navigate({ pathname: "/admin/items", search: `?${queryString}` });
+      })
       .catch((e) => console.log(e));
-    window.location.reload();
   };
 
   return (
@@ -75,6 +95,12 @@ const ItemList = () => {
             </table>
           </>
         )}
+        <Pagination
+          page={page}
+          setPage={setPage}
+          lastItem={lastItem}
+          setLastItem={setLastItem}
+        />
       </div>
 
       <Dialog
