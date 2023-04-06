@@ -125,8 +125,9 @@ function ItemDetails() {
                   {item.brand} {item.title}
                 </div>
                 <div className="text-sm">
-                  <span className="mr-2">Color {item.color} </span>
-                  <span className="text-gray-400 mr-2">|</span> Size {item.size}
+                  <span className="mr-2">{item.color} </span>
+                  <span className="text-gray-400 mr-2">|</span> Size:{" "}
+                  {item.size}
                 </div>
                 <div className="text-sm mt-3">{item.short_description}</div>
                 <ul className="flex my-5">
