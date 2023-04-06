@@ -1,4 +1,4 @@
-import { Fragment, useState, useContext } from "react";
+import { Fragment, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
 import myLogo from "../images/logo_CFL.png";
@@ -11,136 +11,92 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { useShopContext } from "../context/Shop";
+import { getBrands, getCategories, getFeatures } from "../utils/getFilters";
 
-const navigation = {
-  categories: [
-    {
-      id: "women",
-      name: "Women",
-      featured: [
-        {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
-          imageAlt:
-            "Models sitting back to back, wearing Basic Tee in black and bone.",
-        },
-        {
-          name: "Basic Tees",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
-          imageAlt:
-            "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
-        },
-      ],
-      sections: [
-        {
-          id: "clothing",
-          name: "Clothing",
-          items: [
-            { name: "Tops", href: "#" },
-            { name: "Dresses", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Denim", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
-          ],
-        },
-        {
-          id: "accessories",
-          name: "Accessories",
-          items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Significant Other", href: "#" },
-          ],
-        },
-      ],
-    },
-    {
-      id: "men",
-      name: "Men",
-      featured: [
-        {
-          name: "New Arrivals",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg",
-          imageAlt:
-            "Drawstring top with elastic loop closure and textured interior padding.",
-        },
-        {
-          name: "Artwork Tees",
-          href: "#",
-          imageSrc:
-            "https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg",
-          imageAlt:
-            "Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.",
-        },
-      ],
-      sections: [
-        {
-          id: "clothing",
-          name: "Clothing",
-          items: [
-            { name: "Tops", href: "#" },
-            { name: "Pants", href: "#" },
-            { name: "Sweaters", href: "#" },
-            { name: "T-Shirts", href: "#" },
-            { name: "Jackets", href: "#" },
-            { name: "Activewear", href: "#" },
-            { name: "Browse All", href: "#" },
-          ],
-        },
-        {
-          id: "accessories",
-          name: "Accessories",
-          items: [
-            { name: "Watches", href: "#" },
-            { name: "Wallets", href: "#" },
-            { name: "Bags", href: "#" },
-            { name: "Sunglasses", href: "#" },
-            { name: "Hats", href: "#" },
-            { name: "Belts", href: "#" },
-          ],
-        },
-        {
-          id: "brands",
-          name: "Brands",
-          items: [
-            { name: "Re-Arranged", href: "#" },
-            { name: "Counterfeit", href: "#" },
-            { name: "Full Nelson", href: "#" },
-            { name: "My Way", href: "#" },
-          ],
-        },
-      ],
-    },
-  ],
-  pages: [
-    { name: "Kids", href: "#" },
-    { name: "About", href: "#" },
-  ],
-};
+const gender = [
+  {
+    id: "women",
+    name: "Women",
+  },
+  {
+    id: "unisex",
+    name: "Unisex",
+  },
+  {
+    id: "men",
+    name: "Men",
+  },
+];
+
+const cats = [
+  {
+    id: "women",
+    name: "Women",
+    featured: [
+      {
+        name: "Browse All Clothes",
+        href: "/shop?gender=women&status=available&page=1",
+        imageSrc:
+          "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
+        imageAlt:
+          "Models sitting back to back, wearing Basic Tee in black and bone.",
+      },
+      {
+        name: "Basic T-Shirts",
+        href: "/shop?gender=women&cat=T-Shirts&status=available&page=1",
+        imageSrc:
+          "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
+        imageAlt:
+          "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+      },
+    ],
+  },
+  {
+    id: "unisex",
+    name: "Unisex",
+    featured: [
+      {
+        name: "Browse All Clothes",
+        href: "/shop?gender=unisex&status=available&page=1",
+        imageSrc:
+          "https://images.pexels.com/photos/2129970/pexels-photo-2129970.jpeg?auto=compress&cs=tinysrgb&w=640&h=427&dpr=1",
+        imageAlt:
+          "Models sitting back to back, wearing Basic Tee in black and bone.",
+      },
+      {
+        name: "Basic T-Shirts",
+        href: "/shop?gender=unisex&cat=T-Shirts&status=available&page=1",
+        imageSrc:
+          "https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg",
+        imageAlt:
+          "Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.",
+      },
+    ],
+  },
+  {
+    id: "men",
+    name: "Men",
+    featured: [
+      {
+        name: "Browse All Clothes",
+        href: "/shop?gender=men&status=available&page=1",
+        imageSrc:
+          "https://images.pexels.com/photos/670786/pexels-photo-670786.jpeg?auto=compress&cs=tinysrgb&w=640&h=959&dpr=1",
+        imageAlt:
+          "Drawstring top with elastic loop closure and textured interior padding.",
+      },
+      {
+        name: "Basic T-Shirts",
+        href: "/shop?gender=men&cat=T-Shirts&status=available&page=1",
+        imageSrc:
+          "https://images.pexels.com/photos/5698851/pexels-photo-5698851.jpeg?auto=compress&cs=tinysrgb&w=640&h=427&dpr=1",
+
+        imageAlt:
+          "Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.",
+      },
+    ],
+  },
+];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -148,8 +104,26 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [categories, setCategories] = useState();
+  const [features, setFeatures] = useState();
+
   const { user, logout } = useContext(AuthContext);
   const { cart } = useShopContext();
+  const [apparel, setApparel] = useState("women");
+
+  useEffect(() => {
+    getCategories()
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((e) => console.log(e));
+
+    getFeatures()
+      .then((res) => {
+        setFeatures(res.data);
+      })
+      .catch((e) => console.log(e));
+  }, []);
 
   return (
     <div className="bg-white">
@@ -194,9 +168,10 @@ export default function Navbar() {
                 <Tab.Group as="div" className="mt-2">
                   <div className="border-b border-gray-200">
                     <Tab.List className="-mb-px flex space-x-8 px-4">
-                      {navigation.categories.map((category) => (
+                      {cats.map((gender) => (
                         <Tab
-                          key={category.name}
+                          onClick={() => setApparel(gender.id)}
+                          key={gender.name}
                           className={({ selected }) =>
                             classNames(
                               selected
@@ -206,13 +181,15 @@ export default function Navbar() {
                             )
                           }
                         >
-                          {category.name}
+                          {gender.name}
                         </Tab>
                       ))}
                     </Tab.List>
                   </div>
+
+                  {/* Highlights with images */}
                   <Tab.Panels as={Fragment}>
-                    {navigation.categories.map((category) => (
+                    {cats.map((category) => (
                       <Tab.Panel
                         key={category.name}
                         className="space-y-10 px-4 pt-10 pb-8"
@@ -240,53 +217,85 @@ export default function Navbar() {
                                 />
                                 {item.name}
                               </a>
-                              <p aria-hidden="true" className="mt-1">
-                                Shop now
+                              <p
+                                aria-hidden="true"
+                                className="mt-1 text-gray-600"
+                              >
+                                Get now
                               </p>
                             </div>
                           ))}
                         </div>
-                        {category.sections.map((section) => (
-                          <div key={section.name}>
-                            <p
-                              id={`${category.id}-${section.id}-heading-mobile`}
-                              className="font-medium text-gray-900"
-                            >
-                              {section.name}
-                            </p>
-                            <ul
-                              aria-labelledby={`${category.id}-${section.id}-heading-mobile`}
-                              className="mt-6 flex flex-col space-y-6"
-                            >
-                              {section.items.map((item) => (
-                                <li key={item.name} className="flow-root">
-                                  <a
-                                    href={item.href}
+                        {/* Highlights with images end */}
+
+                        {/* Mobile filters */}
+                        <div>
+                          <p className="font-medium text-gray-900">
+                            Categories
+                          </p>
+                          <ul className="mt-6 flex flex-col space-y-6">
+                            {categories &&
+                              categories.map((category) => (
+                                <li key={category.id} className="flow-root">
+                                  <Link
+                                    to={`/shop?gender=${apparel}&cat=${category.name}&status=available&page=1`}
                                     className="-m-2 block p-2 text-gray-500"
+                                    onClick={() => setOpen(false)}
                                   >
-                                    {item.name}
-                                  </a>
+                                    {category.name}
+                                  </Link>
                                 </li>
                               ))}
-                            </ul>
-                          </div>
-                        ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">Features</p>
+                          <ul className="mt-6 flex flex-col space-y-6">
+                            {features &&
+                              features.map((feature) => (
+                                <li key={feature.id} className="flow-root">
+                                  <Link
+                                    to={`/shop?gender=${apparel}&feat=${feature.name}&status=available&page=1`}
+                                    className="-m-2 block p-2 text-gray-500"
+                                    onClick={() => setOpen(false)}
+                                  >
+                                    {feature.name}
+                                  </Link>
+                                </li>
+                              ))}
+                          </ul>
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">Brands</p>
+                          <ul className="mt-6 flex flex-col space-y-6">
+                            {getBrands().map((brand, index) => (
+                              <li key={index} className="flow-root">
+                                <Link
+                                  to={`/shop?gender=${apparel}&brand=${brand}&status=available&page=1`}
+                                  className="-m-2 block p-2 text-gray-500"
+                                  onClick={() => setOpen(false)}
+                                >
+                                  {brand}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        {/* Mobile filters end */}
                       </Tab.Panel>
                     ))}
                   </Tab.Panels>
                 </Tab.Group>
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  {navigation.pages.map((page) => (
-                    <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
-                        className="-m-2 block p-2 font-medium text-gray-900"
-                      >
-                        {page.name}
-                      </a>
-                    </div>
-                  ))}
+                  <div className="flow-root">
+                    <a
+                      href="/about"
+                      className="-m-2 block p-2 font-medium text-gray-900"
+                    >
+                      About
+                    </a>
+                  </div>
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
@@ -324,6 +333,7 @@ export default function Navbar() {
                         <NavLink
                           to="/login"
                           className="-m-2 block p-2 font-medium text-gray-900"
+                          onClick={() => setOpen(false)}
                         >
                           Log In
                         </NavLink>
@@ -332,26 +342,13 @@ export default function Navbar() {
                         <NavLink
                           to="/signup"
                           className="-m-2 block p-2 font-medium text-gray-900"
+                          onClick={() => setOpen(false)}
                         >
                           Create account
                         </NavLink>
                       </div>
                     </>
                   )}
-                </div>
-
-                <div className="border-t border-gray-200 py-6 px-4">
-                  <a href="!#" className="-m-2 flex items-center p-2">
-                    <img
-                      src={FlagIcon}
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-base font-medium text-gray-900">
-                      DE
-                    </span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -376,7 +373,10 @@ export default function Navbar() {
               <button
                 type="button"
                 className="rounded-md bg-white p-2 text-gray-400  hover:text-brand lg:hidden"
-                onClick={() => setOpen(true)}
+                onClick={() => {
+                  setOpen(true);
+                  setApparel("women");
+                }}
               >
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon className="h-7 w-7" aria-hidden="true" />
@@ -393,16 +393,17 @@ export default function Navbar() {
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
-                  {navigation.categories.map((category) => (
+                  {cats.map((category) => (
                     <Popover key={category.name} className="flex">
                       {({ open }) => (
                         <>
                           <div className="relative flex">
                             <Popover.Button
+                              onClick={() => setApparel(category.id)}
                               className={classNames(
                                 open
-                                  ? "border-brand-600 text-brand-600"
-                                  : "border-transparent text-gray-700 hover:text-brand",
+                                  ? "border-brand text-brand focus-visible:outline-none"
+                                  : "border-transparent text-gray-700 hover:text-brand focus-visible:outline-none",
                                 "relative z-10 -mb-px flex items-center border-b-2 pt-px text-base font-medium transition-colors duration-200 ease-out"
                               )}
                             >
@@ -426,9 +427,10 @@ export default function Navbar() {
                                 aria-hidden="true"
                               />
 
-                              <div className="relative bg-white">
+                              <div className="relative bg-white z-10">
                                 <div className="mx-auto max-w-7xl px-8">
                                   <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
+                                    {/* Images */}
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
                                       {category.featured.map((item) => (
                                         <div
@@ -456,40 +458,78 @@ export default function Navbar() {
                                             aria-hidden="true"
                                             className="mt-1"
                                           >
-                                            Shop now
+                                            Get now
                                           </p>
                                         </div>
                                       ))}
                                     </div>
+                                    {/* Images end */}
+
+                                    {/* Prefilter selections */}
                                     <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                      {category.sections.map((section) => (
-                                        <div key={section.name}>
-                                          <p
-                                            id={`${section.name}-heading`}
-                                            className="font-medium text-gray-900"
-                                          >
-                                            {section.name}
-                                          </p>
-                                          <ul
-                                            aria-labelledby={`${section.name}-heading`}
-                                            className="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
-                                          >
-                                            {section.items.map((item) => (
+                                      <div>
+                                        <p className="font-medium text-gray-900 text-left">
+                                          Brands
+                                        </p>
+                                        <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                          {getBrands().map((brand, index) => (
+                                            <li key={index} className="flex">
+                                              <Popover.Button
+                                                as={Link}
+                                                to={`/shop?gender=${apparel}&brand=${brand}&status=available&page=1`}
+                                                className="hover:text-gray-800"
+                                              >
+                                                {brand}
+                                              </Popover.Button>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <p className="font-medium text-gray-900 text-left">
+                                          Categories
+                                        </p>
+                                        <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                          {categories &&
+                                            categories.map((categorie) => (
                                               <li
-                                                key={item.name}
+                                                key={categorie.id}
                                                 className="flex"
                                               >
-                                                <a
-                                                  href={item.href}
+                                                <Popover.Button
+                                                  as={Link}
+                                                  to={`/shop?gender=${apparel}&cat=${categorie.name}&status=available&page=1`}
                                                   className="hover:text-gray-800"
                                                 >
-                                                  {item.name}
-                                                </a>
+                                                  {categorie.name}
+                                                </Popover.Button>
                                               </li>
                                             ))}
-                                          </ul>
-                                        </div>
-                                      ))}
+                                        </ul>
+                                      </div>
+                                      <div>
+                                        <p className="font-medium text-gray-900 text-left">
+                                          Features
+                                        </p>
+                                        <ul className="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
+                                          {features &&
+                                            features.map((feature) => (
+                                              <li
+                                                key={feature.id}
+                                                className="flex"
+                                              >
+                                                <Popover.Button
+                                                  as={Link}
+                                                  to={`/shop?gender=${apparel}&feat=${feature.name}&status=available&page=1`}
+                                                  className="hover:text-gray-800"
+                                                >
+                                                  {feature.name}
+                                                </Popover.Button>
+                                              </li>
+                                            ))}
+                                        </ul>
+                                      </div>
+                                      {/* Prefilter selections end*/}
                                     </div>
                                   </div>
                                 </div>
@@ -501,15 +541,12 @@ export default function Navbar() {
                     </Popover>
                   ))}
 
-                  {navigation.pages.map((page) => (
-                    <a
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-base font-medium text-gray-700 hover:text-brand"
-                    >
-                      {page.name}
-                    </a>
-                  ))}
+                  <a
+                    href="/about"
+                    className="flex items-center text-base font-medium text-gray-700 hover:text-brand"
+                  >
+                    About
+                  </a>
                 </div>
               </Popover.Group>
 
@@ -554,34 +591,9 @@ export default function Navbar() {
                     >
                       Create account
                     </NavLink>
+                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   </div>
                 )}
-
-                <div className="hidden lg:ml-8 lg:flex">
-                  <a
-                    href="!#"
-                    className="flex items-center text-gray-700 hover:text-gray-800"
-                  >
-                    <img
-                      src={FlagIcon}
-                      alt=""
-                      className="block h-auto w-5 flex-shrink-0"
-                    />
-                    <span className="ml-3 block text-sm font-medium">DE</span>
-                    <span className="sr-only">, change currency</span>
-                  </a>
-                </div>
-
-                {/* Search */}
-                <div className="flex lg:ml-6">
-                  <a href="!#" className="p-2 text-gray-400 hover:text-brand">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon
-                      className="h-7 w-7"
-                      aria-hidden="true"
-                    />
-                  </a>
-                </div>
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
