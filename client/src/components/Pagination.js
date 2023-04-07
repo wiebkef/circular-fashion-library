@@ -33,58 +33,61 @@ const Pagination = ({ page = 1, setPage, lastItem, setLastItem }) => {
     } else {
       searchParams.append("page", page);
     }
-
+    console.log("LAST ITEM", lastItem);
     setSearchParams(searchParams);
   };
 
   return (
     <div className="flex justify-center">
-      {page !== 1 && (
-        <button
-          onClick={previousPage}
-          className="ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
+      <button
+        onClick={previousPage}
+        disabled={page === 1}
+        className={`ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800  bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover ${
+          page === 1 && "invisible"
+        }`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="w-6 h-6"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
-            />
-          </svg>
-        </button>
-      )}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75"
+          />
+        </svg>
+      </button>
 
       <div className="ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-md text-md text-gray-800 font-semibold  ">
         {page}
       </div>
-      {!lastItem && (
-        <button
-          onClick={nextPage}
-          className="ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
+
+      <button
+        onClick={nextPage}
+        disabled={lastItem}
+        className={`ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800  bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover ${
+          lastItem && "invisible"
+        }`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2}
+          stroke="currentColor"
+          className="w-6 h-6"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-            />
-          </svg>
-        </button>
-      )}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
+          />
+        </svg>
+      </button>
     </div>
   );
 };
