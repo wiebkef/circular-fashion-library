@@ -42,7 +42,7 @@ const Pagination = ({ page = 1, setPage, lastItem, setLastItem }) => {
       <button
         onClick={previousPage}
         disabled={page === 1}
-        className={`ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800  bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover ${
+        className={`ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-md text-md text-gray-800  bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover ${
           page === 1 && "invisible"
         }`}
       >
@@ -69,7 +69,7 @@ const Pagination = ({ page = 1, setPage, lastItem, setLastItem }) => {
       <button
         onClick={nextPage}
         disabled={lastItem}
-        className={`ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-sm text-md text-gray-800  bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover ${
+        className={`ml-4 mt-8 py-2 px-3 border border-transparent rounded-md shadow-md text-md text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover ${
           lastItem && "invisible"
         }`}
       >
