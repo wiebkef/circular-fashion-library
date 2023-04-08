@@ -65,7 +65,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, signup, login, logout, error }}
+      value={{ user, loading, signup, login, logout, error, setError }}
     >
       {children}
     </AuthContext.Provider>

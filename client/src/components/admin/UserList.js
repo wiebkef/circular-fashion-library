@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../axiosInstance";
-import {
-  Link,
-  useNavigate,
-  useSearchParams,
-  useLocation,
-} from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Dialog } from "@headlessui/react";
 import Pagination from "../Pagination";
 
