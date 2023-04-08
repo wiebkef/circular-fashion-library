@@ -50,12 +50,6 @@ function UserForm() {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-  /*   const handleImages = (e) => {
-    // const files = e.target.files;
-    // e.target.files.forEach((file) => setImages([...images, file]));
-    console.log(e.target.files);
-    console.log(images);
-  }; */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (id) {

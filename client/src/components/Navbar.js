@@ -2,11 +2,9 @@ import { Fragment, useState, useContext, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
 import myLogo from "../images/logo_CFL.png";
-import FlagIcon from "../images/germany-flag-icon.svg";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";

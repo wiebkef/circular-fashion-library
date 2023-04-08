@@ -1,14 +1,63 @@
-import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { useState, useEffect, useContext } from "react";
+import axios from "../axiosInstance";
 import { Switch } from "@headlessui/react";
 import { Link } from "react-router-dom";
+import { getCountries } from "../utils/userProps";
+import { AuthContext } from "../context/Auth";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Checkout() {
+  const { user } = useContext(AuthContext);
+  const id = user.id;
+
   const [agreed, setAgreed] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    street: "",
+    house_no: "",
+    supplement: "",
+    zip: "",
+    city: "",
+    country: "",
+    role: "",
+  });
+  const [error, setError] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    street: "",
+    house_no: "",
+    supplement: "",
+    zip: "",
+    city: "",
+    country: "",
+    role: "",
+  });
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`/api/users/${id}`)
+        .then((res) => {
+          setUserDetails(res.data);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [id]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserDetails({ ...user, [name]: value });
+  };
 
   return (
     <div className="bg-white px-6 sm:py-10 lg:px-6 py-14">
@@ -34,191 +83,186 @@ export default function Checkout() {
         </h3>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Email
-            </label>
-            <div className="mt-2.5">
+            <div className="mt-2.5 relative">
+              {error.email && (
+                <p className="text-red-700">{error.email.message}</p>
+              )}
               <input
                 type="email"
-                name="email"
                 id="email"
-                autoComplete="email"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
+                name="email"
+                value={userDetails.email}
+                placeholder="Email"
+                required
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={handleChange}
               />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              First name *
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="first-name"
-                id="first-name"
-                autoComplete="given-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="last-name"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Last name *
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="last-name"
-                id="last-name"
-                autoComplete="family-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
+              <label
+                htmlFor="email"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Email
+              </label>
             </div>
           </div>
           <div className="sm:col-span-2">
-            <label
-              htmlFor="adress"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Street, Number *
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="adress"
-                id="adress"
-                autoComplete="adress"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
+            <div className="flex gap-3 mt-1 relative">
+              <div className="relative inline-block w-1/2">
+                {error.first_name && (
+                  <p className="text-red-700">{error.first_name.message}</p>
+                )}
+                <input
+                  type="text"
+                  id="first_name"
+                  name="first_name"
+                  value={userDetails.first_name || ""}
+                  placeholder="First Name"
+                  className="inline-block peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="first_name"
+                  className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                >
+                  First Name
+                </label>
+              </div>
+              <div className="relative inline-block w-1/2">
+                {error.last_name && (
+                  <p className="text-red-700">{error.last_name.message}</p>
+                )}
+                <input
+                  type="text"
+                  id="last_name"
+                  name="last_name"
+                  value={userDetails.last_name || ""}
+                  placeholder="Last Name"
+                  className="inline-block peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="last_name"
+                  className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                >
+                  Last Name
+                </label>
+              </div>
             </div>
           </div>
-          <div>
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              City *
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="first-name"
-                id="first-name"
-                autoComplete="given-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
+          <div className="sm:col-span-2">
+            <div className="flex gap-3 mt-1 relative">
+              <div className="relative inline-block w-3/4">
+                {error.street && (
+                  <p className="text-red-700">{error.street.message}</p>
+                )}
+                <input
+                  type="text"
+                  id="street"
+                  name="street"
+                  value={userDetails.street || ""}
+                  placeholder="Street"
+                  className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="street"
+                  className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                >
+                  Street
+                </label>
+              </div>
+              <div className="relative inline-block w-1/4">
+                {error.house_no && (
+                  <p className="text-red-700">{error.house_no.message}</p>
+                )}
+                <input
+                  type="text"
+                  id="house_no"
+                  name="house_no"
+                  value={userDetails.house_no || ""}
+                  placeholder="Number"
+                  className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="house_no"
+                  className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                >
+                  Number
+                </label>
+              </div>
             </div>
           </div>
-          <div>
-            <label
-              htmlFor="country"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Country *
-            </label>
-            <div className="mt-2.5">
+          <div className="sm:col-span-2">
+            <div className="flex gap-3 mt-1 relative">
+              <div className="relative inline-block w-1/4">
+                {error.zip && (
+                  <p className="text-red-700">{error.zip.message}</p>
+                )}
+                <input
+                  type="text"
+                  id="zip"
+                  name="zip"
+                  value={userDetails.zip || ""}
+                  placeholder="Zip code"
+                  className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="zip"
+                  className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                >
+                  Zip code
+                </label>
+              </div>
+              <div className="relative inline-block w-3/4">
+                {error.city && (
+                  <p className="text-red-700">{error.city.message}</p>
+                )}
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={userDetails.city || ""}
+                  placeholder="City"
+                  className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                  onChange={handleChange}
+                />
+                <label
+                  htmlFor="city"
+                  className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+                >
+                  City
+                </label>
+              </div>
+            </div>
+          </div>
+          <div className="sm:col-span-2">
+            <div className="mt-1 relative">
+              {error.country && (
+                <p className="text-red-700">{error.country.message}</p>
+              )}
               <select
                 id="country"
                 name="country"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
+                value={userDetails.country || ""}
+                placeholder="Country"
+                className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
+                onChange={handleChange}
               >
-                <option value="germany">Germany</option>
-                <option value="france">France</option>
+                <option value="">Choose country</option>
+                {getCountries().map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
               </select>
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="state"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              State / Province *
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                autoComplete="city"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="pc"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Postal Code *
-            </label>
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="pc"
-                id="pc"
-                autoComplete="postal code"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="phone-number"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Phone number
-            </label>
-            <div className="relative mt-2.5">
-              <div className="absolute inset-y-0 left-0 flex items-center">
-                <label htmlFor="country" className="sr-only">
-                  Country
-                </label>
-                <select
-                  id="country"
-                  name="country"
-                  className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm"
-                >
-                  <option>EU</option>
-                  <option>US</option>
-                </select>
-                <ChevronDownIcon
-                  className="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-              <input
-                type="tel"
-                name="phone-number"
-                id="phone-number"
-                autoComplete="tel"
-                className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block text-sm font-semibold leading-6 text-gray-900 text-left"
-            >
-              Additional Information
-            </label>
-            <div className="mt-2.5">
-              <textarea
-                name="message"
-                id="message"
-                defaultValue="Apartament/Company/Receiver"
-                rows={4}
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-brand sm:text-sm sm:leading-6"
-              />
+              <label
+                htmlFor="country"
+                className="absolute left-0 -top-3.5 bg-white rounded-md ml-3 px-1.5 text-gray-600 text-sm transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-placeholder-shown:bg-transparent peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm peer-focus:bg-white"
+              >
+                Country
+              </label>
             </div>
           </div>
           <Switch.Group as="div" className="flex gap-x-4 sm:col-span-2">
