@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "../../axiosInstance";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/Auth";
 
 function UserWardrobe() {
@@ -15,7 +14,7 @@ function UserWardrobe() {
         setWardrobe(res.data);
       })
       .catch((e) => console.log(e));
-  }, []);
+  }, [id]);
 
   const handleRemove = (itemId, index) => {
     wardrobe[index].user_id = null;

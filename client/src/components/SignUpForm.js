@@ -14,7 +14,16 @@ function SignUpForm() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    context.signup(user);
+    if (user.password === user.confirmPassword) {
+      context.signup(user);
+    } else {
+      context.setError({
+        ...context.error,
+        confirmPassword: {
+          message: "Passwords do not match.",
+        },
+      });
+    }
   };
 
   return (
@@ -70,11 +79,6 @@ function SignUpForm() {
           </div>
           <div>
             <div className="mt-6 relative">
-              {context.error.confirmPassword && (
-                <p className="text-red-700">
-                  {context.error.confirmPassword.message}
-                </p>
-              )}
               <input
                 type="password"
                 id="confirmPassword"
@@ -91,6 +95,11 @@ function SignUpForm() {
               >
                 Confirm password
               </label>
+              {context.error.confirmPassword && (
+                <p className="text-start ml-3 text-red-700 text-sm">
+                  {context.error.confirmPassword.message}
+                </p>
+              )}
             </div>
           </div>
           <div>
