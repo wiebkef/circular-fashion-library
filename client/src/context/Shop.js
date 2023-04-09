@@ -12,8 +12,10 @@ const cartReducer = (state, action) => {
   switch (type) {
     case "addToCart":
       if (state.length < 3) {
-        if (!state.includes(payload.item)) {
-          return [...state, payload.item];
+        if (!state.some((e) => e.id === payload.item.id)) {
+          state = [...state, payload.item];
+          localStorage.setItem("cart", JSON.stringify(state));
+          return state;
         } else {
           alert("You cannot add the same item twice.");
         }
@@ -26,8 +28,10 @@ const cartReducer = (state, action) => {
         (item) => item.id === action.payload.id
       );
       state.splice(findItemIndex, 1);
+      localStorage.setItem("cart", JSON.stringify(copyCart));
       return copyCart;
     case "clearCart":
+      localStorage.removeItem("cart");
       return [];
 
     default:
@@ -38,7 +42,10 @@ const cartReducer = (state, action) => {
 /* ---------- cart reducer ------------ */
 
 const ShopStates = ({ children }) => {
-  const [cart, cartDispatch] = useReducer(cartReducer, []);
+  const [cart, cartDispatch] = useReducer(
+    cartReducer,
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
 
   const handleClearCart = () => {
     console.log("Clearing cart");
