@@ -1,19 +1,20 @@
 const queryBuilder = (queryParams) => {
-  console.log("WWWWWWW", queryParams);
+  //console.log("WWWWWWW", queryParams);
+  const { Op } = require("sequelize");
 
   const mainQuery = {
     ...(queryParams.size && { size: queryParams.size }),
     ...(queryParams.color && { color: queryParams.color }),
-    ...(queryParams.gender && { gender: queryParams.gender }),
     ...(queryParams.brand && { brand: queryParams.brand }),
-    ...(queryParams.gender && { gender: queryParams.gender }),
     ...(queryParams.status && { status: queryParams.status }),
   };
 
-  let featQuery = { ...(queryParams.feat && { name: queryParams.feat }) };
-  let catQuery = { ...(queryParams.cat && { name: queryParams.cat }) };
+  const genderQuery = queryParams.gender && queryParams.gender;
 
-  return { mainQuery, featQuery, catQuery };
+  const featQuery = { ...(queryParams.feat && { name: queryParams.feat }) };
+  const catQuery = { ...(queryParams.cat && { name: queryParams.cat }) };
+
+  return { genderQuery, mainQuery, featQuery, catQuery };
 };
 
 module.exports = { queryBuilder };
