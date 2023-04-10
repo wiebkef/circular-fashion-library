@@ -10,49 +10,41 @@ function classNames(...classes) {
 }
 
 export default function Checkout() {
-  const { user } = useContext(AuthContext);
-  const id = user.id;
+  const { user, loading } = useContext(AuthContext);
 
   const [agreed, setAgreed] = useState(false);
   const [userDetails, setUserDetails] = useState({
     first_name: "",
     last_name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     street: "",
     house_no: "",
     supplement: "",
     zip: "",
     city: "",
     country: "",
-    role: "",
   });
   const [error, setError] = useState({
     first_name: "",
     last_name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     street: "",
     house_no: "",
     supplement: "",
     zip: "",
     city: "",
     country: "",
-    role: "",
   });
 
   useEffect(() => {
-    if (id) {
+    !loading &&
       axios
-        .get(`/api/users/${id}`)
+        .get(`/api/users/${user.id}`)
         .then((res) => {
           setUserDetails(res.data);
         })
         .catch((e) => console.log(e));
-    }
-  }, [id]);
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,7 +58,7 @@ export default function Checkout() {
           to="/cart"
           className="bg-gray-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-brand lg:px-10"
         >
-          Back to Cart
+          <i className="bi bi-chevron-left"></i> Back to Cart
         </Link>
       </div>
       <div className="mx-auto max-w-2xl text-center">

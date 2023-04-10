@@ -3,18 +3,18 @@ import axios from "../../axiosInstance";
 import { AuthContext } from "../../context/Auth";
 
 function UserWardrobe() {
-  const { user } = useContext(AuthContext);
-  const id = user.id;
+  const { user, loading } = useContext(AuthContext);
   const [wardrobe, setWardrobe] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`/api/items/wardrobe/${id}`)
-      .then((res) => {
-        setWardrobe(res.data);
-      })
-      .catch((e) => console.log(e));
-  }, [id]);
+    !loading &&
+      axios
+        .get(`/api/items/wardrobe/${user.id}`)
+        .then((res) => {
+          setWardrobe(res.data);
+        })
+        .catch((e) => console.log(e));
+  }, [user]);
 
   const handleRemove = (itemId, index) => {
     wardrobe[index].user_id = null;
@@ -25,10 +25,7 @@ function UserWardrobe() {
         setWardrobe(wardrobe.filter((item) => item.id !== itemId));
       })
       .catch((e) => console.log(e));
-    console.log(wardrobe[index]);
   };
-
-  console.log(wardrobe);
 
   return (
     <div className="mx-5">
