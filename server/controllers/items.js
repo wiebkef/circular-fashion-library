@@ -6,6 +6,7 @@ const Feature = require("../models/feature");
 const { queryBuilder } = require("../utils/queryBuilder");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+const { Op } = require("sequelize");
 
 // CLOUDINARY CONFIG
 cloudinary.config({
@@ -49,7 +50,11 @@ const createItem = async (req, res, next) => {
 const getAllItems = async (req, res) => {
   const { page = 1, limit = 12 } = req.query;
   const offset = (page - 1) * limit;
-  const { mainQuery, featQuery, catQuery } = queryBuilder(req.query);
+  const { genderQuery, mainQuery, featQuery, catQuery } = queryBuilder(
+    req.query
+  );
+  console.log(genderQuery);
+  console.log("BUUUUU", mainQuery);
 
   delete req.query.page;
   delete req.query.limit;
@@ -66,7 +71,10 @@ const getAllItems = async (req, res) => {
             { model: Feature, where: catQuery, required: false },
             { model: Category, where: catQuery, required: false },
           ],
-          where: mainQuery,
+          where: {
+            ...mainQuery,
+            gender: { [Op.or]: [genderQuery, "unisex"] },
+          },
           order: [["updated_at", "DESC"]],
           offset: offset,
           limit: limit,
@@ -85,7 +93,10 @@ const getAllItems = async (req, res) => {
             { model: Feature },
             { model: Category, where: catQuery, required: true },
           ],
-          where: mainQuery,
+          where: {
+            ...mainQuery,
+            gender: { [Op.or]: [genderQuery, "unisex"] },
+          },
           order: [["updated_at", "DESC"]],
           offset: offset,
           limit: limit,
@@ -104,7 +115,10 @@ const getAllItems = async (req, res) => {
             { model: Feature, where: featQuery, required: true },
             { model: Category },
           ],
-          where: mainQuery,
+          where: {
+            ...mainQuery,
+            gender: { [Op.or]: [genderQuery, "unisex"] },
+          },
           order: [["updated_at", "DESC"]],
           offset: offset,
           limit: limit,
@@ -120,7 +134,10 @@ const getAllItems = async (req, res) => {
             { model: Feature, where: featQuery, required: true },
             { model: Category, where: catQuery, required: true },
           ],
-          where: mainQuery,
+          where: {
+            ...mainQuery,
+            gender: { [Op.or]: [genderQuery, "unisex"] },
+          },
           order: [["updated_at", "DESC"]],
           offset: offset,
           limit: limit,
