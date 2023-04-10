@@ -1,13 +1,18 @@
-import { createContext, useContext, useReducer } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  useState,
+  useEffect,
+} from "react";
+import axios from "../axiosInstance";
+import { AuthContext } from "./Auth";
 
 /* ---------- context setup ------------ */
 export const ShopContext = createContext();
 
 export const useShopContext = () => useContext(ShopContext);
 const cartReducer = (state, action) => {
-  console.log("Hello from the reducer function!");
-  console.log(state);
-
   const { type, payload } = action;
   switch (type) {
     case "addToCart":
@@ -33,7 +38,6 @@ const cartReducer = (state, action) => {
     case "clearCart":
       localStorage.removeItem("cart");
       return [];
-
     default:
       throw new Error("Invalid action type for cart reducer");
   }
@@ -47,6 +51,18 @@ const ShopStates = ({ children }) => {
     JSON.parse(localStorage.getItem("cart")) || []
   );
 
+  const { user, loading } = useContext(AuthContext);
+  const [wardrobe, setWardrobe] = useState([]);
+  useEffect(() => {
+    !loading &&
+      axios
+        .get(`/api/items/wardrobe/${user.id}`)
+        .then((res) => {
+          setWardrobe(res.data);
+        })
+        .catch((e) => console.log(e));
+  }, [user]);
+
   const handleClearCart = () => {
     console.log("Clearing cart");
     cartDispatch({ type: "clearCart" });
@@ -58,6 +74,8 @@ const ShopStates = ({ children }) => {
         cart,
         cartDispatch,
         handleClearCart,
+        wardrobe,
+        setWardrobe,
       }}
     >
       {children}

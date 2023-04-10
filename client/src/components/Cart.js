@@ -4,7 +4,6 @@ import Incentives from "./Incentives";
 
 const Cart = () => {
   const { cart, cartDispatch } = useShopContext();
-  console.log("cart:", cart);
 
   return (
     <div>
@@ -18,7 +17,7 @@ const Cart = () => {
             yours.
           </p>
         </div>
-        <div className="bg-white shadow rounded-lg overflow-hidden my-4">
+        <div className="border border-1 bg-white shadow rounded-lg overflow-hidden my-4">
           <div className="flex flex-col divide-y divide-gray-200">
             {cart.length > 0 ? (
               cart.map((item, index) => (
@@ -38,7 +37,7 @@ const Cart = () => {
                         onClick={() =>
                           cartDispatch({
                             type: "removeFromCart",
-                            payload: { id:item.id },
+                            payload: { id: item.id },
                           })
                         }
                       >
@@ -83,6 +82,9 @@ const Cart = () => {
               onClick={(event) => {
                 if (!cart.length) {
                   event.preventDefault();
+                  alert(
+                    "Please add at least one item to your cart in order to checkout."
+                  );
                 }
               }}
               className="bg-brand text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-500"

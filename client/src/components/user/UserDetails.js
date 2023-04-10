@@ -4,7 +4,7 @@ import { getCountries } from "../../utils/userProps";
 import { AuthContext } from "../../context/Auth";
 
 function UserDetails() {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const id = user.id;
 
   const [userDetails, setUserDetails] = useState({
@@ -36,12 +36,13 @@ function UserDetails() {
 
   useEffect(() => {
     if (id) {
-      axios
-        .get(`/api/users/${id}`)
-        .then((res) => {
-          setUserDetails(res.data);
-        })
-        .catch((e) => console.log(e));
+      !loading &&
+        axios
+          .get(`/api/users/${id}`)
+          .then((res) => {
+            setUserDetails(res.data);
+          })
+          .catch((e) => console.log(e));
     }
   }, [id]);
 
