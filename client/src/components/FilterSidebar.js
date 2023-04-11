@@ -234,8 +234,8 @@ export default function FilterSidebar() {
         </Transition.Root>
 
         {/* DESKTOP FILTER DIALOG */}
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 ">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+        <main id="allitems" className="mx-auto max-w-7xl px-4 sm:px-6 ">
+          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               All Items
             </h1>

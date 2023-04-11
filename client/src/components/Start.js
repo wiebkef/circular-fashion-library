@@ -1,8 +1,16 @@
 import React from "react";
-import FilterSidebar from "./FilterSidebar";
+import Hero from "./Hero";
+import About from "./About";
+import Highlights from "./Highlights";
 
 function Start() {
-  return <FilterSidebar />;
+  return (
+    <>
+      <Hero />
+      <About />
+      <Highlights />
+    </>
+  );
 }
 
 export default Start;

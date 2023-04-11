@@ -17,7 +17,7 @@ export function getCategories() {
 }
 
 export const getGenders = () => {
-  return ["women", "men", "unisex"];
+  return ["female", "male", "unisex"];
 };
 
 export function getFeatures() {

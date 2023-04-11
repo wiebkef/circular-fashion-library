@@ -55,7 +55,6 @@ const getAllItems = async (req, res) => {
   );
   console.log(genderQuery);
   console.log("BUUUUU", mainQuery);
-
   delete req.query.page;
   delete req.query.limit;
 
@@ -73,7 +72,7 @@ const getAllItems = async (req, res) => {
           ],
           where: {
             ...mainQuery,
-            gender: { [Op.or]: [genderQuery, "unisex"] },
+            gender: { [Op.or]: [genderQuery || "unisex", "unisex"] },
           },
           order: [["updated_at", "DESC"]],
           offset: offset,
