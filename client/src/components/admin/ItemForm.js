@@ -100,7 +100,7 @@ function ItemForm() {
           // setReload(true);
         })
         .catch((err) => {
-          setError("err.response.data.errors");
+          setError(err.response.data.errors);
         });
     } else {
       axios
@@ -109,7 +109,7 @@ function ItemForm() {
           navigate(`/admin/items/${res.data.id}`);
         })
         .catch((err) => {
-          setError("err.response.data.errors");
+          setError(err.response.data.errors);
         });
     }
   };

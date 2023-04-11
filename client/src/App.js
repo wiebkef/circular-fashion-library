@@ -45,6 +45,7 @@ function App() {
         <Route path="/" element={<User />}>
           <Route path="account" element={<UserDashboard />} />
           <Route path="account/wardrobe" element={<UserWardrobe />} />
+          <Route path="account/wardrobe/clean" element={<UserWardrobe />} />
           <Route path="account/details" element={<UserDetails />} />
         </Route>
         <Route path="/admin/" element={<Admin />}>
