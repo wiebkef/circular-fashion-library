@@ -61,7 +61,7 @@ function UserForm() {
           // setReload(true);
         })
         .catch((err) => {
-          setError("err.response.data.errors");
+          setError(err.response.data.errors);
         });
     } else {
       axios
@@ -70,7 +70,7 @@ function UserForm() {
           navigate(`/admin/users/${res.data.id}`);
         })
         .catch((err) => {
-          setError("err.response.data.errors");
+          setError(err.response.data.errors);
         });
     }
   };

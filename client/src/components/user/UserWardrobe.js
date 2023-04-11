@@ -10,9 +10,6 @@ function UserWardrobe() {
   const { cart, wardrobe, setWardrobe } = useShopContext();
   const navigate = useNavigate();
 
-  // console.log(clean);
-  console.log(useLocation());
-
   useEffect(() => {
     !loading &&
       axios
@@ -25,6 +22,7 @@ function UserWardrobe() {
 
   const handleRemove = (itemId, index) => {
     wardrobe[index].user_id = null;
+    wardrobe[index].status = "available";
     wardrobe[index].remove = true;
     axios
       .put(`/api/items/${itemId}`, wardrobe[index])
