@@ -50,11 +50,14 @@ const createItem = async (req, res, next) => {
 const getAllItems = async (req, res) => {
   const { page = 1, limit = 12 } = req.query;
   const offset = (page - 1) * limit;
-  const { genderQuery, mainQuery, featQuery, catQuery } = queryBuilder(
-    req.query
-  );
+  let { genderQuery, mainQuery, featQuery, catQuery } = queryBuilder(req.query);
   console.log(genderQuery);
-  console.log("BUUUUU", mainQuery);
+  console.log("BUUUUU", typeof genderQuery);
+
+  if (!genderQuery) {
+    genderQuery = ["male", "female", "unisex"];
+  }
+
   delete req.query.page;
   delete req.query.limit;
 
@@ -72,7 +75,7 @@ const getAllItems = async (req, res) => {
           ],
           where: {
             ...mainQuery,
-            gender: { [Op.or]: [genderQuery || "unisex", "unisex"] },
+            gender: { [Op.or]: [genderQuery, "unisex"] },
           },
           order: [["updated_at", "DESC"]],
           offset: offset,
