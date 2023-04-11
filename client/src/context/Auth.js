@@ -58,6 +58,7 @@ function AuthProvider({ children }) {
 
   const logout = () => {
     axios.post("/auth/logout", {}).then((res) => {
+      setLoading(true);
       setUser(null);
       window.location.reload();
     });

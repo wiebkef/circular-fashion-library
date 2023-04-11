@@ -1,4 +1,7 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
+import { AuthContext } from "../context/Auth";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const includedFeatures = [
   "Monthly exchange of fashion items",
@@ -8,6 +11,9 @@ const includedFeatures = [
 ];
 
 export default function SubscrPlan() {
+  const { user, loading } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white py-24 sm:py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -16,16 +22,17 @@ export default function SubscrPlan() {
             Revolutionary Circular Fashion Library
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Join our Circular Fashion Library subscription plan and never run
-            out of style! With monthly exchange of fashion items,
-            you can take 3 new clothing items and return 3 old ones that will be
-            repaired and cleaned by our team.
+            Become a member of our Circular Fashion Library and never run out of
+            style! With a monthly exchange of fashion items, you can take up to
+            3 new clothing items and return up to 3 old ones that will be
+            repaired and cleaned by our team. Or you keep your favorites for as
+            long as you wish!
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
           <div className="p-8 sm:p-10 lg:flex-auto">
             <h3 className="text-2xl font-bold tracking-tight text-gray-900">
-            Subscription Benefits
+              Member Benefits
             </h3>
             <p className="mt-6 text-base leading-7 text-gray-600">
               With our subscription plan, you can access our fashion library
@@ -34,14 +41,14 @@ export default function SubscrPlan() {
               a fashion shop.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
-              <h4 className="flex-none text-sm font-semibold leading-6 text-brand">
+              <h4 className="flex-none text font-semibold leading-6 text-brand">
                 What’s included
               </h4>
               <div className="h-px flex-auto bg-gray-100" />
             </div>
             <ul
               role="list"
-              className="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
+              className="text-start mt-8 grid grid-cols-1 gap-4 text leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6"
             >
               {includedFeatures.map((feature) => (
                 <li key={feature} className="flex gap-x-3">
@@ -68,12 +75,18 @@ export default function SubscrPlan() {
                     EUR
                   </span>
                 </p>
-                <a
-                  href="#"
-                  className="mt-10 block w-full rounded-md bg-brand px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Subscribe{" "}
-                </a>
+                {!loading && user ? (
+                  <button className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover">
+                    Become a member
+                  </button>
+                ) : (
+                  <button
+                    onClick={navigate("/signup")}
+                    className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
+                  >
+                    Sign up
+                  </button>
+                )}
                 <p className="mt-6 text-xs leading-5 text-gray-600">
                   By subscribing, you'll be supporting a sustainable and
                   eco-friendly fashion industry. Instead of contributing to the
@@ -81,11 +94,11 @@ export default function SubscrPlan() {
                   in a circular economy where clothing items are reused and
                   given a second life.{" "}
                 </p>
-                <p className="mt-6 text-xs leading-5 text-gray-600">Don't miss out on this opportunity to
-                  refresh your wardrobe sustainably and guilt-free. Subscribe
-                  now and start enjoying the benefits of the Circular Fashion
-                  Library!</p>
-
+                <p className="mt-6 text-xs leading-5 text-gray-600">
+                  Don't miss out on this opportunity to refresh your wardrobe
+                  sustainably and guilt-free. Subscribe now and start enjoying
+                  the benefits of the Circular Fashion Library!
+                </p>
               </div>
             </div>
           </div>

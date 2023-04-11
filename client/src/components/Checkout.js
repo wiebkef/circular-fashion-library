@@ -51,7 +51,7 @@ export default function Checkout() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserDetails({ ...user, [name]: value });
+    setUserDetails({ ...userDetails, [name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -83,6 +83,16 @@ export default function Checkout() {
                 console.log(err);
               });
           });
+          axios
+            .put(`/api/users/${user.id}`, userDetails)
+            .then((res) => {
+              // navigate(`/admin/users/${id}`);
+              navigate(`/account/wardrobe`);
+              // setReload(true);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
           cartDispatch({
             type: "clearCart",
           });
@@ -109,7 +119,7 @@ export default function Checkout() {
           Please fill out the contact and shipping information
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-4 max-w-xl sm:mt-5">
+      <form onSubmit={handleSubmit} className="mx-auto mt-4 max-w-xl sm:mt-5">
         <h3 className="pb-4 text-base font-bold tracking-tight text-gray-900 sm:text-lg text-left">
           CONTACT & SHIPPING INFORMATION
         </h3>
@@ -348,7 +358,6 @@ export default function Checkout() {
         <div className="mt-10">
           <button
             type="submit"
-            onClick={handleSubmit}
             className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
           >
             Confirm Order
