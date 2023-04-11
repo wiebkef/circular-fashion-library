@@ -13,7 +13,7 @@ import { getBrands, getCategories, getFeatures } from "../utils/getFilters";
 
 const gender = [
   {
-    id: "women",
+    id: "female",
     name: "Women",
   },
   {
@@ -21,19 +21,19 @@ const gender = [
     name: "Unisex",
   },
   {
-    id: "men",
+    id: "male",
     name: "Men",
   },
 ];
 
 const cats = [
   {
-    id: "women",
+    id: "female",
     name: "Women",
     featured: [
       {
         name: "Browse All Clothes",
-        href: "/shop?gender=women&status=available&page=1",
+        href: "/shop?gender=female&status=available&page=1",
         imageSrc:
           "https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg",
         imageAlt:
@@ -41,7 +41,7 @@ const cats = [
       },
       {
         name: "Basic T-Shirts",
-        href: "/shop?gender=women&cat=T-Shirts&status=available&page=1",
+        href: "/shop?gender=female&cat=T-Shirts&status=available&page=1",
         imageSrc:
           "https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg",
         imageAlt:
@@ -72,12 +72,12 @@ const cats = [
     ],
   },
   {
-    id: "men",
+    id: "male",
     name: "Men",
     featured: [
       {
         name: "Browse All Clothes",
-        href: "/shop?gender=men&status=available&page=1",
+        href: "/shop?gender=male&status=available&page=1",
         imageSrc:
           "https://images.pexels.com/photos/670786/pexels-photo-670786.jpeg?auto=compress&cs=tinysrgb&w=640&h=959&dpr=1",
         imageAlt:
@@ -85,7 +85,7 @@ const cats = [
       },
       {
         name: "Basic T-Shirts",
-        href: "/shop?gender=men&cat=T-Shirts&status=available&page=1",
+        href: "/shop?gender=male&cat=T-Shirts&status=available&page=1",
         imageSrc:
           "https://images.pexels.com/photos/5698851/pexels-photo-5698851.jpeg?auto=compress&cs=tinysrgb&w=640&h=427&dpr=1",
 
@@ -107,7 +107,7 @@ export default function Navbar() {
 
   const { user, logout } = useContext(AuthContext);
   const { cart } = useShopContext();
-  const [apparel, setApparel] = useState("women");
+  const [apparel, setApparel] = useState("female");
 
   useEffect(() => {
     getCategories()
@@ -373,7 +373,7 @@ export default function Navbar() {
                 className="rounded-md bg-white p-2 text-gray-400  hover:text-brand lg:hidden"
                 onClick={() => {
                   setOpen(true);
-                  setApparel("women");
+                  setApparel("female");
                 }}
               >
                 <span className="sr-only">Open menu</span>
