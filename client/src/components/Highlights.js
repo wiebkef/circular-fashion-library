@@ -1,32 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../axiosInstance";
-import { Link, useLocation } from "react-router-dom";
-import Pagination from "./Pagination";
+import { Link } from "react-router-dom";
 
-const useQueryString = () => {
-  const location = useLocation();
-  return new URLSearchParams(location.search);
-};
-
-function ItemCards({ page, setPage, lastItem, setLastItem }) {
+const Highlights = () => {
   const [items, setItems] = useState([]);
-  const queryString = useQueryString();
 
-  const url = `/api/items?${queryString}`;
   useEffect(() => {
     axios
-      .get(url)
+      .get(
+        "/api/items?gender=unisex&cat=T-Shirts&status=available&limit=6&page=1"
+      )
       .then((res) => {
-        if (res.data.length < 12) {
-          setLastItem(true);
-        }
         setItems(res.data);
       })
       .catch((e) => console.log(e));
-  }, [url, lastItem]);
+  }, []);
 
   return (
     <>
+      <h2 className="text-4xl">Check out the most current shirts</h2>
       <div className="container mx-auto py-8 grid gap-8 max-w-sm md:min-w-[90%] md:grid-cols-2 lg:grid-cols-3 lg:min-w-[95%] 3xl:grid-cols-4 3xl:gap-6 mb-4">
         {items.map((item) => (
           <Link to={`/shop/${item.id}`} key={item.id}>
@@ -61,16 +53,16 @@ function ItemCards({ page, setPage, lastItem, setLastItem }) {
           </Link>
         ))}
       </div>
-      {lastItem && <div>You reached the end. But more is coming soon!</div>}
-      <Pagination
-        page={page}
-        setPage={setPage}
-        url={url}
-        lastItem={lastItem}
-        setLastItem={setLastItem}
-      />
+      <div className="mb-8">
+        <Link
+          to="/shop?gender=unisex&status=available&page=1"
+          className="py-2 px-3 border border-transparent rounded-md shadow-sm text-md font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
+        >
+          Ready for more?
+        </Link>
+      </div>
     </>
   );
-}
+};
 
-export default ItemCards;
+export default Highlights;
