@@ -51,10 +51,9 @@ const ItemList = () => {
           <>
             <table className="w-full table-auto m-4 mx-auto border-collapse text-left">
               <thead className="border-y-2 border-brand">
-                <tr className="">
+                <tr>
                   <th className="py-4 px-2">SKU</th>
-                  <th className="py-4 px-2">Title</th>
-                  <th className="py-4 px-2">Brand</th>
+                  <th className="py-4 px-2">Brand & Title</th>
                   <th className="py-4 px-2">Status</th>
                   <th className="py-4 px-2">Size</th>
                   <th className="py-4 px-2">Color</th>
@@ -66,8 +65,9 @@ const ItemList = () => {
                   return (
                     <tr key={item.id} className="border-y border-brand">
                       <td className="p-2">{item.sku}</td>
-                      <td className="p-2">{item.title}</td>
-                      <td className="p-2">{item.brand}</td>
+                      <td className="p-2">
+                        {item.brand} {item.title}
+                      </td>
                       <td className="p-2">{item.status}</td>
                       <td className="p-2">{item.size}</td>
                       <td className="p-2">{item.color}</td>

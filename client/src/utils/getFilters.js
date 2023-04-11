@@ -5,11 +5,46 @@ export const getSizes = () => {
 };
 
 export const getColors = () => {
-  return ["black", "white", "grey", "blue", "red", "green", "yellow"];
+  return [
+    "black",
+    "white",
+    "grey",
+    "blue",
+    "navy",
+    "red",
+    "green",
+    "yellow",
+    "pink",
+    "purple",
+    "orange",
+    "olive",
+    "teal",
+    "turquoise",
+    "brown",
+    "beige",
+    "multicolor",
+  ];
 };
 
 export const getBrands = () => {
-  return ["Levis", "Diesel", "Hugo", "Armed Angels"];
+  return [
+    "Levis",
+    "Diesel",
+    "Hugo",
+    "Armed Angels",
+    "Lacoste",
+    "Tommy Hilfiger",
+    "Nike",
+    "Adidas",
+    "Puma",
+    "New Balance",
+    "Vans",
+    "Converse",
+    "Columbia",
+    "The North Face",
+    "Jack Wolfskin",
+    "Patagonia",
+  ];
 };
 
 export function getCategories() {

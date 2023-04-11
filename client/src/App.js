@@ -35,11 +35,9 @@ function App() {
         <Route path="/" element={<Start />} />
         <Route path="/shop" element={<FilterSidebar />} />
         <Route path="/shop/:id" element={<ItemDetails />} />
-        <Route path="/users/:id" element={<UserDetails />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUpForm />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
+
         <Route path="/subscription" element={<SubscrPlan />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/" element={<User />}>
@@ -47,6 +45,8 @@ function App() {
           <Route path="account/wardrobe" element={<UserWardrobe />} />
           <Route path="account/wardrobe/clean" element={<UserWardrobe />} />
           <Route path="account/details" element={<UserDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
         <Route path="/admin/" element={<Admin />}>
           <Route index element={<AdminDashboard />} />

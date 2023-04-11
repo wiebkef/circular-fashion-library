@@ -23,7 +23,6 @@ function UserWardrobe() {
   const handleRemove = (itemId, index) => {
     wardrobe[index].user_id = null;
     wardrobe[index].status = "available";
-    // wardrobe[index].remove = true;
     axios
       .put(`/api/items/checkout/${itemId}`, wardrobe[index])
       .then((res) => {
@@ -44,6 +43,8 @@ function UserWardrobe() {
           </h2>
         )}
         <div className="w-full">
+          {wardrobe.length === 0 &&
+            "Your wardrobe is empty. Add some items from our catalog."}
           {wardrobe.map((item, index) => (
             // <Link to={`/shop/${item.id}`} key={item.id}>
             <div
