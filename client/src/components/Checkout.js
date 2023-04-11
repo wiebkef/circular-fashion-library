@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "../axiosInstance";
 import { Switch } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCountries } from "../utils/userProps";
 import { AuthContext } from "../context/Auth";
+import { useShopContext } from "../context/Shop";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -11,7 +12,8 @@ function classNames(...classes) {
 
 export default function Checkout() {
   const { user, loading } = useContext(AuthContext);
-
+  const { cart, wardrobe, cartDispatch } = useShopContext();
+  const navigate = useNavigate();
   const [agreed, setAgreed] = useState(false);
   const [userDetails, setUserDetails] = useState({
     first_name: "",
@@ -34,6 +36,7 @@ export default function Checkout() {
     zip: "",
     city: "",
     country: "",
+    agreed: "",
   });
 
   useEffect(() => {
@@ -49,6 +52,43 @@ export default function Checkout() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserDetails({ ...user, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!cart.length) {
+      alert("Please add at least one item to your cart in order to checkout.");
+    } else {
+      if (cart.length + wardrobe.length > 3) {
+        alert(
+          "You cannot add more than 3 items to your wardrobe. Please remove items from your wardrobe or your cart first before checking out."
+        );
+      } else {
+        if (!agreed) {
+          setError({
+            ...error,
+            agreed:
+              "Please agree to our terms & conditions and privacy policy.",
+          });
+        } else {
+          cart.forEach((cartItem) => {
+            cartItem.user_id = user.id;
+            cartItem.status = "unavailable";
+            axios
+              .put(`/api/items/checkout/${cartItem.id}`, cartItem)
+              .then((res) => {
+                navigate(`/account/wardrobe`);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          });
+          cartDispatch({
+            type: "clearCart",
+          });
+        }
+      }
+    }
   };
 
   return (
@@ -109,6 +149,7 @@ export default function Checkout() {
                   name="first_name"
                   value={userDetails.first_name || ""}
                   placeholder="First Name"
+                  required
                   className="inline-block peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
                 />
@@ -129,6 +170,7 @@ export default function Checkout() {
                   name="last_name"
                   value={userDetails.last_name || ""}
                   placeholder="Last Name"
+                  required
                   className="inline-block peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
                 />
@@ -153,6 +195,7 @@ export default function Checkout() {
                   name="street"
                   value={userDetails.street || ""}
                   placeholder="Street"
+                  required
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
                 />
@@ -173,6 +216,7 @@ export default function Checkout() {
                   name="house_no"
                   value={userDetails.house_no || ""}
                   placeholder="Number"
+                  required
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
                 />
@@ -197,6 +241,7 @@ export default function Checkout() {
                   name="zip"
                   value={userDetails.zip || ""}
                   placeholder="Zip code"
+                  required
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
                 />
@@ -217,6 +262,7 @@ export default function Checkout() {
                   name="city"
                   value={userDetails.city || ""}
                   placeholder="City"
+                  required
                   className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                   onChange={handleChange}
                 />
@@ -239,6 +285,7 @@ export default function Checkout() {
                 name="country"
                 value={userDetails.country || ""}
                 placeholder="Country"
+                required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
               >
@@ -279,17 +326,29 @@ export default function Checkout() {
             </div>
             <Switch.Label className="text-sm leading-6 text-gray-600">
               By selecting this, you agree to our{" "}
-              <a href="#" className="font-semibold text-brand">
-                privacy&nbsp;policy
+              <a href="!#" className="font-semibold text-brand">
+                terms & conditions
+              </a>{" "}
+              and our{" "}
+              <a href="!#" className="font-semibold text-brand">
+                privacy policy
               </a>
               .
+              {!agreed && error.agreed && (
+                <>
+                  <br />
+                  <span className="text-start text-red-500">
+                    {error.agreed}
+                  </span>
+                </>
+              )}
             </Switch.Label>
           </Switch.Group>
         </div>
         <div className="mt-10">
           <button
-            type="submit"
-            className="block w-full rounded-md bg-brand px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+            onClick={handleSubmit}
+            className="w-full flex justify-center mt-8 py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
           >
             Confirm Order
           </button>

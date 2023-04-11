@@ -5,6 +5,7 @@ const {
   getItemById,
   createItem,
   updateItem,
+  checkoutItem,
   deleteItem,
   getWardrobe,
 } = require("../controllers/items");
@@ -18,6 +19,7 @@ itemsRouter.post("/", upload.single("images"), createItem);
 itemsRouter.get("/", getAllItems);
 itemsRouter.get("/:id", itemFinder, getItemById);
 itemsRouter.put("/:id", upload.single("images"), itemFinder, updateItem);
+itemsRouter.put("/checkout/:id", itemFinder, checkoutItem);
 itemsRouter.delete("/:id", itemFinder, deleteItem);
 itemsRouter.get("/wardrobe/:id", userFinder, getWardrobe);
 module.exports = itemsRouter;

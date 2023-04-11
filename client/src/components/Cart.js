@@ -97,9 +97,9 @@ const Cart = () => {
               </Link>
               <button
                 onClick={handleGoToCheckout}
-                className="bg-brand text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-500"
+                className="flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-gray-800 bg-brand hover:bg-brand-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-hover"
               >
-                Checkout
+                Checkout <i className="bi bi-chevron-right ml-2"></i>
               </button>
             </div>
           </div>

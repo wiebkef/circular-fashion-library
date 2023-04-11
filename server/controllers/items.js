@@ -215,6 +215,28 @@ const updateItem = async (req, res, next) => {
   }
 };
 
+const checkoutItem = async (req, res, next) => {
+  try {
+    const { features, ...body } = req.body;
+    const updatedItem = await Item.update(
+      { ...body },
+      {
+        where: {
+          id: req.params.id,
+        },
+      },
+      { returning: true } /*
+      {
+        new: true,
+        runValidators: false,
+      } */
+    );
+    res.status(201).json(updatedItem);
+  } catch (error) {
+    next(new ErrorResponse(error));
+  }
+};
+
 const deleteItem = async (req, res, next) => {
   const features = req.body.features;
   try {
@@ -249,6 +271,7 @@ module.exports = {
   getItemById,
   createItem,
   updateItem,
+  checkoutItem,
   deleteItem,
   getWardrobe,
 };
