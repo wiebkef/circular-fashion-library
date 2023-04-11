@@ -23,9 +23,9 @@ function UserWardrobe() {
   const handleRemove = (itemId, index) => {
     wardrobe[index].user_id = null;
     wardrobe[index].status = "available";
-    wardrobe[index].remove = true;
+    // wardrobe[index].remove = true;
     axios
-      .put(`/api/items/${itemId}`, wardrobe[index])
+      .put(`/api/items/checkout/${itemId}`, wardrobe[index])
       .then((res) => {
         setWardrobe(wardrobe.filter((item) => item.id !== itemId));
       })

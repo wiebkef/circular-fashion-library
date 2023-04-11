@@ -42,7 +42,6 @@ function ItemForm() {
   const [categories, setCategories] = useState([]);
   const [features, setFeatures] = useState([]);
   const [selectedFeatures, setSelectedFeatures] = useState([]);
-  // const [reload, setReload] = useState(false);
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -62,7 +61,7 @@ function ItemForm() {
       .get(`/api/categories`)
       .then((res) => setCategories(res.data))
       .catch((e) => console.log(e));
-  }, [id, selectedFeatures]);
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -100,7 +99,8 @@ function ItemForm() {
           // setReload(true);
         })
         .catch((err) => {
-          setError(err.response.data.errors);
+          // setError(err.response.data.errors);
+          console.log(err);
         });
     } else {
       axios
@@ -109,7 +109,8 @@ function ItemForm() {
           navigate(`/admin/items/${res.data.id}`);
         })
         .catch((err) => {
-          setError(err.response.data.errors);
+          // setError(err.response.data.errors);
+          console.log(err);
         });
     }
   };
@@ -238,7 +239,7 @@ function ItemForm() {
                 type="text"
                 id="title"
                 name="title"
-                value={item.title}
+                value={item.title || ""}
                 placeholder="Title"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
@@ -347,7 +348,7 @@ function ItemForm() {
               <textarea
                 id="short_description"
                 name="short_description"
-                value={item.short_description}
+                value={item.short_description || ""}
                 placeholder="Short Description"
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
@@ -368,7 +369,7 @@ function ItemForm() {
               <textarea
                 id="description"
                 name="description"
-                value={item.description}
+                value={item.description || ""}
                 placeholder="Description"
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
                 onChange={handleChange}
@@ -389,7 +390,7 @@ function ItemForm() {
               <select
                 id="features"
                 name="features[]"
-                value={selectedFeatures}
+                value={selectedFeatures || []}
                 placeholder="Features"
                 required
                 className="peer w-full border border-gray-300 px-3 py-2 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand placeholder-transparent"
