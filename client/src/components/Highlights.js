@@ -16,7 +16,7 @@ const Highlights = () => {
 
   return (
     <>
-      <h2 className="text-4xl my-6">Check out our new arrivals</h2>
+      <h2 id="allitems" className="text-4xl my-6">Check out our new arrivals</h2>
 
       <div className="container mx-auto grid max-w-2xl grid-cols-1 sm:gap-x-6 gap-y-6 px-4 sm:py-4 sm:px-6 sm:grid-cols-2 lg:grid-cols-3 lg:max-w-7xl lg:px-4">
         {items.map((item) => (

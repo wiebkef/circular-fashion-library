@@ -28,22 +28,18 @@ export const getColors = () => {
 
 export const getBrands = () => {
   return [
-    "Levis",
+    "Adidas",
+    "Armed Angels",
+    "CHER17",
     "Diesel",
     "Hugo",
-    "Armed Angels",
-    "Lacoste",
-    "Tommy Hilfiger",
-    "Nike",
-    "Adidas",
-    "Puma",
-    "New Balance",
-    "Vans",
-    "Converse",
-    "Columbia",
-    "The North Face",
     "Jack Wolfskin",
+    "Lacoste",
+    "Levis",
+    "Nike",
     "Patagonia",
+    "The North Face",
+    "Tommy Hilfiger",
   ];
 };
 
