@@ -5,28 +5,28 @@ import item4 from "../images/jns4.png";
 
 const features = [
   {
-    name: "But that is not all!",
+    name: "But that's not all!",
     icon: "bi bi-star",
     description:
-      "When you return your items, our team will repair and clean them to make them as good as new. So not only are you helping the environment by reducing waste, but you are also getting your clothes fixed and refreshed without any additional effort.",
+      "Before making clothes available again to the next member our team will clean and repair them to ensure a maximum longevity. Not only are you helping the environment by reducing waste, but you are also getting your clothes fixed and refreshed without any additional effort.",
   },
   {
     name: "Customer frontend",
     icon: "bi bi-laptop",
     description:
-      "It is just like any other fashion shop, except we do not show prices. You can browse and select clothing items you love and add them to your cart. The only difference is that you do not have to pay for each item you choose.",
+      "Circular Fashion Library is just like any other fashion shop, except you won't find any price tags. You can browse and select clothing items you love and add them to your cart. You don't have to pay for each item you choose. It's already included in your membership.",
   },
   {
     name: "Subscription plan",
     icon: "bi bi-check-circle",
     description:
-      "We encourage you to take advantage of our subscription plan, which is not only affordable but also environmentally friendly. With our Circular Fashion Library, you can constantly refresh your wardrobe without sacrificing your values.",
+      "Our membership is not just affordable but also enables you to reduce your impact on the environment. With our Circular Fashion Library, you can be stylish during all seasons without sacrificing your values.",
   },
   {
     name: "Join",
     icon: "bi bi-people",
     description:
-      " our community of fashion-forward individuals who care about the planet and love fashion. Subscribe now and start your sustainable fashion journey!",
+      "Join our community of fashion-forward individuals, who care about the planet and love fashion. Subscribe now and start your sustainable fashion journey!",
   },
 ];
 
@@ -39,19 +39,21 @@ export default function About() {
             How does it work?
           </h2>
           <p className="mt-4 text-gray-500">
-            You purchase a subscription plan, and then you can exchange fashion
-            items on a monthly basis. You can select up to three new clothing
-            items from our vast collection, and you can return up to three items
-            that you no longer need.
+            As a Circular Fashion Library member you can select up to three
+            fashion items simultanously from our extensive collection. You can
+            keep them as long as you want and exchange some or all of them for
+            new ones at any time.
           </p>
 
           <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
             {features.map((feature) => (
               <div key={feature.name} className="border-t border-gray-200 pt-4">
-              <dt className="flex items-center justify-center text-brand">
-                <i className={`bi ${feature.icon} text-3xl mr-2`}></i>
-                <span className="text-center font-medium">{feature.name}</span>
-              </dt>
+                <dt className="flex items-center justify-center text-brand">
+                  <i className={`bi ${feature.icon} text-3xl mr-2`}></i>
+                  <span className="text-center font-medium">
+                    {feature.name}
+                  </span>
+                </dt>
                 <dd className="mt-2 text-base text-gray-500">
                   {feature.description}
                 </dd>
