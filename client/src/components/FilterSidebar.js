@@ -234,7 +234,7 @@ export default function FilterSidebar() {
         </Transition.Root>
 
         {/* DESKTOP FILTER DIALOG */}
-        <main id="allitems" className="mx-auto max-w-7xl px-4 sm:px-6 ">
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 ">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               All Items
@@ -256,9 +256,9 @@ export default function FilterSidebar() {
               {/* Filters */}
               <form onSubmit={handleSubmit} className="hidden lg:block">
                 {/* Gender */}
-                <div className="border-t border-gray-200 py-2">
+                <div className="border-t border-gray-200 py-2 focus-visible:outline-none">
                   <select
-                    className="form-select border-transparent w-full "
+                    className="form-select border-transparent w-full focus:border-none focus:ring-0 focus-visible:outline-none"
                     name="gender"
                     aria-label="Select a size"
                     onChange={handleChange}
@@ -270,9 +270,9 @@ export default function FilterSidebar() {
                   </select>
                 </div>
                 {/* Sizes */}
-                <div className="border-t border-gray-200 py-2">
+                <div className="border-t border-gray-200 py-2 focus-visible:outline-none">
                   <select
-                    className="form-select border-transparent w-full "
+                    className="form-select border-transparent w-full focus:border-none focus:ring-0 focus-visible:outline-none"
                     name="size"
                     aria-label="Select a size"
                     onChange={handleChange}
@@ -289,9 +289,9 @@ export default function FilterSidebar() {
                 </div>
 
                 {/* Colors */}
-                <div className="border-t border-gray-200 py-2">
+                <div className="border-t border-gray-200 py-2 focus-visible:outline-none">
                   <select
-                    className="form-select border-transparent w-full"
+                    className="form-select border-transparent w-full focus:border-none focus:ring-0 focus-visible:outline-none"
                     name="color"
                     aria-label="Select a Color"
                     onChange={handleChange}
@@ -308,9 +308,9 @@ export default function FilterSidebar() {
                 </div>
 
                 {/* Brands */}
-                <div className="border-t border-gray-200 py-2">
+                <div className="border-t border-gray-200 py-2 focus-visible:outline-none">
                   <select
-                    className="form-select border-transparent w-full "
+                    className="form-select border-transparent w-full focus:border-none focus:ring-0 focus-visible:outline-none"
                     name="brand"
                     aria-label="Select a brand"
                     onChange={handleChange}
@@ -327,9 +327,9 @@ export default function FilterSidebar() {
                 </div>
 
                 {/* Features */}
-                <div className="border-t border-gray-200 py-2">
+                <div className="border-t border-gray-200 py-2 focus-visible:outline-none">
                   <select
-                    className="form-select border-transparent w-full"
+                    className="form-select border-transparent w-full focus:border-none focus:ring-0 focus-visible:outline-none"
                     name="feat"
                     aria-label="Select a feature"
                     onChange={handleChange}
@@ -347,9 +347,9 @@ export default function FilterSidebar() {
                 </div>
 
                 {/* Categories */}
-                <div className="border-t border-gray-200 py-2">
+                <div className="border-t border-gray-200 py-2 focus-visible:outline-none">
                   <select
-                    className="form-select border-transparent w-full"
+                    className="form-select border-transparent w-full focus-visible:outline-none focus:border-none focus:ring-0"
                     name="cat"
                     aria-label="Select a feature"
                     onChange={handleChange}
