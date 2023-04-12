@@ -67,7 +67,7 @@ function UserDetails() {
         // setReload(true);
       })
       .catch((err) => {
-        setError("err.response.data.errors");
+        console.log(err);r.response.data.errors");
       });
   };
 
