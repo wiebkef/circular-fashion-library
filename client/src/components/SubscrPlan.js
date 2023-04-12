@@ -4,10 +4,10 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const includedFeatures = [
-  "Monthly exchange of fashion items",
-  "Take 3 new clothing items and return 3",
+  "Exchange of fashion items at any time",
+  "Take up to three clothing items concurrently",
   "Returned items are repaired and cleaned by our team",
-  "Official member t-shirt",
+  "Receive an official member t-shirt",
 ];
 
 export default function SubscrPlan() {
@@ -19,14 +19,13 @@ export default function SubscrPlan() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl sm:text-center">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            Revolutionary Circular Fashion Library
+            Circular Fashion Library
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Become a member of our Circular Fashion Library and never run out of
-            style! With a monthly exchange of fashion items, you can take up to
-            3 new clothing items and return up to 3 old ones that will be
-            repaired and cleaned by our team. Or you keep your favorites for as
-            long as you wish!
+            Become a member of the Circular Fashion Library and never run out of
+            style! You can take up to three clothing items and exchange some or
+            all, which will be repaired and cleaned by our team. Your favorite
+            pieces you can keep as long as you wish!
           </p>
         </div>
         <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
@@ -35,10 +34,10 @@ export default function SubscrPlan() {
               Member Benefits
             </h3>
             <p className="mt-6 text-base leading-7 text-gray-600">
-              With our subscription plan, you can access our fashion library
-              without worrying about the price. You can select the clothing
-              items you want and which ones you would like to return, just like
-              a fashion shop.
+              With your membership you have access to our constantly growing
+              fashion library without worrying about the price. You can select
+              the clothing items you want just like in any other fashion shop
+              and exchange them at any time for new ones.
             </p>
             <div className="mt-10 flex items-center gap-x-4">
               <h4 className="flex-none text font-semibold leading-6 text-brand">
