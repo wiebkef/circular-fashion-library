@@ -294,21 +294,25 @@ export default function Navbar() {
                             to="/admin"
                             className="-m-2 block p-2 font-medium text-gray-900"
                           >
-                            Admin {user.email}
+                            <button className="bg-white border border-1 border-gray-700 hover:border-brand hover:text-brand rounded px-3 py-2">
+                              {user.email}
+                            </button>
                           </Link>
                         ) : (
                           <Link
                             to="/account"
                             className="-m-2 block p-2 font-medium text-gray-900"
                           >
-                            User {user.email}
+                            <button className="bg-white border border-1 border-gray-700 hover:border-brand hover:text-brand rounded px-3 py-2">
+                              {user.email}
+                            </button>
                           </Link>
                         )}
                       </div>
                       <div className="flow-root">
                         <Link
                           onClick={logout}
-                          className="-m-2 block p-2 font-medium text-gray-900"
+                          className="-m-2 block p-2 font-medium text-gray-900 hover:text-brand"
                         >
                           Log Out
                         </Link>
@@ -538,20 +542,24 @@ export default function Navbar() {
                         to="/admin"
                         className="text-sm font-medium text-gray-700"
                       >
-                        {user.email}
+                        <button className="bg-white border border-1 border-gray-700 hover:border-brand hover:text-brand rounded px-3 py-2">
+                          {user.email}
+                        </button>
                       </Link>
                     ) : (
                       <Link
                         to="/account"
                         className="text-sm font-medium text-gray-700"
                       >
-                        {user.email}
+                        <button className="bg-white border border-1 border-gray-700 hover:border-brand hover:text-brand rounded px-3 py-2">
+                          {user.email}
+                        </button>
                       </Link>
                     )}
                     <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                     <Link
                       onClick={logout}
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
+                      className="text-sm font-medium text-gray-700 hover:text-brand"
                     >
                       Log Out
                     </Link>

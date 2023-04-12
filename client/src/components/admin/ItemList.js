@@ -46,7 +46,16 @@ const ItemList = () => {
   return (
     <>
       <div className="container mt-5 mb-16 mx-auto">
-        <h2 className="text-3xl font-semibold mt-6">Items</h2>
+        <div className="flex flex-row justify-between mt-6">
+          <div>
+            <Link to="/admin">
+              <i className="bi bi-chevron-left text-xl"></i>
+            </Link>
+          </div>
+          <h2 className="text-3xl font-semibold">Items</h2>
+          <div>&nbsp;</div>
+        </div>
+
         {items && (
           <>
             <table className="w-full table-auto m-4 mx-auto border-collapse text-left">

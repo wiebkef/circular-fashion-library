@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "../../axiosInstance";
 import { getCountries } from "../../utils/userProps";
 import { AuthContext } from "../../context/Auth";
+import { Link } from "react-router-dom";
 
 function UserDetails() {
   const { user, loading } = useContext(AuthContext);
@@ -73,9 +74,17 @@ function UserDetails() {
   return (
     <div className="my-16 sm:mx-auto sm:w-full sm:max-w-xl">
       <div className="bg-white py-8 px-6 border shadow-md rounded-lg sm:px-10">
-        <h1 className="mb-16 text-3xl font-bold">
-          Update your details and address
-        </h1>
+        <div className="flex flex-row justify-between">
+          <div>
+            <Link to="/account">
+              <i className="bi bi-chevron-left text-xl"></i>
+            </Link>
+          </div>
+          <h1 className="mb-16 text-3xl font-bold">
+            Update details and address
+          </h1>
+          <div>&nbsp;</div>
+        </div>
         <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
           <div>
             <div className="mt-1 relative">
