@@ -38,7 +38,7 @@ function AuthProvider({ children }) {
       })
       .catch((err) => {
         setUser(null);
-        setError(err.response.data.errors);
+        console.log(err);
       });
   };
 
@@ -52,7 +52,7 @@ function AuthProvider({ children }) {
       })
       .catch((err) => {
         setUser(null);
-        setError(err.response.data.errors);
+        console.log(err);
       });
   };
 
