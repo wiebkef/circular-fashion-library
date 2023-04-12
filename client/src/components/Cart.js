@@ -90,7 +90,7 @@ const Cart = () => {
             </div>
             <div className="px-4 py-2 bg-gray-100 flex justify-between">
               <Link
-                to="/shop"
+                to="/shop?status=available&page=1"
                 className="text-brand font-bold pt-2 hover:text-gray-500"
               >
                 <i className="bi bi-chevron-left"></i> Back to Shop

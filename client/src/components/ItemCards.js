@@ -30,7 +30,7 @@ function ItemCards({ page, setPage, lastItem, setLastItem }) {
       <div className="container mx-auto py-8 grid gap-8 max-w-sm md:min-w-[90%] md:grid-cols-2 lg:grid-cols-3 lg:min-w-[95%] 3xl:grid-cols-4 3xl:gap-6 mb-4">
         {items.map((item) => (
           <Link to={`/shop/${item.id}`} key={item.id}>
-            <div className="bg-white shadow-md overflow-hidden rounded-lg h-full">
+            <div className="bg-white shadow-md hover:shadow-lg overflow-hidden rounded-lg h-full">
               <div className="w-full h-80 overflow-hidden rounded-t-lg">
                 <img
                   className="w-full h-full object-cover rounded-t-lg rounded-b-lg"
