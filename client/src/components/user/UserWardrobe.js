@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "../../axiosInstance";
 import { AuthContext } from "../../context/Auth";
 import { useShopContext } from "../../context/Shop";
@@ -34,7 +34,15 @@ function UserWardrobe() {
   return (
     <div className="mx-5">
       <div className="container sm:max-w-[600px] mx-auto my-16 bg-white py-8 px-6 border shadow-md rounded-lg">
-        <h1 className="mb-6 text-3xl font-bold">Your current wardrobe</h1>
+        <div className="flex flex-row justify-between">
+          <div>
+            <Link to="/account">
+              <i className="bi bi-chevron-left text-xl"></i>
+            </Link>
+          </div>
+          <h1 className="mb-16 text-3xl font-bold">Your current wardrobe</h1>
+          <div>&nbsp;</div>
+        </div>
         {pathname === "/account/wardrobe/clean" && (
           <h2 className="mb-6 text-lg py-1 px-3 bg-red-600 text-white rounded-full">
             Please return at least {cart.length + wardrobe.length - 3}{" "}
