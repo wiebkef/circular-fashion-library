@@ -21,15 +21,15 @@ function Footer() {
               Subscribe to our newsletter
             </h3>
             <form>
-              <div className="flex flex-wrap items-center">
+              <div className="sm:flex sm:flex-wrap sm:items-center">
                 <div className="w-80 sm:w-2/3 lg:w-3/5 mb-2 sm:mb-0 mx-auto lg:mx-0">
                   <input
                     type="email"
                     placeholder="Enter your email"
-                    className="bg-white border border-gray-400 py-2 px-4 w-full rounded-lg focus:outline-brand focus:border-brand focus:ring-0"
+                    className="bg-white border border-gray-400 py-2 px-4 w-full rounded-md focus:outline-brand focus:border-brand focus:ring-0"
                   />
                 </div>
-                <div className="mx-auto block sm:w-1/3 md:inline-flex md:pl-2 lg:w-1/6 lg:mx-0">
+                <div className="mx-auto block max-w-xs sm:w-1/3 md:inline-flex md:pl-2 lg:w-1/6 lg:mx-0">
                   <button
                     type="submit"
                     className="bg-gray-500 hover:bg-brand text-white py-2 px-4 rounded-md w-full sm:w-auto"

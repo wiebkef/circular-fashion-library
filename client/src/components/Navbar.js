@@ -286,17 +286,6 @@ export default function Navbar() {
                 </Tab.Group>
 
                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                  <div className="flow-root">
-                    <a
-                      href="/about"
-                      className="-m-2 block p-2 font-medium text-gray-900"
-                    >
-                      About
-                    </a>
-                  </div>
-                </div>
-
-                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                   {user ? (
                     <>
                       <div className="flow-root">
@@ -538,13 +527,6 @@ export default function Navbar() {
                       )}
                     </Popover>
                   ))}
-
-                  <a
-                    href="/about"
-                    className="flex items-center text-base font-medium text-gray-700 hover:text-brand"
-                  >
-                    About
-                  </a>
                 </div>
               </Popover.Group>
 
